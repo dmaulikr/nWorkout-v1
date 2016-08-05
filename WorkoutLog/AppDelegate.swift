@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  WorkoutLog
-//
-//  Created by Nathan Lanza on 8/5/16.
-//  Copyright © 2016 Nathan Lanza. All rights reserved.
-//
-
 import UIKit
 import CoreData
 

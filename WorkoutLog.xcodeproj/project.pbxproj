@@ -3,18 +3,39 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		B366C6DF1D5497C200484784 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C6DE1D5497C200484784 /* AppDelegate.swift */; };
-		B366C6E11D5497C200484784 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C6E01D5497C200484784 /* ViewController.swift */; };
-		B366C6E41D5497C200484784 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B366C6E21D5497C200484784 /* Main.storyboard */; };
-		B366C6E71D5497C200484784 /* WorkoutLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B366C6E51D5497C200484784 /* WorkoutLog.xcdatamodeld */; };
 		B366C6E91D5497C200484784 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B366C6E81D5497C200484784 /* Assets.xcassets */; };
 		B366C6EC1D5497C200484784 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B366C6EA1D5497C200484784 /* LaunchScreen.storyboard */; };
 		B366C6F71D5497C200484784 /* WorkoutLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C6F61D5497C200484784 /* WorkoutLogTests.swift */; };
 		B366C7021D5497C200484784 /* WorkoutLogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7011D5497C200484784 /* WorkoutLogUITests.swift */; };
+		B366C7131D54987B00484784 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7121D54987B00484784 /* ConfigurableCell.swift */; };
+		B366C7161D54988900484784 /* ContextExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7151D54988900484784 /* ContextExtensions.swift */; };
+		B366C7191D54989800484784 /* WorkoutsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7171D54989800484784 /* WorkoutsTVC.swift */; };
+		B366C71A1D54989800484784 /* WorkoutTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7181D54989800484784 /* WorkoutTVC.swift */; };
+		B366C71D1D5498A800484784 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C71C1D5498A800484784 /* Routine.swift */; };
+		B366C7201D5498BB00484784 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C71F1D5498BB00484784 /* TableViewCell.swift */; };
+		B366C7241D5498C500484784 /* RoutineHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7211D5498C500484784 /* RoutineHeaderCell.swift */; };
+		B366C7251D5498C500484784 /* RowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7221D5498C500484784 /* RowCell.swift */; };
+		B366C7261D5498C500484784 /* SetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7231D5498C500484784 /* SetCell.swift */; };
+		B366C7281D5498CF00484784 /* RoutinesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7271D5498CF00484784 /* RoutinesTVC.swift */; };
+		B366C72B1D5498DD00484784 /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7291D5498DD00484784 /* DataSourceDelegate.swift */; };
+		B366C72C1D5498DD00484784 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C72A1D5498DD00484784 /* TableViewDataSource.swift */; };
+		B366C72F1D54993300484784 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B366C72E1D54993300484784 /* Main.storyboard */; };
+		B366C7311D54993B00484784 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7301D54993B00484784 /* HeaderCell.swift */; };
+		B366C7351D54994600484784 /* ManagedObjectObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7321D54994600484784 /* ManagedObjectObserver.swift */; };
+		B366C7361D54994600484784 /* ManagedObjectProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7331D54994600484784 /* ManagedObjectProtocols.swift */; };
+		B366C7371D54994600484784 /* NSManagedObjectContext+Observers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7341D54994600484784 /* NSManagedObjectContext+Observers.swift */; };
+		B366C73A1D54995E00484784 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7391D54995E00484784 /* Utilities.swift */; };
+		B366C73F1D54996800484784 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C73B1D54996800484784 /* DataProvider.swift */; };
+		B366C7401D54996800484784 /* DataProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C73C1D54996800484784 /* DataProviderDelegate.swift */; };
+		B366C7411D54996800484784 /* DataProviderUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C73D1D54996800484784 /* DataProviderUpdate.swift */; };
+		B366C7421D54996800484784 /* FetchedResultsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C73E1D54996800484784 /* FetchedResultsDataProvider.swift */; };
+		B396BDA61D549E570014650F /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B396BDA51D549E570014650F /* Workout.swift */; };
+		B3E07C231D554CE4006D68AE /* WorkoutLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B3E07C211D554CE4006D68AE /* WorkoutLog.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,9 +58,6 @@
 /* Begin PBXFileReference section */
 		B366C6DB1D5497C200484784 /* WorkoutLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B366C6DE1D5497C200484784 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B366C6E01D5497C200484784 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B366C6E31D5497C200484784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B366C6E61D5497C200484784 /* WorkoutLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WorkoutLog.xcdatamodel; sourceTree = "<group>"; };
 		B366C6E81D5497C200484784 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B366C6EB1D5497C200484784 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B366C6ED1D5497C200484784 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +67,30 @@
 		B366C6FD1D5497C200484784 /* WorkoutLogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WorkoutLogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B366C7011D5497C200484784 /* WorkoutLogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutLogUITests.swift; sourceTree = "<group>"; };
 		B366C7031D5497C200484784 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B366C7121D54987B00484784 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
+		B366C7151D54988900484784 /* ContextExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextExtensions.swift; sourceTree = "<group>"; };
+		B366C7171D54989800484784 /* WorkoutsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsTVC.swift; sourceTree = "<group>"; };
+		B366C7181D54989800484784 /* WorkoutTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTVC.swift; sourceTree = "<group>"; };
+		B366C71C1D5498A800484784 /* Routine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
+		B366C71F1D5498BB00484784 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		B366C7211D5498C500484784 /* RoutineHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineHeaderCell.swift; sourceTree = "<group>"; };
+		B366C7221D5498C500484784 /* RowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowCell.swift; sourceTree = "<group>"; };
+		B366C7231D5498C500484784 /* SetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetCell.swift; sourceTree = "<group>"; };
+		B366C7271D5498CF00484784 /* RoutinesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutinesTVC.swift; sourceTree = "<group>"; };
+		B366C7291D5498DD00484784 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
+		B366C72A1D5498DD00484784 /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
+		B366C72E1D54993300484784 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		B366C7301D54993B00484784 /* HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
+		B366C7321D54994600484784 /* ManagedObjectObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectObserver.swift; sourceTree = "<group>"; };
+		B366C7331D54994600484784 /* ManagedObjectProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectProtocols.swift; sourceTree = "<group>"; };
+		B366C7341D54994600484784 /* NSManagedObjectContext+Observers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Observers.swift"; sourceTree = "<group>"; };
+		B366C7391D54995E00484784 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		B366C73B1D54996800484784 /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		B366C73C1D54996800484784 /* DataProviderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviderDelegate.swift; sourceTree = "<group>"; };
+		B366C73D1D54996800484784 /* DataProviderUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviderUpdate.swift; sourceTree = "<group>"; };
+		B366C73E1D54996800484784 /* FetchedResultsDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsDataProvider.swift; sourceTree = "<group>"; };
+		B396BDA51D549E570014650F /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		B3E07C221D554CE4006D68AE /* WorkoutLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WorkoutLog.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,13 +141,16 @@
 		B366C6DD1D5497C200484784 /* WorkoutLog */ = {
 			isa = PBXGroup;
 			children = (
-				B366C6DE1D5497C200484784 /* AppDelegate.swift */,
-				B366C6E01D5497C200484784 /* ViewController.swift */,
-				B366C6E21D5497C200484784 /* Main.storyboard */,
-				B366C6E81D5497C200484784 /* Assets.xcassets */,
-				B366C6EA1D5497C200484784 /* LaunchScreen.storyboard */,
-				B366C6ED1D5497C200484784 /* Info.plist */,
-				B366C6E51D5497C200484784 /* WorkoutLog.xcdatamodeld */,
+				B396BDA51D549E570014650F /* Workout.swift */,
+				B366C7431D54996C00484784 /* DataProvider */,
+				B366C7381D54994B00484784 /* ManagedObject */,
+				B366C72D1D5498E200484784 /* TableViewDataSource */,
+				B366C71E1D5498AB00484784 /* Model */,
+				B366C71B1D54989C00484784 /* Controller */,
+				B366C7141D54987E00484784 /* Cell */,
+				B366C7111D54986000484784 /* CoreData */,
+				B366C7101D54984E00484784 /* View */,
+				B366C70F1D54983D00484784 /* Other */,
 			);
 			path = WorkoutLog;
 			sourceTree = "<group>";
@@ -126,6 +171,96 @@
 				B366C7031D5497C200484784 /* Info.plist */,
 			);
 			path = WorkoutLogUITests;
+			sourceTree = "<group>";
+		};
+		B366C70F1D54983D00484784 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				B366C6E81D5497C200484784 /* Assets.xcassets */,
+				B366C6EA1D5497C200484784 /* LaunchScreen.storyboard */,
+				B366C6ED1D5497C200484784 /* Info.plist */,
+				B366C6DE1D5497C200484784 /* AppDelegate.swift */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		B366C7101D54984E00484784 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B366C7301D54993B00484784 /* HeaderCell.swift */,
+				B366C7211D5498C500484784 /* RoutineHeaderCell.swift */,
+				B366C7221D5498C500484784 /* RowCell.swift */,
+				B366C7231D5498C500484784 /* SetCell.swift */,
+				B366C72E1D54993300484784 /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		B366C7111D54986000484784 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				B366C7151D54988900484784 /* ContextExtensions.swift */,
+				B3E07C211D554CE4006D68AE /* WorkoutLog.xcdatamodeld */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		B366C7141D54987E00484784 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B366C71F1D5498BB00484784 /* TableViewCell.swift */,
+				B366C7121D54987B00484784 /* ConfigurableCell.swift */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		B366C71B1D54989C00484784 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B366C7271D5498CF00484784 /* RoutinesTVC.swift */,
+				B366C7171D54989800484784 /* WorkoutsTVC.swift */,
+				B366C7181D54989800484784 /* WorkoutTVC.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		B366C71E1D5498AB00484784 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B366C71C1D5498A800484784 /* Routine.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		B366C72D1D5498E200484784 /* TableViewDataSource */ = {
+			isa = PBXGroup;
+			children = (
+				B366C7291D5498DD00484784 /* DataSourceDelegate.swift */,
+				B366C72A1D5498DD00484784 /* TableViewDataSource.swift */,
+			);
+			name = TableViewDataSource;
+			sourceTree = "<group>";
+		};
+		B366C7381D54994B00484784 /* ManagedObject */ = {
+			isa = PBXGroup;
+			children = (
+				B366C7391D54995E00484784 /* Utilities.swift */,
+				B366C7321D54994600484784 /* ManagedObjectObserver.swift */,
+				B366C7331D54994600484784 /* ManagedObjectProtocols.swift */,
+				B366C7341D54994600484784 /* NSManagedObjectContext+Observers.swift */,
+			);
+			name = ManagedObject;
+			sourceTree = "<group>";
+		};
+		B366C7431D54996C00484784 /* DataProvider */ = {
+			isa = PBXGroup;
+			children = (
+				B366C73B1D54996800484784 /* DataProvider.swift */,
+				B366C73C1D54996800484784 /* DataProviderDelegate.swift */,
+				B366C73D1D54996800484784 /* DataProviderUpdate.swift */,
+				B366C73E1D54996800484784 /* FetchedResultsDataProvider.swift */,
+			);
+			name = DataProvider;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,7 +349,7 @@
 				};
 			};
 			buildConfigurationList = B366C6D61D5497C200484784 /* Build configuration list for PBXProject "WorkoutLog" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -238,9 +373,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B366C72F1D54993300484784 /* Main.storyboard in Resources */,
 				B366C6EC1D5497C200484784 /* LaunchScreen.storyboard in Resources */,
 				B366C6E91D5497C200484784 /* Assets.xcassets in Resources */,
-				B366C6E41D5497C200484784 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,9 +400,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B366C6E71D5497C200484784 /* WorkoutLog.xcdatamodeld in Sources */,
-				B366C6E11D5497C200484784 /* ViewController.swift in Sources */,
+				B366C7261D5498C500484784 /* SetCell.swift in Sources */,
+				B366C7311D54993B00484784 /* HeaderCell.swift in Sources */,
+				B366C73F1D54996800484784 /* DataProvider.swift in Sources */,
+				B366C7351D54994600484784 /* ManagedObjectObserver.swift in Sources */,
+				B366C7131D54987B00484784 /* ConfigurableCell.swift in Sources */,
+				B366C7401D54996800484784 /* DataProviderDelegate.swift in Sources */,
+				B3E07C231D554CE4006D68AE /* WorkoutLog.xcdatamodeld in Sources */,
+				B366C7361D54994600484784 /* ManagedObjectProtocols.swift in Sources */,
+				B366C7241D5498C500484784 /* RoutineHeaderCell.swift in Sources */,
+				B366C7201D5498BB00484784 /* TableViewCell.swift in Sources */,
+				B366C71D1D5498A800484784 /* Routine.swift in Sources */,
+				B396BDA61D549E570014650F /* Workout.swift in Sources */,
+				B366C7191D54989800484784 /* WorkoutsTVC.swift in Sources */,
+				B366C7411D54996800484784 /* DataProviderUpdate.swift in Sources */,
+				B366C72B1D5498DD00484784 /* DataSourceDelegate.swift in Sources */,
 				B366C6DF1D5497C200484784 /* AppDelegate.swift in Sources */,
+				B366C7161D54988900484784 /* ContextExtensions.swift in Sources */,
+				B366C73A1D54995E00484784 /* Utilities.swift in Sources */,
+				B366C7371D54994600484784 /* NSManagedObjectContext+Observers.swift in Sources */,
+				B366C7421D54996800484784 /* FetchedResultsDataProvider.swift in Sources */,
+				B366C7251D5498C500484784 /* RowCell.swift in Sources */,
+				B366C7281D5498CF00484784 /* RoutinesTVC.swift in Sources */,
+				B366C72C1D5498DD00484784 /* TableViewDataSource.swift in Sources */,
+				B366C71A1D54989800484784 /* WorkoutTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,14 +459,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B366C6E21D5497C200484784 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B366C6E31D5497C200484784 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		B366C6EA1D5497C200484784 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -514,6 +662,7 @@
 				B366C7081D5497C200484784 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B366C7091D5497C200484784 /* Build configuration list for PBXNativeTarget "WorkoutLogTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +671,7 @@
 				B366C70B1D5497C200484784 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B366C70C1D5497C200484784 /* Build configuration list for PBXNativeTarget "WorkoutLogUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,16 +680,17 @@
 				B366C70E1D5497C200484784 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		B366C6E51D5497C200484784 /* WorkoutLog.xcdatamodeld */ = {
+		B3E07C211D554CE4006D68AE /* WorkoutLog.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				B366C6E61D5497C200484784 /* WorkoutLog.xcdatamodel */,
+				B3E07C221D554CE4006D68AE /* WorkoutLog.xcdatamodel */,
 			);
-			currentVersion = B366C6E61D5497C200484784 /* WorkoutLog.xcdatamodel */;
+			currentVersion = B3E07C221D554CE4006D68AE /* WorkoutLog.xcdatamodel */;
 			path = WorkoutLog.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
