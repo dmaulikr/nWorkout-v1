@@ -57,7 +57,7 @@ extension TableCell: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "setCell", for: indexPath) as! SetCell
             cell.set = (lift.sets![indexPath.row] as! LSet)
             cell.targetRepsTextField.text = "\(cell.set.targetReps)"
-            cell.weightTextField.text = "\(cell.set.weight)"
+            cell.targetWeightTextField.text = "\(cell.set.weight)"
             return cell
         }
     }

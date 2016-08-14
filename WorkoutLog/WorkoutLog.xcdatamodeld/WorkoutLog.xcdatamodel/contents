@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11209.5" systemVersion="16A270f" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11215.2" systemVersion="16A270f" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Lift" representedClassName="Lift" syncable="YES" codeGenerationType="class">
         <attribute name="expanded" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" defaultValueString="Squat" syncable="YES"/>
-        <relationship name="sets" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="LSet" syncable="YES"/>
+        <relationship name="sets" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="LSet" inverseName="set" inverseEntity="LSet" syncable="YES"/>
+        <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="lifts" inverseEntity="Workout" syncable="YES"/>
     </entity>
     <entity name="LSet" representedClassName="LSet" syncable="YES" codeGenerationType="class">
         <attribute name="targetReps" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="weight" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="set" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Lift" inverseName="sets" inverseEntity="Lift" syncable="YES"/>
     </entity>
     <entity name="Workout" representedClassName="Workout" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="lifts" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Lift" syncable="YES"/>
+        <relationship name="lifts" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Lift" inverseName="workout" inverseEntity="Lift" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Lift" positionX="-45" positionY="27" width="128" height="90"/>
-        <element name="LSet" positionX="-36" positionY="36" width="128" height="75"/>
+        <element name="Lift" positionX="-45" positionY="27" width="128" height="105"/>
+        <element name="LSet" positionX="-36" positionY="36" width="128" height="90"/>
         <element name="Workout" positionX="-63" positionY="-18" width="128" height="90"/>
     </elements>
 </model>
