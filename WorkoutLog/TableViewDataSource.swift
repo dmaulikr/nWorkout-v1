@@ -67,6 +67,7 @@ class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, 
             object.managedObjectContext!.performAndWait {
                 object.managedObjectContext!.delete(object)
             }
+            try! object.managedObjectContext?.save()
         }
     }
 }

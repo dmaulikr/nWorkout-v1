@@ -27,7 +27,7 @@ class WorkoutsTVC: UITableViewController {
         request.fetchBatchSize = 20
         
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        let dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
+        let dataProvider =  FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
         dataSource = TableViewDataSource(tableView: tableView, dataProvider: dataProvider, delegate: self)
     }
     

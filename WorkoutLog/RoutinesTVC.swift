@@ -36,10 +36,12 @@ class RoutinesTVC: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
+        return 0
         return routines.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
         if expanded[section] {
             return routines[section].workoutsAndDays.count + 2
         } else {
@@ -47,34 +49,8 @@ class RoutinesTVC: UITableViewController {
         }
     }
     
-    func setUpHeaderCellFor(_ indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "routineHeaderCell", for: indexPath) as! RoutineHeaderCell
-        let routine = routines[indexPath.section]
-        cell.routineNameTextField.text = routine.name
-        return cell
-    }
-    
-    func setUpAddNewWorkoutCellFor(_ indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "addNewWorkoutCell", for: indexPath)
-        cell.textLabel?.text = "Add workout..."
-        return cell
-    }
-    
-    func setUpWorkoutCellFor(_ indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "workoutCell", for: indexPath)
-        let workoutAndDay = routines[indexPath.section].workoutsAndDays[indexPath.row - 1]
-        cell.textLabel?.text = "\(workoutAndDay.0) on \(workoutAndDay.1)"
-        return cell
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            return setUpHeaderCellFor(indexPath)
-        } else if indexPath.row == routines[indexPath.section].workoutsAndDays.count + 1 {
-            return setUpAddNewWorkoutCellFor(indexPath)
-        } else {
-            return setUpWorkoutCellFor(indexPath)
-        }
+        return UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

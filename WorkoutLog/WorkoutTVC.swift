@@ -22,12 +22,23 @@ class WorkoutTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.allowsSelection = false
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        NotificationCenter.default.addObserver(forName: "setsDidChange" as Notification.Name, object: nil, queue: OperationQueue.main) { notification in
+            let lift = notification.object as! Lift
+            let index = self.workout.lifts!.index(of: lift)
+            let indexPath = IndexPath(row: index, section: 0)
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
     }
     
     
@@ -46,93 +57,47 @@ class WorkoutTVC: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return workout.lifts!.count
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (workout.lifts?[section] as! Lift).expanded {
-            return workout.lifts![section].sets!!.count + 2
-        } else {
-            return 1
-        }
-    }
-    
-    func setUpHeaderCellFor(_ indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "headerCell", for: indexPath) as! HeaderCell
-        let lift = workout.lifts![indexPath.section]
-        cell.nameTextField.text = lift.name
-        return cell
-    }
-    
-    func setUpAddNewSetCellFor(_ indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "addNewRowCell", for: indexPath)
-        cell.textLabel?.text = "Add set..."
-        return cell
-    }
-    
-    func setUpSetCellFor(_ indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "rowCell", for: indexPath) as! SetCell
-        let set = workout.lifts![indexPath.section].sets!![indexPath.row - 1]
-        cell.weightTextField.text = "\(set.weight!)"
-        cell.targetRepsTextField.text = "\(set.targetReps!)"
-        return cell
+        return workout.lifts!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            return setUpHeaderCellFor(indexPath)
-        } else if indexPath.row == workout.lifts![indexPath.section].sets!!.count + 1 {
-            return setUpAddNewSetCellFor(indexPath)
-        } else {
-            return setUpSetCellFor(indexPath)
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TableCell
+        cell.lift = workout.lifts![indexPath.row] as! Lift
+        cell.nameLabel?.text = cell.lift.name!
+        cell.tableView.reloadData()
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let lift = workout.lifts![indexPath.row] as! Lift
+        let setCount = lift.sets!.count
         
+        return CGFloat(82 + (setCount + 1) * 46)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            (workout.lifts![indexPath.section] as! Lift).expanded = !workout.lifts![indexPath.section].expanded
-        } else if indexPath.row == workout.lifts![indexPath.section].sets!!.count + 1 {
-            workout.lifts?[indexPath.section].addToSets(LSet(context: context))
-            try! context.save()
-        }
-        tableView.reloadData()
+        
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.row == 0 || indexPath.row == workout.lifts![indexPath.section].sets!!.count + 1 {
-            return false
-        } else {
-            return true
-        }
+        return false
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            workout.lifts![indexPath.section].removeFromSets(at: indexPath.row - 1)
-            try! context.save()
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            //
-        }
+        
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        let lift = workout.lifts![fromIndexPath.section] as! Lift
-        let from = lift.sets![fromIndexPath.row - 1] as! LSet
-        lift.removeFromSets(at: fromIndexPath.row - 1)
-        lift.insertIntoSets(from, at: to.row - 1)
-        try! context.save()
+        
     }
     
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.row == 0 || indexPath.row == workout.lifts![indexPath.section].sets!!.count + 1 {
-            return false
-        } else {
-            return true
-        }
+        return false
     }
-    
     
     // MARK: - Navigation
     
@@ -141,5 +106,5 @@ class WorkoutTVC: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    
 }
+

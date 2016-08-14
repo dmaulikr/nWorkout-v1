@@ -1,5 +1,8 @@
 import Foundation
 
+public typealias OrderedSet = NSOrderedSet
+
+
 extension Sequence {
     func findFirstOccurence(block: @noescape (Iterator.Element) -> Bool) -> Iterator.Element? {
         for x in self where block(x) {

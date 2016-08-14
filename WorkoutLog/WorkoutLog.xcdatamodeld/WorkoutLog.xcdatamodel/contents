@@ -3,7 +3,7 @@
     <entity name="Lift" representedClassName="Lift" syncable="YES" codeGenerationType="class">
         <attribute name="expanded" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" defaultValueString="Squat" syncable="YES"/>
-        <relationship name="sets" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LSet" syncable="YES"/>
+        <relationship name="sets" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="LSet" syncable="YES"/>
     </entity>
     <entity name="LSet" representedClassName="LSet" syncable="YES" codeGenerationType="class">
         <attribute name="targetReps" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -12,11 +12,11 @@
     <entity name="Workout" representedClassName="Workout" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="lifts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Lift" syncable="YES"/>
+        <relationship name="lifts" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Lift" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Workout" positionX="-63" positionY="-18" width="128" height="90"/>
         <element name="Lift" positionX="-45" positionY="27" width="128" height="90"/>
         <element name="LSet" positionX="-36" positionY="36" width="128" height="75"/>
+        <element name="Workout" positionX="-63" positionY="-18" width="128" height="90"/>
     </elements>
 </model>

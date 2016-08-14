@@ -18,14 +18,11 @@
 		B366C71A1D54989800484784 /* WorkoutTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7181D54989800484784 /* WorkoutTVC.swift */; };
 		B366C71D1D5498A800484784 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C71C1D5498A800484784 /* Routine.swift */; };
 		B366C7201D5498BB00484784 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C71F1D5498BB00484784 /* TableViewCell.swift */; };
-		B366C7241D5498C500484784 /* RoutineHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7211D5498C500484784 /* RoutineHeaderCell.swift */; };
-		B366C7251D5498C500484784 /* RowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7221D5498C500484784 /* RowCell.swift */; };
 		B366C7261D5498C500484784 /* SetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7231D5498C500484784 /* SetCell.swift */; };
 		B366C7281D5498CF00484784 /* RoutinesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7271D5498CF00484784 /* RoutinesTVC.swift */; };
 		B366C72B1D5498DD00484784 /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7291D5498DD00484784 /* DataSourceDelegate.swift */; };
 		B366C72C1D5498DD00484784 /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C72A1D5498DD00484784 /* TableViewDataSource.swift */; };
 		B366C72F1D54993300484784 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B366C72E1D54993300484784 /* Main.storyboard */; };
-		B366C7311D54993B00484784 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7301D54993B00484784 /* HeaderCell.swift */; };
 		B366C7351D54994600484784 /* ManagedObjectObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7321D54994600484784 /* ManagedObjectObserver.swift */; };
 		B366C7361D54994600484784 /* ManagedObjectProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7331D54994600484784 /* ManagedObjectProtocols.swift */; };
 		B366C7371D54994600484784 /* NSManagedObjectContext+Observers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7341D54994600484784 /* NSManagedObjectContext+Observers.swift */; };
@@ -34,8 +31,8 @@
 		B366C7401D54996800484784 /* DataProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C73C1D54996800484784 /* DataProviderDelegate.swift */; };
 		B366C7411D54996800484784 /* DataProviderUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C73D1D54996800484784 /* DataProviderUpdate.swift */; };
 		B366C7421D54996800484784 /* FetchedResultsDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C73E1D54996800484784 /* FetchedResultsDataProvider.swift */; };
-		B396BDA61D549E570014650F /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B396BDA51D549E570014650F /* Workout.swift */; };
 		B3E07C231D554CE4006D68AE /* WorkoutLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B3E07C211D554CE4006D68AE /* WorkoutLog.xcdatamodeld */; };
+		B3E07C271D602AD1006D68AE /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E07C261D602AD1006D68AE /* TableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,14 +70,11 @@
 		B366C7181D54989800484784 /* WorkoutTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTVC.swift; sourceTree = "<group>"; };
 		B366C71C1D5498A800484784 /* Routine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		B366C71F1D5498BB00484784 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
-		B366C7211D5498C500484784 /* RoutineHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineHeaderCell.swift; sourceTree = "<group>"; };
-		B366C7221D5498C500484784 /* RowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowCell.swift; sourceTree = "<group>"; };
 		B366C7231D5498C500484784 /* SetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetCell.swift; sourceTree = "<group>"; };
 		B366C7271D5498CF00484784 /* RoutinesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutinesTVC.swift; sourceTree = "<group>"; };
 		B366C7291D5498DD00484784 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 		B366C72A1D5498DD00484784 /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		B366C72E1D54993300484784 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		B366C7301D54993B00484784 /* HeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderCell.swift; sourceTree = "<group>"; };
 		B366C7321D54994600484784 /* ManagedObjectObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectObserver.swift; sourceTree = "<group>"; };
 		B366C7331D54994600484784 /* ManagedObjectProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectProtocols.swift; sourceTree = "<group>"; };
 		B366C7341D54994600484784 /* NSManagedObjectContext+Observers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Observers.swift"; sourceTree = "<group>"; };
@@ -89,8 +83,8 @@
 		B366C73C1D54996800484784 /* DataProviderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviderDelegate.swift; sourceTree = "<group>"; };
 		B366C73D1D54996800484784 /* DataProviderUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviderUpdate.swift; sourceTree = "<group>"; };
 		B366C73E1D54996800484784 /* FetchedResultsDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsDataProvider.swift; sourceTree = "<group>"; };
-		B396BDA51D549E570014650F /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		B3E07C221D554CE4006D68AE /* WorkoutLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WorkoutLog.xcdatamodel; sourceTree = "<group>"; };
+		B3E07C261D602AD1006D68AE /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,14 +135,11 @@
 		B366C6DD1D5497C200484784 /* WorkoutLog */ = {
 			isa = PBXGroup;
 			children = (
-				B396BDA51D549E570014650F /* Workout.swift */,
-				B366C7431D54996C00484784 /* DataProvider */,
-				B366C7381D54994B00484784 /* ManagedObject */,
+				B366C7111D54986000484784 /* CoreData */,
 				B366C72D1D5498E200484784 /* TableViewDataSource */,
 				B366C71E1D5498AB00484784 /* Model */,
 				B366C71B1D54989C00484784 /* Controller */,
 				B366C7141D54987E00484784 /* Cell */,
-				B366C7111D54986000484784 /* CoreData */,
 				B366C7101D54984E00484784 /* View */,
 				B366C70F1D54983D00484784 /* Other */,
 			);
@@ -187,9 +178,7 @@
 		B366C7101D54984E00484784 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B366C7301D54993B00484784 /* HeaderCell.swift */,
-				B366C7211D5498C500484784 /* RoutineHeaderCell.swift */,
-				B366C7221D5498C500484784 /* RowCell.swift */,
+				B3E07C261D602AD1006D68AE /* TableCell.swift */,
 				B366C7231D5498C500484784 /* SetCell.swift */,
 				B366C72E1D54993300484784 /* Main.storyboard */,
 			);
@@ -199,6 +188,8 @@
 		B366C7111D54986000484784 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				B366C7381D54994B00484784 /* ManagedObject */,
+				B366C7431D54996C00484784 /* DataProvider */,
 				B366C7151D54988900484784 /* ContextExtensions.swift */,
 				B3E07C211D554CE4006D68AE /* WorkoutLog.xcdatamodeld */,
 			);
@@ -217,9 +208,8 @@
 		B366C71B1D54989C00484784 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B366C7271D5498CF00484784 /* RoutinesTVC.swift */,
-				B366C7171D54989800484784 /* WorkoutsTVC.swift */,
-				B366C7181D54989800484784 /* WorkoutTVC.swift */,
+				B3E07C241D602507006D68AE /* Routines */,
+				B3E07C251D60250F006D68AE /* Workouts */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -261,6 +251,23 @@
 				B366C73E1D54996800484784 /* FetchedResultsDataProvider.swift */,
 			);
 			name = DataProvider;
+			sourceTree = "<group>";
+		};
+		B3E07C241D602507006D68AE /* Routines */ = {
+			isa = PBXGroup;
+			children = (
+				B366C7271D5498CF00484784 /* RoutinesTVC.swift */,
+			);
+			name = Routines;
+			sourceTree = "<group>";
+		};
+		B3E07C251D60250F006D68AE /* Workouts */ = {
+			isa = PBXGroup;
+			children = (
+				B366C7171D54989800484784 /* WorkoutsTVC.swift */,
+				B366C7181D54989800484784 /* WorkoutTVC.swift */,
+			);
+			name = Workouts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,17 +408,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B366C7261D5498C500484784 /* SetCell.swift in Sources */,
-				B366C7311D54993B00484784 /* HeaderCell.swift in Sources */,
 				B366C73F1D54996800484784 /* DataProvider.swift in Sources */,
 				B366C7351D54994600484784 /* ManagedObjectObserver.swift in Sources */,
 				B366C7131D54987B00484784 /* ConfigurableCell.swift in Sources */,
 				B366C7401D54996800484784 /* DataProviderDelegate.swift in Sources */,
 				B3E07C231D554CE4006D68AE /* WorkoutLog.xcdatamodeld in Sources */,
 				B366C7361D54994600484784 /* ManagedObjectProtocols.swift in Sources */,
-				B366C7241D5498C500484784 /* RoutineHeaderCell.swift in Sources */,
 				B366C7201D5498BB00484784 /* TableViewCell.swift in Sources */,
 				B366C71D1D5498A800484784 /* Routine.swift in Sources */,
-				B396BDA61D549E570014650F /* Workout.swift in Sources */,
 				B366C7191D54989800484784 /* WorkoutsTVC.swift in Sources */,
 				B366C7411D54996800484784 /* DataProviderUpdate.swift in Sources */,
 				B366C72B1D5498DD00484784 /* DataSourceDelegate.swift in Sources */,
@@ -419,8 +423,8 @@
 				B366C7161D54988900484784 /* ContextExtensions.swift in Sources */,
 				B366C73A1D54995E00484784 /* Utilities.swift in Sources */,
 				B366C7371D54994600484784 /* NSManagedObjectContext+Observers.swift in Sources */,
+				B3E07C271D602AD1006D68AE /* TableCell.swift in Sources */,
 				B366C7421D54996800484784 /* FetchedResultsDataProvider.swift in Sources */,
-				B366C7251D5498C500484784 /* RowCell.swift in Sources */,
 				B366C7281D5498CF00484784 /* RoutinesTVC.swift in Sources */,
 				B366C72C1D5498DD00484784 /* TableViewDataSource.swift in Sources */,
 				B366C71A1D54989800484784 /* WorkoutTVC.swift in Sources */,
