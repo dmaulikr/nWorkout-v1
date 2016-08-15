@@ -23,6 +23,12 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate, T: NSFetchReque
         return sec.numberOfObjects
     }
     
+    func numberOfSections() -> Int {
+        guard let secs = fetchedResultsController.sections else { return 0 }
+        return secs.count
+    }
+    
+    
     // MARK: Private
     
     private let fetchedResultsController: NSFetchedResultsController<T>

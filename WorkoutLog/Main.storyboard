@@ -10,7 +10,7 @@
         <!--Workouts-->
         <scene sceneID="GTj-dn-UOU">
             <objects>
-                <tableViewController id="Zoc-XH-KB5" customClass="CoreDataTVC" customModule="WorkoutLog" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Zoc-XH-KB5" customClass="WorkoutsTVC" customModule="WorkoutLog" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="UOH-gN-PdE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -96,7 +96,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tableCell" rowHeight="281" id="2B2-qm-KgZ" customClass="TableCell" customModule="WorkoutLog" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="liftCell" rowHeight="281" id="2B2-qm-KgZ" customClass="LiftCell" customModule="WorkoutLog" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="281"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="center" tableViewCell="2B2-qm-KgZ" id="lDJ-4h-gnJ">
@@ -525,6 +525,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="XbW-3O-TNn"/>
-        <segue reference="esg-wv-eOx"/>
+        <segue reference="En0-af-MPz"/>
     </inferredMetricsTieBreakers>
 </document>

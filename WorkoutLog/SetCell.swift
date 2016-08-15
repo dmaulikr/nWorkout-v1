@@ -2,8 +2,24 @@ import UIKit
 
 extension SetCell: ConfigurableCell {
     typealias DataSource = LSet
-    func configureForObject(object: LSet) {
-        //
+    func configureForObject(object: LSet, at indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            textLabel?.text = "Add set..."
+            targetWeightTextField.isHidden = true
+            targetRepsTextField.isHidden = true
+            completedWeightTextField.isHidden = true
+            completedRepsTextField.isHidden = true
+            statusButton.isHidden = true
+        } else {
+            textLabel?.text = ""
+            targetWeightTextField.isHidden = false
+            targetRepsTextField.isHidden = false
+            completedWeightTextField.isHidden = false
+            completedRepsTextField.isHidden = false
+            statusButton.isHidden = false
+
+            set = object
+        }
     }
 }
 

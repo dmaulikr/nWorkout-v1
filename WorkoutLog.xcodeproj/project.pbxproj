@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		B30365D31D617A3F0030705E /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D21D617A3F0030705E /* RoutineCell.swift */; };
 		B30365D71D61863C0030705E /* RoutineTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D61D61863C0030705E /* RoutineTVC.swift */; };
-		B30365D91D6194450030705E /* TableCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D81D6194450030705E /* TableCell2.swift */; };
+		B30365D91D6194450030705E /* LiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D81D6194450030705E /* LiftCell.swift */; };
 		B366C6DF1D5497C200484784 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C6DE1D5497C200484784 /* AppDelegate.swift */; };
 		B366C6E91D5497C200484784 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B366C6E81D5497C200484784 /* Assets.xcassets */; };
 		B366C6EC1D5497C200484784 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B366C6EA1D5497C200484784 /* LaunchScreen.storyboard */; };
@@ -38,7 +38,7 @@
 		B3BA3A0B1D606882001C23FB /* SelectWorkoutTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BA3A0A1D606882001C23FB /* SelectWorkoutTVC.swift */; };
 		B3BA3A0D1D606DC1001C23FB /* StatisticsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BA3A0C1D606DC1001C23FB /* StatisticsTVC.swift */; };
 		B3E07C231D554CE4006D68AE /* WorkoutLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B3E07C211D554CE4006D68AE /* WorkoutLog.xcdatamodeld */; };
-		B3E07C271D602AD1006D68AE /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E07C261D602AD1006D68AE /* TableCell.swift */; };
+		B3E07C271D602AD1006D68AE /* OldLiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E07C261D602AD1006D68AE /* OldLiftCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +61,7 @@
 /* Begin PBXFileReference section */
 		B30365D21D617A3F0030705E /* RoutineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
 		B30365D61D61863C0030705E /* RoutineTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineTVC.swift; sourceTree = "<group>"; };
-		B30365D81D6194450030705E /* TableCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell2.swift; sourceTree = "<group>"; };
+		B30365D81D6194450030705E /* LiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiftCell.swift; sourceTree = "<group>"; };
 		B366C6DB1D5497C200484784 /* WorkoutLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B366C6DE1D5497C200484784 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B366C6E81D5497C200484784 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		B3BA3A0A1D606882001C23FB /* SelectWorkoutTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectWorkoutTVC.swift; sourceTree = "<group>"; };
 		B3BA3A0C1D606DC1001C23FB /* StatisticsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsTVC.swift; sourceTree = "<group>"; };
 		B3E07C221D554CE4006D68AE /* WorkoutLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WorkoutLog.xcdatamodel; sourceTree = "<group>"; };
-		B3E07C261D602AD1006D68AE /* TableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
+		B3E07C261D602AD1006D68AE /* OldLiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldLiftCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,8 +192,8 @@
 			children = (
 				B3791F811D614E3E003DD70F /* Keyboard.xib */,
 				B3791F831D614FDD003DD70F /* Keyboard.swift */,
-				B3E07C261D602AD1006D68AE /* TableCell.swift */,
-				B30365D81D6194450030705E /* TableCell2.swift */,
+				B3E07C261D602AD1006D68AE /* OldLiftCell.swift */,
+				B30365D81D6194450030705E /* LiftCell.swift */,
 				B366C7231D5498C500484784 /* SetCell.swift */,
 				B366C72E1D54993300484784 /* Main.storyboard */,
 			);
@@ -445,9 +445,9 @@
 				B366C7161D54988900484784 /* ContextExtensions.swift in Sources */,
 				B366C73A1D54995E00484784 /* Utilities.swift in Sources */,
 				B366C7371D54994600484784 /* NSManagedObjectContext+Observers.swift in Sources */,
-				B3E07C271D602AD1006D68AE /* TableCell.swift in Sources */,
+				B3E07C271D602AD1006D68AE /* OldLiftCell.swift in Sources */,
 				B366C7421D54996800484784 /* FetchedResultsDataProvider.swift in Sources */,
-				B30365D91D6194450030705E /* TableCell2.swift in Sources */,
+				B30365D91D6194450030705E /* LiftCell.swift in Sources */,
 				B366C7281D5498CF00484784 /* RoutinesTVC.swift in Sources */,
 				B3BA3A0D1D606DC1001C23FB /* StatisticsTVC.swift in Sources */,
 				B366C72C1D5498DD00484784 /* TableViewDataSource.swift in Sources */,

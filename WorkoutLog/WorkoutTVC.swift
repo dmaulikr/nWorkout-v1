@@ -20,23 +20,29 @@ class WorkoutTVC: UITableViewController {
         }
     }
     
-    var keyboardView: Keyboard!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsSelection = false
-
-        keyboardView = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         NotificationCenter.default.addObserver(forName: "setsDidChange" as Notification.Name, object: nil, queue: OperationQueue.main) { notification in
             let lift = notification.object as! Lift
             let index = self.workout.lifts!.index(of: lift)
             let indexPath = IndexPath(row: index, section: 0)
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            let cell = self.tableView.cellForRow(at: indexPath)!
+            print(cell)
+            let change: CGFloat = notification.userInfo!["change"] as! String == "add" ? 44 : -44
+            
+            self.tableView.beginUpdates()
+            UIView.animate(withDuration: 0.3) {
+                cell.frame = CGRect(x: cell.frame.origin.x, y: cell.frame.origin.y, width: cell.frame.width, height: cell.frame.height + change)
+            }
+            self.tableView.endUpdates()
+            //            self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
         if navigationController!.viewControllers[1] is SelectWorkoutTVC {
@@ -68,11 +74,10 @@ class WorkoutTVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TableCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "liftCell", for: indexPath) as! LiftCell
         cell.lift = workout.lifts![indexPath.row] as! Lift
         cell.nameLabel?.text = cell.lift.name!
         cell.tableView.reloadData()
-        cell.keyboardView = keyboardView
         return cell
     }
     

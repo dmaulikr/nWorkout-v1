@@ -1,11 +1,11 @@
 import UIKit
 
 class WorkoutsTVDataSource: TableViewDataSource<WorkoutsTVC, FetchedResultsDataProvider<WorkoutsTVC, Workout>, WorkoutCell> {
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let object = dataProvider.object(at: indexPath)
             object.managedObjectContext!.performAndWait {
@@ -17,7 +17,35 @@ class WorkoutsTVDataSource: TableViewDataSource<WorkoutsTVC, FetchedResultsDataP
 }
 
 class RoutinesTVDataSource: TableViewDataSource<RoutinesTVC, FetchedResultsDataProvider<RoutinesTVC, Routine>, RoutineCell> {
+}
+
+class LiftCellTVDataSource: TableViewDataSource<LiftCell, Lift, SetCell> {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        print(indexPath)
+        if indexPath.section == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
     
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            dataProvider.managedObjectContext?.performAndWait {
+                let set = self.dataProvider.sets![indexPath.row] as! LSet
+                self.dataProvider.managedObjectContext?.delete(set)
+                do {
+                    try self.dataProvider.managedObjectContext!.save()
+                } catch let error {
+                    print(error)
+                }
+            }
+            self.tableView.deleteRows(at: [indexPath], with: .none)
+            let notification = Notification(name: "setsDidChange" as Notification.Name, object: self.dataProvider, userInfo: ["change":"delete"])
+            NotificationCenter.default.post(notification)
+        }
+    }
 }
 
 class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, Cell: UITableViewCell where Delegate.Object == DataProv.Object, Cell: ConfigurableCell, Cell.DataSource == DataProv.Object>: NSObject, UITableViewDataSource {
@@ -46,7 +74,7 @@ class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, 
                 tableView.insertRows(at: [indexPath], with: .fade)
             case .update(let indexPath, let object):
                 guard let cell = tableView.cellForRow(at: indexPath) as? Cell else { break }
-                cell.configureForObject(object: object)
+                cell.configureForObject(object: object, at: indexPath)
             case .move(let indexPath, let newIndexPath):
                 tableView.deleteRows(at: [indexPath], with: .fade)
                 tableView.insertRows(at: [newIndexPath], with: .fade)
@@ -65,6 +93,10 @@ class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, 
     
     // MARK: UITableViewDataSource
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return dataProvider.numberOfSections()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataProvider.numberOfItems(inSection: section)
     }
@@ -73,8 +105,15 @@ class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, 
         let object = dataProvider.object(at: indexPath)
         let identifier = delegate.cellIdentifier(for: object)
         guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? Cell else { fatalError("Unexpected cell type at \(indexPath)") }
-        cell.configureForObject(object: object)
+        cell.configureForObject(object: object, at: indexPath)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        //
     }
     
 //    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
