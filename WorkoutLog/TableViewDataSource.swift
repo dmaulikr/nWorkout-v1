@@ -1,7 +1,5 @@
 import UIKit
 
-
-
 class WorkoutsTVDataSource: TableViewDataSource<WorkoutsTVC, FetchedResultsDataProvider<WorkoutsTVC, Workout>, WorkoutCell> {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
