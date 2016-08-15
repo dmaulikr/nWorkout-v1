@@ -43,7 +43,7 @@ class RoutinesTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 0
         if expanded[section] {
-            return routines[section].workoutsAndDays.count + 2
+            return 0
         } else {
             return 1
         }
@@ -54,12 +54,12 @@ class RoutinesTVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            expanded[indexPath.section] = !expanded[indexPath.section]
-        } else if indexPath.row == routines[indexPath.section].workoutsAndDays.count + 1 {
-            routines[indexPath.section].workoutsAndDays.append((Workout(context: context),.monday))
-        }
-        tableView.reloadData()
+//        if indexPath.row == 0 {
+//            expanded[indexPath.section] = !expanded[indexPath.section]
+//        } else if indexPath.row == routines[indexPath.section].workoutsAndDays.count + 1 {
+//            routines[indexPath.section].workoutsAndDays.append((Workout(context: context),.monday))
+//        }
+//        tableView.reloadData()
     }
     
     /*

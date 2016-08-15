@@ -18,7 +18,7 @@ class TableCell: UITableViewCell {
         }
     }
     var lift: Lift!
-    
+    var keyboardView: Keyboard!
 }
 
 extension TableCell: UITableViewDelegate {
@@ -27,7 +27,7 @@ extension TableCell: UITableViewDelegate {
         
         context.performAndWait {
             let newSet = LSet(context: self.context)
-            newSet.weight = 225
+            newSet.targetWeight = 225
             newSet.targetReps = 5
             self.lift.addToSets(newSet)
             try! self.context.save()
@@ -56,8 +56,7 @@ extension TableCell: UITableViewDataSource {
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "setCell", for: indexPath) as! SetCell
             cell.set = (lift.sets![indexPath.row] as! LSet)
-            cell.targetRepsTextField.text = "\(cell.set.targetReps)"
-            cell.targetWeightTextField.text = "\(cell.set.weight)"
+            cell.keyboardView = keyboardView
             return cell
         }
     }

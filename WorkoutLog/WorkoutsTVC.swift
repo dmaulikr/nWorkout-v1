@@ -34,18 +34,13 @@ class WorkoutsTVC: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
-        let wtvc = segue.destination as! WorkoutTVC
         switch segue.identifier! {
         case "viewWorkout":
+            let wtvc = segue.destination as! WorkoutTVC
             guard let workout = dataSource.selectedObject else { fatalError("Showing detail, but no selected row?") }
             wtvc.workout = workout
         case "newWorkout":
-            context.performAndWait {
-                let workout = Workout(context: self.context)
-                workout.date = Date()
-                wtvc.workout = workout
-            }
-            try! context.save()
+            break
         default: fatalError("No segue identifier for \(segue.identifier)")
         }
     }

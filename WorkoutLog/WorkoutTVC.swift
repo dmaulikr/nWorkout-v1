@@ -20,16 +20,15 @@ class WorkoutTVC: UITableViewController {
         }
     }
     
+    var keyboardView: Keyboard!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.allowsSelection = false
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+
+        keyboardView = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -39,6 +38,10 @@ class WorkoutTVC: UITableViewController {
             let indexPath = IndexPath(row: index, section: 0)
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+        
+        if navigationController!.viewControllers[1] is SelectWorkoutTVC {
+            navigationController!.viewControllers.remove(at: 1)
+        }
     }
     
     
@@ -47,7 +50,7 @@ class WorkoutTVC: UITableViewController {
         lift.name = "Squat"
         let set1 = LSet(context: context)
         set1.targetReps = 5
-        set1.weight = 225
+        set1.targetWeight = 225
         lift.sets = [set1]
         workout.addToLifts(lift)
         try! context.save()
@@ -69,6 +72,7 @@ class WorkoutTVC: UITableViewController {
         cell.lift = workout.lifts![indexPath.row] as! Lift
         cell.nameLabel?.text = cell.lift.name!
         cell.tableView.reloadData()
+        cell.keyboardView = keyboardView
         return cell
     }
     
