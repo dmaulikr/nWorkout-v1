@@ -1,6 +1,7 @@
 import UIKit
 import CoreData
 
+
 class WorkoutsTVC: UITableViewController {
     
     lazy var context: NSManagedObjectContext = {
@@ -15,8 +16,8 @@ class WorkoutsTVC: UITableViewController {
     
     // MARK: Private
 
-    private typealias DataProv = FetchedResultsDataProvider<WorkoutsTVC, Workout>
-    private var dataSource: TableViewDataSource<WorkoutsTVC, DataProv, TableViewCell>!
+    private typealias WorkoutDataProv = FetchedResultsDataProvider<WorkoutsTVC, Workout>
+    private var dataSource: WorkoutsTVDataSource!//TableViewDataSource<WorkoutsTVC, WorkoutDataProv, WorkoutCell>!
     
     private func setupTableView() {
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -28,7 +29,7 @@ class WorkoutsTVC: UITableViewController {
         
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         let dataProvider =  FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
-        dataSource = TableViewDataSource(tableView: tableView, dataProvider: dataProvider, delegate: self)
+        dataSource = WorkoutsTVDataSource(tableView: tableView, dataProvider: dataProvider, delegate: self)
     }
     
     // MARK: - Navigation

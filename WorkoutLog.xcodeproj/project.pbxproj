@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B30365D31D617A3F0030705E /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D21D617A3F0030705E /* RoutineCell.swift */; };
+		B30365D71D61863C0030705E /* RoutineTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D61D61863C0030705E /* RoutineTVC.swift */; };
+		B30365D91D6194450030705E /* TableCell2.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D81D6194450030705E /* TableCell2.swift */; };
 		B366C6DF1D5497C200484784 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C6DE1D5497C200484784 /* AppDelegate.swift */; };
 		B366C6E91D5497C200484784 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B366C6E81D5497C200484784 /* Assets.xcassets */; };
 		B366C6EC1D5497C200484784 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B366C6EA1D5497C200484784 /* LaunchScreen.storyboard */; };
@@ -16,7 +19,7 @@
 		B366C7161D54988900484784 /* ContextExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7151D54988900484784 /* ContextExtensions.swift */; };
 		B366C7191D54989800484784 /* WorkoutsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7171D54989800484784 /* WorkoutsTVC.swift */; };
 		B366C71A1D54989800484784 /* WorkoutTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7181D54989800484784 /* WorkoutTVC.swift */; };
-		B366C7201D5498BB00484784 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C71F1D5498BB00484784 /* TableViewCell.swift */; };
+		B366C7201D5498BB00484784 /* WorkoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C71F1D5498BB00484784 /* WorkoutCell.swift */; };
 		B366C7261D5498C500484784 /* SetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7231D5498C500484784 /* SetCell.swift */; };
 		B366C7281D5498CF00484784 /* RoutinesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7271D5498CF00484784 /* RoutinesTVC.swift */; };
 		B366C72B1D5498DD00484784 /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7291D5498DD00484784 /* DataSourceDelegate.swift */; };
@@ -56,6 +59,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B30365D21D617A3F0030705E /* RoutineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
+		B30365D61D61863C0030705E /* RoutineTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineTVC.swift; sourceTree = "<group>"; };
+		B30365D81D6194450030705E /* TableCell2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCell2.swift; sourceTree = "<group>"; };
 		B366C6DB1D5497C200484784 /* WorkoutLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B366C6DE1D5497C200484784 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B366C6E81D5497C200484784 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -71,7 +77,7 @@
 		B366C7151D54988900484784 /* ContextExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextExtensions.swift; sourceTree = "<group>"; };
 		B366C7171D54989800484784 /* WorkoutsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsTVC.swift; sourceTree = "<group>"; };
 		B366C7181D54989800484784 /* WorkoutTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTVC.swift; sourceTree = "<group>"; };
-		B366C71F1D5498BB00484784 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		B366C71F1D5498BB00484784 /* WorkoutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutCell.swift; sourceTree = "<group>"; };
 		B366C7231D5498C500484784 /* SetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetCell.swift; sourceTree = "<group>"; };
 		B366C7271D5498CF00484784 /* RoutinesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutinesTVC.swift; sourceTree = "<group>"; };
 		B366C7291D5498DD00484784 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
@@ -187,6 +193,7 @@
 				B3791F811D614E3E003DD70F /* Keyboard.xib */,
 				B3791F831D614FDD003DD70F /* Keyboard.swift */,
 				B3E07C261D602AD1006D68AE /* TableCell.swift */,
+				B30365D81D6194450030705E /* TableCell2.swift */,
 				B366C7231D5498C500484784 /* SetCell.swift */,
 				B366C72E1D54993300484784 /* Main.storyboard */,
 			);
@@ -207,7 +214,8 @@
 		B366C7141D54987E00484784 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B366C71F1D5498BB00484784 /* TableViewCell.swift */,
+				B366C71F1D5498BB00484784 /* WorkoutCell.swift */,
+				B30365D21D617A3F0030705E /* RoutineCell.swift */,
 				B366C7121D54987B00484784 /* ConfigurableCell.swift */,
 			);
 			name = Cell;
@@ -265,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				B366C7271D5498CF00484784 /* RoutinesTVC.swift */,
+				B30365D61D61863C0030705E /* RoutineTVC.swift */,
 			);
 			name = Routines;
 			sourceTree = "<group>";
@@ -419,23 +428,26 @@
 			files = (
 				B366C7261D5498C500484784 /* SetCell.swift in Sources */,
 				B366C73F1D54996800484784 /* DataProvider.swift in Sources */,
+				B30365D31D617A3F0030705E /* RoutineCell.swift in Sources */,
 				B366C7351D54994600484784 /* ManagedObjectObserver.swift in Sources */,
 				B366C7131D54987B00484784 /* ConfigurableCell.swift in Sources */,
 				B366C7401D54996800484784 /* DataProviderDelegate.swift in Sources */,
 				B3E07C231D554CE4006D68AE /* WorkoutLog.xcdatamodeld in Sources */,
 				B366C7361D54994600484784 /* ManagedObjectProtocols.swift in Sources */,
-				B366C7201D5498BB00484784 /* TableViewCell.swift in Sources */,
+				B366C7201D5498BB00484784 /* WorkoutCell.swift in Sources */,
 				B3BA3A0B1D606882001C23FB /* SelectWorkoutTVC.swift in Sources */,
 				B3791F841D614FDD003DD70F /* Keyboard.swift in Sources */,
 				B366C7191D54989800484784 /* WorkoutsTVC.swift in Sources */,
 				B366C7411D54996800484784 /* DataProviderUpdate.swift in Sources */,
 				B366C72B1D5498DD00484784 /* DataSourceDelegate.swift in Sources */,
+				B30365D71D61863C0030705E /* RoutineTVC.swift in Sources */,
 				B366C6DF1D5497C200484784 /* AppDelegate.swift in Sources */,
 				B366C7161D54988900484784 /* ContextExtensions.swift in Sources */,
 				B366C73A1D54995E00484784 /* Utilities.swift in Sources */,
 				B366C7371D54994600484784 /* NSManagedObjectContext+Observers.swift in Sources */,
 				B3E07C271D602AD1006D68AE /* TableCell.swift in Sources */,
 				B366C7421D54996800484784 /* FetchedResultsDataProvider.swift in Sources */,
+				B30365D91D6194450030705E /* TableCell2.swift in Sources */,
 				B366C7281D5498CF00484784 /* RoutinesTVC.swift in Sources */,
 				B3BA3A0D1D606DC1001C23FB /* StatisticsTVC.swift in Sources */,
 				B366C72C1D5498DD00484784 /* TableViewDataSource.swift in Sources */,

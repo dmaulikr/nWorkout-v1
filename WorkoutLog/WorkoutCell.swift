@@ -1,10 +1,10 @@
 import UIKit
 
-class TableViewCell: UITableViewCell {
+class WorkoutCell: UITableViewCell {
 
 }
 
-extension TableViewCell: ConfigurableCell {
+extension WorkoutCell: ConfigurableCell {
     func configureForObject(object: Workout) {
         textLabel?.text = "\(object.date!)"
     }

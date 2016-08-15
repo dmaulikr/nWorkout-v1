@@ -1,28 +1,55 @@
 import UIKit
 import CoreData
 
+extension Lift: DataProvider {
+    typealias Object = LSet
+    func object(at: IndexPath) -> LSet {
+        return sets!.object(at: at.row) as! LSet
+    }
+    func numberOfItems(inSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        } else {
+            return 0
+        }
+    }
+}
 
-class TableCell: UITableViewCell {
+class TableCell2: UITableViewCell {
+    var lift: Lift!
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            setupTableView()
+            tableView.isScrollEnabled = false
+            dataSource = TableViewDataSource(tableView: tableView, dataProvider: lift, delegate: self)
+        }
+    }
+    
+    func setupTableView() {
+        
+    }
+    var keyboardView: Keyboard!
     
     lazy var context: NSManagedObjectContext = {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         return delegate.persistentContainer.viewContext
     }()
     
-    @IBOutlet weak var nameLabel: UILabel!
-    
-    @IBOutlet weak var tableView: UITableView! {
-        didSet {
-            tableView.delegate = self
-            tableView.dataSource = self
-            tableView.isScrollEnabled = false
-        }
-    }
-    var lift: Lift!
-    var keyboardView: Keyboard!
+    private typealias DataProv = Lift
+    private var dataSource: TableViewDataSource<TableCell2, DataProv, SetCell>!
 }
 
-extension TableCell: UITableViewDelegate {
+extension TableCell2: DataSourceDelegate {
+    typealias Object = LSet
+    func cellIdentifier(for object: LSet) -> String {
+        return ""
+    }
+}
+
+
+extension TableCell2: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         
@@ -33,8 +60,8 @@ extension TableCell: UITableViewDelegate {
             self.lift.addToSets(newSet)
             try! self.context.save()
         }
-//        let path = IndexPath(row: indexPath.row, section: indexPath.section)
-//        tableView.insertRows(at: [path], with: .none)
+        //        let path = IndexPath(row: indexPath.row, section: indexPath.section)
+        //        tableView.insertRows(at: [path], with: .none)
         let notification = Notification(name: "setsDidChange" as Notification.Name, object: self.lift, userInfo: nil)
         NotificationCenter.default.post(notification)
     }
@@ -48,7 +75,7 @@ extension TableCell: UITableViewDelegate {
     }
 }
 
-extension TableCell: UITableViewDataSource {
+extension TableCell2: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == lift!.sets!.count {
             let cell = tableView.dequeueReusableCell(withIdentifier: "addSetCell", for: indexPath)
@@ -90,7 +117,7 @@ extension TableCell: UITableViewDataSource {
                     print(error)
                 }
             }
-//            self.tableView.deleteRows(at: [indexPath], with: .none)
+            //            self.tableView.deleteRows(at: [indexPath], with: .none)
             let notification = Notification(name: "setsDidChange" as Notification.Name, object: self.lift, userInfo: nil)
             NotificationCenter.default.post(notification)
         }

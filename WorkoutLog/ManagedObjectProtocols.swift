@@ -8,6 +8,7 @@ public protocol ManagedObjectType: class, NSFetchRequestResult {
     var managedObjectContext: NSManagedObjectContext? { get }
 }
 
+
 extension ManagedObjectType {
     public static var request: NSFetchRequest<Self> {
         let request = NSFetchRequest<Self>(entityName: entityName)
@@ -40,6 +41,23 @@ extension Lift: ManagedObjectType {
     }
 }
 
+extension Routine: ManagedObjectType {
+    public static var entityName: String {
+        return "Routine"
+    }
+}
+
+extension RoutineLift: ManagedObjectType {
+    public static var entityName: String {
+        return "RoutineLift"
+    }
+}
+
+extension RoutineSet: ManagedObjectType {
+    public static var entityName: String {
+        return "RoutineSet"
+    }
+}
 extension LSet: ManagedObjectType {
     public static var entityName: String {
         return "LSet"

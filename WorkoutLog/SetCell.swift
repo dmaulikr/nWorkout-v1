@@ -1,5 +1,12 @@
 import UIKit
 
+extension SetCell: ConfigurableCell {
+    typealias DataSource = LSet
+    func configureForObject(object: LSet) {
+        //
+    }
+}
+
 class SetCell: UITableViewCell, KeyboardDelegate {
     
     var set: LSet! {

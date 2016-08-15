@@ -1,5 +1,27 @@
 import UIKit
 
+
+
+class WorkoutsTVDataSource: TableViewDataSource<WorkoutsTVC, FetchedResultsDataProvider<WorkoutsTVC, Workout>, WorkoutCell> {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let object = dataProvider.object(at: indexPath)
+            object.managedObjectContext!.performAndWait {
+                object.managedObjectContext!.delete(object)
+            }
+            try! object.managedObjectContext?.save()
+        }
+    }
+}
+
+class RoutinesTVDataSource: TableViewDataSource<RoutinesTVC, FetchedResultsDataProvider<RoutinesTVC, Routine>, RoutineCell> {
+    
+}
+
 class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, Cell: UITableViewCell where Delegate.Object == DataProv.Object, Cell: ConfigurableCell, Cell.DataSource == DataProv.Object>: NSObject, UITableViewDataSource {
     
     
@@ -40,7 +62,7 @@ class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, 
     // MARK: Private
     
     private let tableView: UITableView
-    private let dataProvider: DataProv
+    internal let dataProvider: DataProv
     private weak var delegate: Delegate!
     
     // MARK: UITableViewDataSource
@@ -57,17 +79,18 @@ class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, 
         return cell
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let object = dataProvider.object(at: indexPath)
-            object.managedObjectContext!.performAndWait {
-                object.managedObjectContext!.delete(object)
-            }
-            try! object.managedObjectContext?.save()
-        }
-    }
+//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+//    
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            let object = dataProvider.object(at: indexPath)
+//            object.managedObjectContext!.performAndWait {
+//                object.managedObjectContext!.delete(object)
+//            }
+//            try! object.managedObjectContext?.save()
+//        }
+//    }
 }
+
