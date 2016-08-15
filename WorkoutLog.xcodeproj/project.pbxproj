@@ -10,6 +10,8 @@
 		B30365D31D617A3F0030705E /* RoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D21D617A3F0030705E /* RoutineCell.swift */; };
 		B30365D71D61863C0030705E /* RoutineTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D61D61863C0030705E /* RoutineTVC.swift */; };
 		B30365D91D6194450030705E /* LiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D81D6194450030705E /* LiftCell.swift */; };
+		B30365E01D61B6A50030705E /* RoutineLiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365DF1D61B6A50030705E /* RoutineLiftCell.swift */; };
+		B30365E21D61B6AC0030705E /* RoutineSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365E11D61B6AC0030705E /* RoutineSetCell.swift */; };
 		B366C6DF1D5497C200484784 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C6DE1D5497C200484784 /* AppDelegate.swift */; };
 		B366C6E91D5497C200484784 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B366C6E81D5497C200484784 /* Assets.xcassets */; };
 		B366C6EC1D5497C200484784 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B366C6EA1D5497C200484784 /* LaunchScreen.storyboard */; };
@@ -62,6 +64,8 @@
 		B30365D21D617A3F0030705E /* RoutineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineCell.swift; sourceTree = "<group>"; };
 		B30365D61D61863C0030705E /* RoutineTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineTVC.swift; sourceTree = "<group>"; };
 		B30365D81D6194450030705E /* LiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiftCell.swift; sourceTree = "<group>"; };
+		B30365DF1D61B6A50030705E /* RoutineLiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineLiftCell.swift; sourceTree = "<group>"; };
+		B30365E11D61B6AC0030705E /* RoutineSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineSetCell.swift; sourceTree = "<group>"; };
 		B366C6DB1D5497C200484784 /* WorkoutLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B366C6DE1D5497C200484784 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B366C6E81D5497C200484784 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,6 +128,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B30365DD1D61B6860030705E /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				B366C71F1D5498BB00484784 /* WorkoutCell.swift */,
+				B30365D81D6194450030705E /* LiftCell.swift */,
+				B366C7231D5498C500484784 /* SetCell.swift */,
+			);
+			name = Workout;
+			sourceTree = "<group>";
+		};
+		B30365DE1D61B6920030705E /* Routine */ = {
+			isa = PBXGroup;
+			children = (
+				B30365D21D617A3F0030705E /* RoutineCell.swift */,
+				B30365DF1D61B6A50030705E /* RoutineLiftCell.swift */,
+				B30365E11D61B6AC0030705E /* RoutineSetCell.swift */,
+			);
+			name = Routine;
+			sourceTree = "<group>";
+		};
 		B366C6D21D5497C200484784 = {
 			isa = PBXGroup;
 			children = (
@@ -192,9 +216,6 @@
 			children = (
 				B3791F811D614E3E003DD70F /* Keyboard.xib */,
 				B3791F831D614FDD003DD70F /* Keyboard.swift */,
-				B3E07C261D602AD1006D68AE /* OldLiftCell.swift */,
-				B30365D81D6194450030705E /* LiftCell.swift */,
-				B366C7231D5498C500484784 /* SetCell.swift */,
 				B366C72E1D54993300484784 /* Main.storyboard */,
 			);
 			name = View;
@@ -214,9 +235,10 @@
 		B366C7141D54987E00484784 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B366C71F1D5498BB00484784 /* WorkoutCell.swift */,
-				B30365D21D617A3F0030705E /* RoutineCell.swift */,
 				B366C7121D54987B00484784 /* ConfigurableCell.swift */,
+				B30365DD1D61B6860030705E /* Workout */,
+				B30365DE1D61B6920030705E /* Routine */,
+				B3E07C261D602AD1006D68AE /* OldLiftCell.swift */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -431,6 +453,7 @@
 				B30365D31D617A3F0030705E /* RoutineCell.swift in Sources */,
 				B366C7351D54994600484784 /* ManagedObjectObserver.swift in Sources */,
 				B366C7131D54987B00484784 /* ConfigurableCell.swift in Sources */,
+				B30365E21D61B6AC0030705E /* RoutineSetCell.swift in Sources */,
 				B366C7401D54996800484784 /* DataProviderDelegate.swift in Sources */,
 				B3E07C231D554CE4006D68AE /* WorkoutLog.xcdatamodeld in Sources */,
 				B366C7361D54994600484784 /* ManagedObjectProtocols.swift in Sources */,
@@ -447,6 +470,7 @@
 				B366C7371D54994600484784 /* NSManagedObjectContext+Observers.swift in Sources */,
 				B3E07C271D602AD1006D68AE /* OldLiftCell.swift in Sources */,
 				B366C7421D54996800484784 /* FetchedResultsDataProvider.swift in Sources */,
+				B30365E01D61B6A50030705E /* RoutineLiftCell.swift in Sources */,
 				B30365D91D6194450030705E /* LiftCell.swift in Sources */,
 				B366C7281D5498CF00484784 /* RoutinesTVC.swift in Sources */,
 				B3BA3A0D1D606DC1001C23FB /* StatisticsTVC.swift in Sources */,

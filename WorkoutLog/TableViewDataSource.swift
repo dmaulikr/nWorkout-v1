@@ -48,6 +48,35 @@ class LiftCellTVDataSource: TableViewDataSource<LiftCell, Lift, SetCell> {
     }
 }
 
+class RoutineLiftCellTVDataSource: TableViewDataSource<RoutineLiftCell, RoutineLift, RoutineSetCell> {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        print(indexPath)
+        if indexPath.section == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            dataProvider.managedObjectContext?.performAndWait {
+                let set = self.dataProvider.sets![indexPath.row] as! LSet
+                self.dataProvider.managedObjectContext?.delete(set)
+                do {
+                    try self.dataProvider.managedObjectContext!.save()
+                } catch let error {
+                    print(error)
+                }
+            }
+            self.tableView.deleteRows(at: [indexPath], with: .none)
+            let notification = Notification(name: "setsDidChange" as Notification.Name, object: self.dataProvider, userInfo: ["change":"delete"])
+            NotificationCenter.default.post(notification)
+        }
+    }
+}
+
 class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, Cell: UITableViewCell where Delegate.Object == DataProv.Object, Cell: ConfigurableCell, Cell.DataSource == DataProv.Object>: NSObject, UITableViewDataSource {
     
     

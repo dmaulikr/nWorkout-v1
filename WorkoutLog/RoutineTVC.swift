@@ -64,13 +64,10 @@ class RoutineTVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = routine.name!
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TableCell
-//        cell.lift = routine.lifts![indexPath.row] as! RoutineLift
-//        cell.nameLabel?.text = cell.lift.name!
-//        cell.tableView.reloadData()
-//        cell.keyboardView = keyboardView
+        let cell = tableView.dequeueReusableCell(withIdentifier: "routineLiftCell", for: indexPath) as! RoutineLiftCell
+        cell.lift = routine.lifts![indexPath.row] as! RoutineLift
+        cell.nameLabel?.text = cell.lift.name!
+
         return cell
     }
     

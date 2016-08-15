@@ -77,7 +77,7 @@ class WorkoutTVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "liftCell", for: indexPath) as! LiftCell
         cell.lift = workout.lifts![indexPath.row] as! Lift
         cell.nameLabel?.text = cell.lift.name!
-        cell.tableView.reloadData()
+//        cell.tableView.reloadData()
         return cell
     }
     
