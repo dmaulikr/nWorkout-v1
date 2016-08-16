@@ -15,7 +15,7 @@ class RoutinesTVC: UITableViewController {
     
     // MARK: Private
     private typealias RoutineDataProv = FetchedResultsDataProvider<RoutinesTVC, Routine>
-    private var dataSource: RoutinesTVDataSource! //TableViewDataSource<RoutinesTVC, RoutineDataProv, RoutineCell>!
+    internal var dataSource: RoutinesTVDataSource! //TableViewDataSource<RoutinesTVC, RoutineDataProv, RoutineCell>!
     
     private func setupTableView() {
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -29,8 +29,7 @@ class RoutinesTVC: UITableViewController {
         dataSource = RoutinesTVDataSource(tableView: tableView, dataProvider: dataProvider, delegate: self)
     }
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let rtvc = segue.destination as! RoutineTVC
         switch segue.identifier! {
         case "showRoutine":

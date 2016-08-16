@@ -66,7 +66,7 @@ extension LiftCell: UITableViewDelegate {
         }
         let path = IndexPath(row: lift.sets!.count - 1, section: 0)
         tableView.insertRows(at: [path], with: .automatic)
-        let notification = Notification(name: "setsDidChange" as Notification.Name, object: self.lift, userInfo: ["change":"add"])
+        let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.lift, userInfo: ["change":"add"])
         NotificationCenter.default.post(notification)
     }
     

@@ -29,7 +29,7 @@ class WorkoutTVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        NotificationCenter.default.addObserver(forName: "setsDidChange" as Notification.Name, object: nil, queue: OperationQueue.main) { notification in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "setsDidChange"), object: nil, queue: OperationQueue.main) { notification in
             let lift = notification.object as! Lift
             let index = self.workout.lifts!.index(of: lift)
             let indexPath = IndexPath(row: index, section: 0)
@@ -111,7 +111,7 @@ class WorkoutTVC: UITableViewController {
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }

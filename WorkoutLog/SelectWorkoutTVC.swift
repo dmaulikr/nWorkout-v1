@@ -15,12 +15,11 @@ class SelectWorkoutTVC: UITableViewController {
     }
 
     // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {        
         let wtvc = segue.destination as! WorkoutTVC
         context.performAndWait {
             let workout = Workout(context: self.context)
-            workout.date = Date()
+            workout.date = NSDate()
             wtvc.workout = workout
         }
         try! context.save()

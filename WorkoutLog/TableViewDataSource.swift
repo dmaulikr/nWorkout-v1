@@ -41,8 +41,8 @@ class LiftCellTVDataSource: TableViewDataSource<LiftCell, Lift, SetCell> {
                     print(error)
                 }
             }
-            self.tableView.deleteRows(at: [indexPath], with: .none)
-            let notification = Notification(name: "setsDidChange" as Notification.Name, object: self.dataProvider, userInfo: ["change":"delete"])
+            tableView.deleteRows(at: [indexPath], with: .none)
+            let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.dataProvider, userInfo: ["change":"delete"])
             NotificationCenter.default.post(notification)
         }
     }
@@ -70,14 +70,14 @@ class RoutineLiftCellTVDataSource: TableViewDataSource<RoutineLiftCell, RoutineL
                     print(error)
                 }
             }
-            self.tableView.deleteRows(at: [indexPath], with: .none)
-            let notification = Notification(name: "setsDidChange" as Notification.Name, object: self.dataProvider, userInfo: ["change":"delete"])
+            tableView.deleteRows(at: [indexPath], with: .none)
+            let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.dataProvider, userInfo: ["change":"delete"])
             NotificationCenter.default.post(notification)
         }
     }
 }
 
-class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, Cell: UITableViewCell where Delegate.Object == DataProv.Object, Cell: ConfigurableCell, Cell.DataSource == DataProv.Object>: NSObject, UITableViewDataSource {
+class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, Cell: UITableViewCell>: NSObject, UITableViewDataSource where Delegate.Object == DataProv.Object, Cell: ConfigurableCell, Cell.DataSource == DataProv.Object {
     
     
     required init(tableView: UITableView, dataProvider: DataProv, delegate: Delegate) {

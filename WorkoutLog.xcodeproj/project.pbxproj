@@ -171,9 +171,9 @@
 		B366C6DD1D5497C200484784 /* WorkoutLog */ = {
 			isa = PBXGroup;
 			children = (
+				B366C7391D54995E00484784 /* Utilities.swift */,
 				B366C7111D54986000484784 /* CoreData */,
 				B366C72D1D5498E200484784 /* TableViewDataSource */,
-				B366C71E1D5498AB00484784 /* Model */,
 				B366C71B1D54989C00484784 /* Controller */,
 				B366C7141D54987E00484784 /* Cell */,
 				B366C7101D54984E00484784 /* View */,
@@ -224,10 +224,10 @@
 		B366C7111D54986000484784 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				B366C7381D54994B00484784 /* ManagedObject */,
-				B366C7431D54996C00484784 /* DataProvider */,
 				B366C7151D54988900484784 /* ContextExtensions.swift */,
 				B3E07C211D554CE4006D68AE /* WorkoutLog.xcdatamodeld */,
+				B366C7381D54994B00484784 /* ManagedObject */,
+				B366C7431D54996C00484784 /* DataProvider */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -253,13 +253,6 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		B366C71E1D5498AB00484784 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
 		B366C72D1D5498E200484784 /* TableViewDataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,7 +265,6 @@
 		B366C7381D54994B00484784 /* ManagedObject */ = {
 			isa = PBXGroup;
 			children = (
-				B366C7391D54995E00484784 /* Utilities.swift */,
 				B366C7321D54994600484784 /* ManagedObjectObserver.swift */,
 				B366C7331D54994600484784 /* ManagedObjectProtocols.swift */,
 				B366C7341D54994600484784 /* NSManagedObjectContext+Observers.swift */,

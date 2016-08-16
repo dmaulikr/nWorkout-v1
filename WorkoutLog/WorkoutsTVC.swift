@@ -17,7 +17,7 @@ class WorkoutsTVC: UITableViewController {
     // MARK: Private
 
     private typealias WorkoutDataProv = FetchedResultsDataProvider<WorkoutsTVC, Workout>
-    private var dataSource: WorkoutsTVDataSource!//TableViewDataSource<WorkoutsTVC, WorkoutDataProv, WorkoutCell>!
+    internal var dataSource: WorkoutsTVDataSource!//TableViewDataSource<WorkoutsTVC, WorkoutDataProv, WorkoutCell>!
     
     private func setupTableView() {
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -34,7 +34,7 @@ class WorkoutsTVC: UITableViewController {
     
     // MARK: - Navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
         case "viewWorkout":
             let wtvc = segue.destination as! WorkoutTVC

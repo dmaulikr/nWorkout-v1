@@ -4,22 +4,22 @@ public typealias OrderedSet = NSOrderedSet
 
 
 extension Sequence {
-    func findFirstOccurence(block: @noescape (Iterator.Element) -> Bool) -> Iterator.Element? {
+    func findFirstOccurence(block: (Iterator.Element) -> Bool) -> Iterator.Element? {
         for x in self where block(x) {
             return x
         }
         return nil
     }
     
-    func some(block: @noescape (Iterator.Element) -> Bool) -> Bool {
+    func some(block: (Iterator.Element) -> Bool) -> Bool {
         return findFirstOccurence(block: block) != nil
     }
     
-    func all(block: @noescape (Iterator.Element) -> Bool) -> Bool {
+    func all(block: (Iterator.Element) -> Bool) -> Bool {
         return findFirstOccurence { !block($0) } == nil
     }
     
-    func asyncForEachWithCompletion(completion: () -> (), block: @noescape (Iterator.Element, () -> ()) -> ()) {
+    func asyncForEachWithCompletion(completion: @escaping () -> (), block: (Iterator.Element, () -> ()) -> ()) {
         let group = DispatchGroup()
         let innerCompletion = { group.leave() }
         for x in self {

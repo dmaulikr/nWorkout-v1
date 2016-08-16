@@ -10,7 +10,7 @@ extension NSManagedObjectContext {
             return false
         }
     }
-    public func performChanges(block: () -> ()) {
+    public func performChanges(block: @escaping () -> ()) {
         perform {
             block()
             let _ = self.saveOrRollback()

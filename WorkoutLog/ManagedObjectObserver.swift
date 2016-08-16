@@ -6,9 +6,9 @@ public final class ManagedObjectObserver {
         case update
     }
     
-    public init?(object: ManagedObjectType, changeHandler: (ChangeType) -> ()) {
+    public init?(object: ManagedObjectType, changeHandler: @escaping (ChangeType) -> ()) {
         guard let moc = object.managedObjectContext else { return nil }
-        objectHasBeenDeleted = !(object.dynamicType.defaultPredicate.evaluate(with: object))
+        objectHasBeenDeleted = !(type(of: object).defaultPredicate.evaluate(with: object))
         token = moc.addObjectsDidChangeNotificationObserver { [unowned self] note in
             guard let changeType = self.changeTypeOfObject(object: object, inNotification: note) else { return }
             self.objectHasBeenDeleted = changeType == .delete

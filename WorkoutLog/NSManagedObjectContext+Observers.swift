@@ -2,7 +2,7 @@ import CoreData
 
 public struct ObjectsDidChangeNotification {
     init(note: NSNotification) {
-        assert(note.name == "NSManagedObjectContextObjectsDidChangeNotification" as NSNotification.Name)
+        assert(note.name == NSNotification.Name(rawValue:"NSManagedObjectContextObjectsDidChangeNotification"))
         notification = note
     }
     
@@ -45,10 +45,10 @@ public struct ObjectsDidChangeNotification {
 
 
 extension NSManagedObjectContext {
-    public func addObjectsDidChangeNotificationObserver(handler: (ObjectsDidChangeNotification) -> ()) -> NSObjectProtocol {
+    public func addObjectsDidChangeNotificationObserver(handler: @escaping (ObjectsDidChangeNotification) -> ()) -> NSObjectProtocol {
         let nc = NotificationCenter.default
         return nc.addObserver(forName: Notification.Name(rawValue: "NSManagedObjectContextObjectsDidChangeNotification"), object: self, queue: nil) { note in
-            let wrappedNote = ObjectsDidChangeNotification(note: note)
+            let wrappedNote = ObjectsDidChangeNotification(note: note as NSNotification)
             handler(wrappedNote)
         }
     }
