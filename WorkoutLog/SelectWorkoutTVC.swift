@@ -3,23 +3,22 @@ import CoreData
 
 class SelectWorkoutTVC: TVCWithContext {
     
-    var routines: [Routine] = []
+    var frc: NSFetchedResultsController<Routine>!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        let request = Routine.request
+        request.returnsObjectsAsFaults = false
+        request.fetchBatchSize = 20
+        
+        frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        try! frc.performFetch()
     }
-    
-//    let dataSource = TableViewDataSource(tableView: tableView, dataProvider: routines, delegate: self)
 }
 
-//extension SelectWorkoutTVC: DataSourceDelegate {
-//    func cellIdentifier(for object: Routine) -> String {
-//        return "cell"
-//    }
-//    func cellIdentifierForRegistration(for cell: BaseConfigurableCell<Routine>) -> String {
-//        return "cell"
-//    }
-//}
+
 
 // MARK: UITableViewDataSource
 extension SelectWorkoutTVC {
@@ -30,7 +29,7 @@ extension SelectWorkoutTVC {
         if section == 0 {
             return 1
         } else {
-            return routines.count
+            return frc.sections![0].numberOfObjects
         }
     }
     
@@ -39,7 +38,7 @@ extension SelectWorkoutTVC {
         if indexPath.section == 0 {
             cell.textLabel?.text = "Blank workout"
         } else {
-            cell.textLabel?.text = routines[indexPath.row].name
+            cell.textLabel?.text = frc.fetchedObjects![indexPath.row].name
         }
         return cell
     }
@@ -61,8 +60,15 @@ extension SelectWorkoutTVC {
                 }
             }
         case (let row, 1):
-            //TODO: Make sure to do this...
-            print(row)
+            context.performAndWait {
+                wtvc.source = self.frc.fetchedObjects![row].toWorkout()
+                wtvc.source.date = NSDate()
+                do {
+                    try self.context.save()
+                } catch {
+                    print(error)
+                }
+            }
         default:
             assertionFailure("shouldn't happen")
         }

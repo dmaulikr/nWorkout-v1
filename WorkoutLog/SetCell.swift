@@ -38,7 +38,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         targetRepsTextField = UITextField()
         completedWeightTextField = UITextField()
         completedRepsTextField = UITextField()
-        textFields += [targetWeightTextField, targetRepsTextField, completedRepsTextField, completedRepsTextField]
+        textFields += [targetWeightTextField, targetRepsTextField, completedWeightTextField, completedRepsTextField]
         statusButton = SetStatusButton(type: .system)
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -217,7 +217,7 @@ extension SetCell: UITextFieldDelegate {
             currentlyEditing = nil
         }
         
-        let value = Int(textField.text!)!
+        let value = Int(textField.text!) ?? 0
         switch textField {
         case self.targetWeightTextField:
             self.targetWeight = value

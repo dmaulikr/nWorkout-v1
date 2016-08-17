@@ -73,7 +73,7 @@ class RoutineLiftCell: CellWithTableView<RoutineLift, RoutineSet, RoutineSetCell
         tableView.frame = CGRect(x: x, y: y, width: width, height: height + 45)
         
         tableView.insertRows(at: [path], with: .automatic)
-        let notification = Notification(name: Notification.Name(rawValue:"subTVCellDidChange"), object: source, userInfo: ["change":"add"])
+        let notification = Notification(name: Notification.Name(rawValue:"routineSetChanged"), object: source, userInfo: ["change":"add"])
         NotificationCenter.default.post(notification)
     }
     
@@ -96,7 +96,7 @@ class RoutineLiftCell: CellWithTableView<RoutineLift, RoutineSet, RoutineSetCell
         
         if editingStyle == .delete {
             dataSource.dataProvider.managedObjectContext?.performAndWait {
-                let set = self.dataSource.dataProvider.sets![indexPath.row] as! LSet
+                let set = self.dataSource.dataProvider.sets![indexPath.row] as! RoutineSet
                 self.dataSource.dataProvider.managedObjectContext?.delete(set)
                 do {
                     try self.dataSource.dataProvider.managedObjectContext!.save()
@@ -105,7 +105,13 @@ class RoutineLiftCell: CellWithTableView<RoutineLift, RoutineSet, RoutineSetCell
                 }
             }
             tableView.deleteRows(at: [indexPath], with: .none)
-            let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.dataSource.dataProvider, userInfo: ["change":"delete"])
+            let frame = tableView.frame
+            let height = frame.height
+            let width = frame.width
+            let x = frame.origin.x
+            let y = frame.origin.y
+            tableView.frame = CGRect(x: x, y: y, width: width, height: height - 45)
+            let notification = Notification(name: Notification.Name(rawValue:"routineSetChanged"), object: source, userInfo: ["change":"delete"])
             NotificationCenter.default.post(notification)
         }
     }

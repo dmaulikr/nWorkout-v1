@@ -46,6 +46,8 @@ class WorkoutTVC: TVCWithTableViewInCells<Workout, Lift, LiftCell> {
         if navigationController!.viewControllers[1] is SelectWorkoutTVC {
             navigationController!.viewControllers.remove(at: 1)
         }
+        
+        observeNotification(named: "setChanged")
     }
     
     override func cellIdentifier(for object: Lift) -> String {

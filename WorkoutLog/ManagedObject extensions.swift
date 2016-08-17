@@ -20,17 +20,42 @@ extension Routine: ManagedObjectType {
     public static var entityName: String {
         return "Routine"
     }
+    
+    func toWorkout() -> Workout {
+        let workout = Workout(context: managedObjectContext!)
+        let lfts = lifts!.map { ($0 as! RoutineLift).toLift() }
+        for lift in lfts {
+            workout.addToLifts(lift)
+        }
+        return workout
+    }
 }
 
 extension RoutineLift: ManagedObjectType {
     public static var entityName: String {
         return "RoutineLift"
     }
+    
+    func toLift() -> Lift {
+        let lift = Lift(context: managedObjectContext!)
+        let sts = sets!.map { ($0 as! RoutineSet).toSet() }
+        for set in sts {
+            lift.addToSets(set)
+        }
+        return lift
+    }
 }
 
 extension RoutineSet: ManagedObjectType {
     public static var entityName: String {
         return "RoutineSet"
+    }
+    
+    func toSet() -> LSet {
+        let lSet = LSet(context: managedObjectContext!)
+        lSet.targetWeight = weight
+        lSet.targetReps = reps
+        return lSet
     }
 }
 extension LSet: ManagedObjectType {

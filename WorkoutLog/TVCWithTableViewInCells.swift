@@ -5,7 +5,7 @@ import CoreData
 class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext where Type: ManagedObjectType, Source: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider {
     
     private var observer: ManagedObjectObserver?
-
+    
     var source: Source! {
         didSet {
             observer = ManagedObjectObserver(object: source) { [unowned self] type in
@@ -24,7 +24,7 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
         super.viewDidLoad()
         setUpTableView()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))
     }
     
     private func setUpTableView() {
@@ -33,10 +33,8 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
         dataSource = TableViewDataSource(tableView: tableView, dataProvider: source, delegate: self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "subTVCellDidChange"), object: nil, queue: OperationQueue.main) { notification in
+    func observeNotification(named name: String) {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: name), object: nil, queue: OperationQueue.main) { notification in
             let type = notification.object as! Type
             let indexPath = self.source.index(of: type)
             let cell = self.tableView.cellForRow(at: indexPath)!
@@ -49,6 +47,12 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
             self.tableView.endUpdates()
             //            self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func addButtonTapped() {

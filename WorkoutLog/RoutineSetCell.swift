@@ -129,7 +129,7 @@ extension RoutineSetCell: UITextFieldDelegate {
             currentlyEditing = nil
         }
         
-        let value = Int(textField.text!)!
+        let value = Int(textField.text!) ?? 0
         switch textField {
         case self.weightTextField:
             self.weight = value

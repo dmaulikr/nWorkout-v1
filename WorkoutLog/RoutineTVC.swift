@@ -40,6 +40,11 @@ class RoutineTVC: TVCWithTableViewInCells<Routine, RoutineLift, RoutineLiftCell>
         return "New Lift"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)        
+        observeNotification(named: "routineSetChanged")
+    }
+    
     override func cellIdentifier(for object: RoutineLift) -> String {
         return "routineLiftCell"
     }
