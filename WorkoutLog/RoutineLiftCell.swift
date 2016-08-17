@@ -2,7 +2,7 @@ import UIKit
 import CoreData
 
 extension RoutineLift: DataProvider {
-    typealias Object = RoutineSet
+
     func object(at: IndexPath) -> RoutineSet {
         return sets!.object(at: at.row) as! RoutineSet
     }
@@ -19,58 +19,41 @@ extension RoutineLift: DataProvider {
     }
 }
 
-class RoutineLiftCell: UITableViewCell {
-    var lift: RoutineLift! {
-        didSet {
-            dataSource = RoutineLiftCellTVDataSource(tableView: tableView, dataProvider: lift, delegate: self)
-        }
-    }
-    @IBOutlet weak var nameLabel: UILabel!
+class RoutineLiftCell: CellWithTableView<RoutineSet, RoutineSetCell, RoutineLift> {
+    var nameLabel: UILabel!
     
-    @IBOutlet weak var tableView: UITableView! {
+    override var tableView: UITableView! {
         didSet {
-            tableView.isScrollEnabled = false
             tableView.delegate = self
-            tableView.allowsMultipleSelectionDuringEditing = false
         }
     }
-    
-    lazy var context: NSManagedObjectContext = {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        return delegate.persistentContainer.viewContext
-    }()
-    
-    private var dataSource: RoutineLiftCellTVDataSource!
-}
 
-extension RoutineLiftCell: DataSourceDelegate {
-    typealias Object = RoutineSet
-    func cellIdentifier(for object: RoutineSet) -> String {
+    override func cellIdentifier(for object: RoutineSet) -> String {
         return "routineSetCell"
     }
-}
+    override func cellIdentifierForRegistration(for cell: RoutineSetCell.Type) -> String {
+        return "routineSetCell"
+    }
 
-
-extension RoutineLiftCell: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         
         context.performAndWait {
             let newSet = RoutineSet(context: self.context)
-            newSet.weight = (self.lift.sets?.lastObject as? RoutineSet)?.weight ?? 0
-            newSet.reps = (self.lift.sets?.lastObject as? RoutineSet)?.reps ?? 0
+            newSet.weight = (self.source.sets?.lastObject as? RoutineSet)?.weight ?? 0
+            newSet.reps = (self.source.sets?.lastObject as? RoutineSet)?.reps ?? 0
             
-            self.lift.addToSets(newSet)
+            self.source.addToSets(newSet)
             try! self.context.save()
         }
-        let path = IndexPath(row: lift.sets!.count - 1, section: 0)
+        let path = IndexPath(row: source.sets!.count - 1, section: 0)
         tableView.insertRows(at: [path], with: .automatic)
-        let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.lift, userInfo: ["change":"add"])
+        let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: source, userInfo: ["change":"add"])
         NotificationCenter.default.post(notification)
     }
     
-    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    @objc(tableView:willSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if indexPath.section == 1 {
             return indexPath
         } else {
@@ -79,3 +62,4 @@ extension RoutineLiftCell: UITableViewDelegate {
     }
 }
 
+extension RoutineLiftCell: UITableViewDelegate { }

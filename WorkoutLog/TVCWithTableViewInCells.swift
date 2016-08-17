@@ -2,12 +2,22 @@ import UIKit
 import CoreData
 
 
-class WorkoutTVC: TVCWithContext {
+class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext where Type: ManagedObjectType, Source: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type {
     
     private var observer: ManagedObjectObserver?
-    var workout: Workout! {
+    
+    init(source: Source) {
+        self.source = source
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    var source: Source {
         didSet {
-            observer = ManagedObjectObserver(object: workout) { [unowned self] type in
+            observer = ManagedObjectObserver(object: source) { [unowned self] type in
                 guard type == .delete else { return }
                 let _ = self.navigationController?.popViewController(animated: true)
             }
@@ -18,20 +28,18 @@ class WorkoutTVC: TVCWithContext {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.allowsSelection = false
+        tableView.allowseSelection = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "setsDidChange"), object: nil, queue: OperationQueue.main) { notification in
-            let lift = notification.object as! Lift
-            let index = self.workout.lifts!.index(of: lift)
-            let indexPath = IndexPath(row: index, section: 0)
+            let type = notification.object as! Type
+            let indexPath = self.source.index(of: type)
             let cell = self.tableView.cellForRow(at: indexPath)!
-            print(cell)
             let change: CGFloat = notification.userInfo!["change"] as! String == "add" ? 44 : -44
-            
+            //TODO: This sould not be a number.
             self.tableView.beginUpdates()
             UIView.animate(withDuration: 0.3) {
                 cell.frame = CGRect(x: cell.frame.origin.x, y: cell.frame.origin.y, width: cell.frame.width, height: cell.frame.height + change)
@@ -46,34 +54,19 @@ class WorkoutTVC: TVCWithContext {
     }
     
     
-    @IBAction func addLiftButtonTapped(_ sender: UIBarButtonItem) {
-        let lift = Lift(context: context)
-        lift.name = "Squat"
-        let set1 = LSet(context: context)
-        set1.targetReps = 5
-        set1.targetWeight = 225
-        lift.sets = [set1]
-        workout.addToLifts(lift)
-        try! context.save()
-        tableView.reloadData()
-    }
+//    @IBAction func addLiftButtonTapped(_ sender: UIBarButtonItem) {
+//        let lift = Lift(context: context)
+//        lift.name = "Squat"
+//        let set1 = LSet(context: context)
+//        set1.targetReps = 5
+//        set1.targetWeight = 225
+//        lift.sets = [set1]
+//        workout.addToLifts(lift)
+//        try! context.save()
+//        tableView.reloadData()
+//    }
     
-    // MARK: - Table view data source
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return workout.lifts!.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "liftCell", for: indexPath) as! LiftCell
-        cell.source = workout.lifts![indexPath.row] as! Lift
-        cell.nameLabel?.text = cell.source.name!
-        return cell
-    }
+    internal var dataSource: TableViewDataSource<TVCWithTableViewInCells, Source, Cell>!
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let lift = workout.lifts![indexPath.row] as! Lift

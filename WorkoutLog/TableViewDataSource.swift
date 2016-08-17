@@ -1,81 +1,81 @@
 import UIKit
 
-class WorkoutsTVDataSource: TableViewDataSource<WorkoutsTVC, FetchedResultsDataProvider<WorkoutsTVC, Workout>, WorkoutCell> {
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let object = dataProvider.object(at: indexPath)
-            object.managedObjectContext!.performAndWait {
-                object.managedObjectContext!.delete(object)
-            }
-            try! object.managedObjectContext?.save()
-        }
-    }
-}
-
-class RoutinesTVDataSource: TableViewDataSource<RoutinesTVC, FetchedResultsDataProvider<RoutinesTVC, Routine>, RoutineCell> {
-}
-
-class LiftCellTVDataSource: TableViewDataSource<LiftCell, Lift, SetCell> {
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        print(indexPath)
-        if indexPath.section == 0 {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            dataProvider.managedObjectContext?.performAndWait {
-                let set = self.dataProvider.sets![indexPath.row] as! LSet
-                self.dataProvider.managedObjectContext?.delete(set)
-                do {
-                    try self.dataProvider.managedObjectContext!.save()
-                } catch let error {
-                    print(error)
-                }
-            }
-            tableView.deleteRows(at: [indexPath], with: .none)
-            let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.dataProvider, userInfo: ["change":"delete"])
-            NotificationCenter.default.post(notification)
-        }
-    }
-}
-
-class RoutineLiftCellTVDataSource: TableViewDataSource<RoutineLiftCell, RoutineLift, RoutineSetCell> {
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        print(indexPath)
-        if indexPath.section == 0 {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete {
-            dataProvider.managedObjectContext?.performAndWait {
-                let set = self.dataProvider.sets![indexPath.row] as! LSet
-                self.dataProvider.managedObjectContext?.delete(set)
-                do {
-                    try self.dataProvider.managedObjectContext!.save()
-                } catch let error {
-                    print(error)
-                }
-            }
-            tableView.deleteRows(at: [indexPath], with: .none)
-            let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.dataProvider, userInfo: ["change":"delete"])
-            NotificationCenter.default.post(notification)
-        }
-    }
-}
+//class WorkoutsTVDataSource: TableViewDataSource<WorkoutsTVC, FetchedResultsDataProvider<WorkoutsTVC>, WorkoutCell> {
+//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        return true
+//    }
+//    
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            let object = dataProvider.object(at: indexPath)
+//            object.managedObjectContext!.performAndWait {
+//                object.managedObjectContext!.delete(object)
+//            }
+//            try! object.managedObjectContext?.save()
+//        }
+//    }
+//}
+//
+//class RoutinesTVDataSource: TableViewDataSource<RoutinesTVC, FetchedResultsDataProvider<RoutinesTVC>, RoutineCell> {
+//}
+//
+//class LiftCellTVDataSource: TableViewDataSource<LiftCell, Lift, SetCell> {
+//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        print(indexPath)
+//        if indexPath.section == 0 {
+//            return true
+//        } else {
+//            return false
+//        }
+//    }
+//    
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        
+//        if editingStyle == .delete {
+//            dataProvider.managedObjectContext?.performAndWait {
+//                let set = self.dataProvider.sets![indexPath.row] as! LSet
+//                self.dataProvider.managedObjectContext?.delete(set)
+//                do {
+//                    try self.dataProvider.managedObjectContext!.save()
+//                } catch let error {
+//                    print(error)
+//                }
+//            }
+//            tableView.deleteRows(at: [indexPath], with: .none)
+//            let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.dataProvider, userInfo: ["change":"delete"])
+//            NotificationCenter.default.post(notification)
+//        }
+//    }
+//}
+//
+//class RoutineLiftCellTVDataSource: TableViewDataSource<RoutineLiftCell, RoutineLift, RoutineSetCell> {
+//    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        print(indexPath)
+//        if indexPath.section == 0 {
+//            return true
+//        } else {
+//            return false
+//        }
+//    }
+//    
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        
+//        if editingStyle == .delete {
+//            dataProvider.managedObjectContext?.performAndWait {
+//                let set = self.dataProvider.sets![indexPath.row] as! LSet
+//                self.dataProvider.managedObjectContext?.delete(set)
+//                do {
+//                    try self.dataProvider.managedObjectContext!.save()
+//                } catch let error {
+//                    print(error)
+//                }
+//            }
+//            tableView.deleteRows(at: [indexPath], with: .none)
+//            let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.dataProvider, userInfo: ["change":"delete"])
+//            NotificationCenter.default.post(notification)
+//        }
+//    }
+//}
 
 class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, Cell: UITableViewCell>: NSObject, UITableViewDataSource where Delegate.Object == DataProv.Object, Cell: ConfigurableCell, Cell.DataSource == DataProv.Object {
     

@@ -1,11 +1,11 @@
 import Foundation
 import CoreData
 
-class FetchedResultsDataProvider<Delegate: DataProviderDelegate, T: NSFetchRequestResult>: NSObject, NSFetchedResultsControllerDelegate, DataProvider {
+class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, NSFetchedResultsControllerDelegate, DataProvider {
     
     typealias Object = Delegate.Object
     
-    init(fetchedResultsController: NSFetchedResultsController<T>, delegate: Delegate) {
+    init(fetchedResultsController: NSFetchedResultsController<Delegate.Object>, delegate: Delegate) {
         self.fetchedResultsController = fetchedResultsController
         self.delegate = delegate
         super.init()
@@ -14,8 +14,7 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate, T: NSFetchReque
     }
     
     func object(at indexPath: IndexPath) -> Object {
-        guard let result = fetchedResultsController.object(at: indexPath) as? Object else { fatalError("Unexpected object at \(indexPath)") }
-        return result
+        return fetchedResultsController.object(at: indexPath)
     }
     
     func numberOfItems(inSection section: Int) -> Int {
@@ -31,7 +30,7 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate, T: NSFetchReque
     
     // MARK: Private
     
-    private let fetchedResultsController: NSFetchedResultsController<T>
+    private let fetchedResultsController: NSFetchedResultsController<Delegate.Object>
     private let delegate: Delegate
     private var updates: [DataProviderUpdate<Object>] = []
     

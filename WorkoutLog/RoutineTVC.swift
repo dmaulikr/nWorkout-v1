@@ -65,8 +65,8 @@ class RoutineTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "routineLiftCell", for: indexPath) as! RoutineLiftCell
-        cell.lift = routine.lifts![indexPath.row] as! RoutineLift
-        cell.nameLabel?.text = cell.lift.name!
+        cell.source = routine.lifts![indexPath.row] as! RoutineLift
+        cell.nameLabel?.text = cell.source.name!
 
         return cell
     }

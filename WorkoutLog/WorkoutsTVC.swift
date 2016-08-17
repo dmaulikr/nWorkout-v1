@@ -1,38 +1,32 @@
 import UIKit
 import CoreData
 
-
-class WorkoutsTVC: UITableViewController {
+class WorkoutsTVC: CoreDataTVC<Workout, WorkoutCell> {
     
-    lazy var context: NSManagedObjectContext = {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        return delegate.persistentContainer.viewContext
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New Workout", style: .plain, target: self, action: #selector(newWorkout))
+        
     }
     
-    // MARK: Private
-
-    private typealias WorkoutDataProv = FetchedResultsDataProvider<WorkoutsTVC, Workout>
-    internal var dataSource: WorkoutsTVDataSource!//TableViewDataSource<WorkoutsTVC, WorkoutDataProv, WorkoutCell>!
-    
-    private func setupTableView() {
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 40
-        
-        let request = Workout.request
-        request.returnsObjectsAsFaults = false
-        request.fetchBatchSize = 20
-        
-        let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        let dataProvider =  FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
-        dataSource = WorkoutsTVDataSource(tableView: tableView, dataProvider: dataProvider, delegate: self)
+    func newWorkout() {
+        let swtvc = SelectWorkoutTVC(style: .grouped)
+        navigationController?.pushViewController(swtvc, animated: true)
     }
     
-    // MARK: - Navigation
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let wtvc = WorkoutTVC()
+        wtvc.workout = dataSource.selectedObject
+        navigationController?.pushViewController(wtvc, animated: true)
+    }
+    
+    
+    
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
@@ -45,16 +39,13 @@ class WorkoutsTVC: UITableViewController {
         default: fatalError("No segue identifier for \(segue.identifier)")
         }
     }
-}
-
-extension WorkoutsTVC: DataProviderDelegate {
-    func dataProviderDidUpdate(updates: [DataProviderUpdate<Workout>]?) {
-        dataSource.processUpdates(updates: updates)
+    
+    
+    // DataSourceDelegate
+    override func cellIdentifier(for object: Workout) -> String {
+        return "workoutCell"
     }
-}
-
-extension WorkoutsTVC: DataSourceDelegate {
-    func cellIdentifier(for object: Workout) -> String {
+    override func cellIdentifierForRegistration(for cell: WorkoutCell.Type) -> String {
         return "workoutCell"
     }
 }
