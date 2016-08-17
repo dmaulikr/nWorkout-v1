@@ -5,17 +5,11 @@ extension SetCell: ConfigurableCell {
     func configureForObject(object: LSet, at indexPath: IndexPath) {
         if indexPath.section == 1 {
             textLabel?.text = "Add set..."
-            targetWeightTextField.isHidden = true
-            targetRepsTextField.isHidden = true
-            completedWeightTextField.isHidden = true
-            completedRepsTextField.isHidden = true
+            textFields.forEach { $0.isHidden = true }
             statusButton.isHidden = true
         } else {
             textLabel?.text = ""
-            targetWeightTextField.isHidden = false
-            targetRepsTextField.isHidden = false
-            completedWeightTextField.isHidden = false
-            completedRepsTextField.isHidden = false
+            textFields.forEach { $0.isHidden = false }
             statusButton.isHidden = false
 
             set = object
@@ -33,60 +27,31 @@ class SetCell: UITableViewCell, KeyboardDelegate {
             statusButton.status = set.setStatus
             
             keyboardView.delegate = self
-            targetWeightTextField.inputView = keyboardView
-            targetRepsTextField.inputView = keyboardView
-            completedWeightTextField.inputView = keyboardView
-            completedRepsTextField.inputView = keyboardView
+            textFields.forEach { $0.inputView = keyboardView }
         }
     }
     
-    var keyboardView: Keyboard = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: (UIApplication.shared.windows.first?.rootViewController?.view.frame.size.height)! / 3))
-    var currentlyEditing: UITextField?
     
-    func keyWasTapped(character: String) {
-        currentlyEditing?.text = currentlyEditing!.text! + character
-    }
-    func backspaceWasTapped() {
-        currentlyEditing?.deleteBackward()
-    }
-    func hideWasTapped() {
-        endEditing(true)
-    }
-    func nextWasTapped() {
-        switch currentlyEditing! {
-        case targetWeightTextField:
-            currentlyEditing = targetRepsTextField
-        case targetRepsTextField:
-            currentlyEditing = completedWeightTextField
-        case completedWeightTextField:
-            currentlyEditing = completedRepsTextField
-        case completedRepsTextField:
-            currentlyEditing = nil
-            endEditing(true)
-        default:
-            break
-        }
-        currentlyEditing?.becomeFirstResponder()
-    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         targetWeightTextField = UITextField()
         targetRepsTextField = UITextField()
         completedWeightTextField = UITextField()
         completedRepsTextField = UITextField()
+        textFields += [targetWeightTextField, targetRepsTextField, completedRepsTextField, completedRepsTextField]
         statusButton = SetStatusButton(type: .system)
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         //Configure TextFields
-        var views: [UIView] = [targetWeightTextField, targetRepsTextField, completedWeightTextField, completedRepsTextField]
-        for textField in views as! [UITextField] {
+        for textField in textFields {
             textField.borderStyle = .line
             textField.textAlignment = .center
+            textField.delegate = self
         }
         
         //Configure Button
-        views.append(statusButton)
+        let views: [UIView] = textFields + [statusButton]
         statusButton.addTarget(self, action: #selector(statusButtonPushed(_:)), for: .touchUpInside)
         
         //Configure StackView
@@ -98,7 +63,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         let width = contentView.frame.width
         let height = contentView.frame.height
         
-        stackView.frame = CGRect(x: 8.0, y: 4.0, width: width - 16.0, height: height - 8.0)
+        stackView.frame = CGRect(x: 8.0, y: 4.0, width: width - 32.0, height: height - 8.0)
         contentView.addSubview(stackView)
     }
     
@@ -106,7 +71,8 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var targetWeightTextField: UITextField { didSet { targetWeightTextField.delegate = self } }
+    var textFields = [UITextField]()
+    var targetWeightTextField: UITextField
     var targetWeight: Int {
         get {
             return Int(set.targetWeight)
@@ -119,7 +85,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
             targetWeightTextField.text = "\(newValue)"
         }
     }
-    var targetRepsTextField: UITextField { didSet { targetRepsTextField.delegate = self } }
+    var targetRepsTextField: UITextField
     var targetReps: Int {
         get {
             return Int(set.targetReps)
@@ -133,7 +99,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         }
     }
     
-    var completedWeightTextField: UITextField { didSet { completedWeightTextField.delegate = self } }
+    var completedWeightTextField: UITextField
     var completedWeight: Int {
         get {
             return Int(set.completedWeight)
@@ -146,7 +112,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
             completedWeightTextField.text = "\(newValue)"
         }
     }
-    var completedRepsTextField: UITextField { didSet { completedRepsTextField.delegate = self } }
+    var completedRepsTextField: UITextField
     var completedReps: Int {
         get {
             return Int(set.completedReps)
@@ -183,6 +149,34 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         }
     }
     
+    var keyboardView: Keyboard = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: (UIApplication.shared.windows.first?.rootViewController?.view.frame.size.height)! / 3))
+    var currentlyEditing: UITextField?
+    
+    func keyWasTapped(character: String) {
+        currentlyEditing?.text = currentlyEditing!.text! + character
+    }
+    func backspaceWasTapped() {
+        currentlyEditing?.deleteBackward()
+    }
+    func hideWasTapped() {
+        endEditing(true)
+    }
+    func nextWasTapped() {
+        switch currentlyEditing! {
+        case targetWeightTextField:
+            currentlyEditing = targetRepsTextField
+        case targetRepsTextField:
+            currentlyEditing = completedWeightTextField
+        case completedWeightTextField:
+            currentlyEditing = completedRepsTextField
+        case completedRepsTextField:
+            currentlyEditing = nil
+            endEditing(true)
+        default:
+            break
+        }
+        currentlyEditing?.becomeFirstResponder()
+    }
 }
 
 enum SetStatus: String {

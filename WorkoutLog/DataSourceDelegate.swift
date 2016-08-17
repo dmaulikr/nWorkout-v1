@@ -11,7 +11,9 @@ protocol DataSourceDelegate: class {
     func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath)
 }
 
-extension DataSourceDelegate {
-    func canEditRow(at: IndexPath) -> Bool { return false }
-    func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) { }
-}
+//extension DataSourceDelegate {
+//    func canEditRow(at indexPath: IndexPath) -> Bool {
+//        return false
+//    }
+//    func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) { }
+//}

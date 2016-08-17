@@ -2,7 +2,7 @@ import UIKit
 import CoreData
 
 extension RoutineLift: DataProvider {
-
+    
     func object(at: IndexPath) -> RoutineSet {
         return sets!.object(at: at.row) as! RoutineSet
     }
@@ -39,18 +39,18 @@ class RoutineLiftCell: CellWithTableView<RoutineLift, RoutineSet, RoutineSetCell
         
         tableView.delegate = self
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func cellIdentifier(for object: RoutineSet) -> String {
         return "routineSetCell"
     }
     override func cellIdentifierForRegistration(for cell: RoutineSetCell.Type) -> String {
         return "routineSetCell"
     }
-
+    
     
     @objc(tableView:didSelectRowAtIndexPath:) func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
@@ -64,8 +64,16 @@ class RoutineLiftCell: CellWithTableView<RoutineLift, RoutineSet, RoutineSetCell
             try! self.context.save()
         }
         let path = IndexPath(row: source.sets!.count - 1, section: 0)
+        
+        let frame = tableView.frame
+        let height = frame.height
+        let width = frame.width
+        let x = frame.origin.x
+        let y = frame.origin.y
+        tableView.frame = CGRect(x: x, y: y, width: width, height: height + 45)
+        
         tableView.insertRows(at: [path], with: .automatic)
-        let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: source, userInfo: ["change":"add"])
+        let notification = Notification(name: Notification.Name(rawValue:"subTVCellDidChange"), object: source, userInfo: ["change":"add"])
         NotificationCenter.default.post(notification)
     }
     
@@ -76,6 +84,32 @@ class RoutineLiftCell: CellWithTableView<RoutineLift, RoutineSet, RoutineSetCell
             return nil
         }
     }
+    override func canEditRow(at indexPath: IndexPath) -> Bool {
+        if indexPath.section == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            dataSource.dataProvider.managedObjectContext?.performAndWait {
+                let set = self.dataSource.dataProvider.sets![indexPath.row] as! LSet
+                self.dataSource.dataProvider.managedObjectContext?.delete(set)
+                do {
+                    try self.dataSource.dataProvider.managedObjectContext!.save()
+                } catch let error {
+                    print(error)
+                }
+            }
+            tableView.deleteRows(at: [indexPath], with: .none)
+            let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.dataSource.dataProvider, userInfo: ["change":"delete"])
+            NotificationCenter.default.post(notification)
+        }
+    }
+
 }
 
 extension RoutineLiftCell: UITableViewDelegate { }
@@ -86,3 +120,4 @@ extension RoutineLiftCell: ConfigurableCell {
         source = object
     }
 }
+

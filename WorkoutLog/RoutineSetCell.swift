@@ -5,33 +5,92 @@ extension RoutineSetCell: ConfigurableCell {
     func configureForObject(object: RoutineSet, at indexPath: IndexPath) {
         if indexPath.section == 1 {
             textLabel?.text = "Add set..."
-            weightTextField.isHidden = true
-            repsTextField.isHidden = true
+            textFields.forEach { $0.isHidden = true }
         } else {
             textLabel?.text = ""
-            weightTextField.isHidden = false
-            repsTextField.isHidden = false
-
+            textFields.forEach { $0.isHidden = false }
+            
             set = object
         }
     }
 }
 
 class RoutineSetCell: UITableViewCell, KeyboardDelegate {
-    
     var set: RoutineSet! {
         didSet {
             reps = Int(set.reps)
             weight = Int(set.weight)
             
             keyboardView.delegate = self
-            weightTextField.inputView = keyboardView
-            repsTextField.inputView = keyboardView
+            textFields.forEach { $0.inputView = keyboardView }
         }
     }
     
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        
+        weightTextField = UITextField()
+        repsTextField = UITextField()
+        textFields += [weightTextField, repsTextField]
+        
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        //Configure TextFields
+        for textField in textFields {
+            textField.borderStyle = .line
+            textField.textAlignment = .center
+            textField.delegate = self
+        }
+        
+        //Configure StackView
+        let stackView = UIStackView(arrangedSubviews: textFields)
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        
+        let width = contentView.frame.width
+        let height = contentView.frame.height
+        
+        stackView.frame = CGRect(x: 8.0, y: 4.0, width: width - 32.0, height: height - 8.0)
+        contentView.addSubview(stackView)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    var textFields = [UITextField]()
+    var weightTextField: UITextField
+    var weight: Int {
+        get {
+            return Int(set.weight)
+        }
+        set {
+            set.managedObjectContext?.perform {
+                self.set.weight = Int16(newValue)
+                try! self.set.managedObjectContext?.save()
+            }
+            weightTextField.text = "\(newValue)"
+        }
+    }
+    var repsTextField: UITextField
+    var reps: Int {
+        get {
+            return Int(set.reps)
+        }
+        set {
+            set.managedObjectContext?.perform {
+                self.set.reps = Int16(newValue)
+                try! self.set.managedObjectContext?.save()
+            }
+            repsTextField.text = "\(newValue)"
+        }
+    }
+    // MARK: KeyboardView
     var keyboardView: Keyboard = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: (UIApplication.shared.windows.first?.rootViewController?.view.frame.size.height)! / 3))
     var currentlyEditing: UITextField?
+}
+
+extension RoutineSetCell {
     
     func keyWasTapped(character: String) {
         currentlyEditing?.text = currentlyEditing!.text! + character
@@ -55,34 +114,7 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate {
         currentlyEditing?.becomeFirstResponder()
     }
     
-    var weightTextField: UITextField! { didSet { weightTextField.delegate = self } }
-    var weight: Int {
-        get {
-            return Int(set.weight)
-        }
-        set {
-            set.managedObjectContext?.perform {
-                self.set.weight = Int16(newValue)
-                try! self.set.managedObjectContext?.save()
-            }
-            weightTextField.text = "\(newValue)"
-        }
-    }
-    var repsTextField: UITextField! { didSet { repsTextField.delegate = self } }
-    var reps: Int {
-        get {
-            return Int(set.reps)
-        }
-        set {
-            set.managedObjectContext?.perform {
-                self.set.reps = Int16(newValue)
-                try! self.set.managedObjectContext?.save()
-            }
-            repsTextField.text = "\(newValue)"
-        }
-    }
 }
-
 
 extension RoutineSetCell: UITextFieldDelegate {
     

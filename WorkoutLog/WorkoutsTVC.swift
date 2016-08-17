@@ -27,4 +27,21 @@ class WorkoutsTVC: CoreDataTVC<Workout, WorkoutCell> {
     override func cellIdentifierForRegistration(for cell: WorkoutCell.Type) -> String {
         return "workoutCell"
     }
+    
+    override func canEditRow(at indexPath: IndexPath) -> Bool {
+        return true
+    }
+    override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let object = dataSource.dataProvider.object(at: indexPath)
+            object.managedObjectContext!.performAndWait {
+                object.managedObjectContext!.delete(object)
+            }
+            do {
+                try object.managedObjectContext?.save()
+            } catch {
+                print(error)
+            }
+        }
+    }
 }

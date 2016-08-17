@@ -40,7 +40,7 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
             let type = notification.object as! Type
             let indexPath = self.source.index(of: type)
             let cell = self.tableView.cellForRow(at: indexPath)!
-            let change: CGFloat = notification.userInfo!["change"] as! String == "add" ? 44 : -44
+            let change: CGFloat = notification.userInfo!["change"] as! String == "add" ? 45 : -45
             //TODO: This sould not be a number.
             self.tableView.beginUpdates()
             UIView.animate(withDuration: 0.3) {
@@ -85,6 +85,13 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
     func cellIdentifierForRegistration(for cell: Cell.Type) -> String {
         assertionFailure("Implement")
         return ""
+    }
+    
+    func canEditRow(at: IndexPath) -> Bool {
+        return false
+    }
+    func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
+        //
     }
 }
 

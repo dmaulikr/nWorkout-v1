@@ -50,9 +50,17 @@ class CellWithTableView<Source: DataProvider, Type: NSManagedObject, Cell: UITab
         assertionFailure("You must override cellIdentifier(for object: Type")
         return ""
     }
+    
+    func canEditRow(at: IndexPath) -> Bool {
+        return false
+    }
+    func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
+        //
+    }
 }
 
-extension CellWithTableView: DataSourceDelegate { /*implementation is in main class as you can't override functions declared in extensions */}
+extension CellWithTableView: DataSourceDelegate {}
+
 
 
 

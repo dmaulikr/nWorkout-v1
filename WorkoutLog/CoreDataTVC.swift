@@ -36,9 +36,16 @@ class CoreDataTVC<Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext 
         assertionFailure("You must override cellIdentifier(for object: Type")
         return ""
     }
+    
+    func canEditRow(at: IndexPath) -> Bool {
+        return false
+    }
+    func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
+        //
+    }
 }
 
-extension CoreDataTVC: DataSourceDelegate { /*implementation is in main class as you can't override functions declared in extensions */}
+extension CoreDataTVC: DataSourceDelegate {}
 
 extension CoreDataTVC: DataProviderDelegate {
     func dataProviderDidUpdate(updates: [DataProviderUpdate<Type>]?) {

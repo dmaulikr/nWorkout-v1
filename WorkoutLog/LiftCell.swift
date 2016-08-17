@@ -64,8 +64,16 @@ class LiftCell: CellWithTableView<Lift, LSet, SetCell> {
             try! self.context.save()
         }
         let path = IndexPath(row: source.sets!.count - 1, section: 0)
+        
+        let frame = tableView.frame
+        let height = frame.height
+        let width = frame.width
+        let x = frame.origin.x
+        let y = frame.origin.y
+        tableView.frame = CGRect(x: x, y: y, width: width, height: height + 45)
+        
         tableView.insertRows(at: [path], with: .automatic)
-        let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: source, userInfo: ["change":"add"])
+        let notification = Notification(name: Notification.Name(rawValue:"subTVCellDidChange"), object: source, userInfo: ["change":"add"])
         NotificationCenter.default.post(notification)
     }
     
@@ -76,7 +84,30 @@ class LiftCell: CellWithTableView<Lift, LSet, SetCell> {
             return nil
         }
     }
-    
+    override func canEditRow(at indexPath: IndexPath) -> Bool {
+        if indexPath.section == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            dataSource.dataProvider.managedObjectContext?.performAndWait {
+                let set = self.dataSource.dataProvider.sets![indexPath.row] as! LSet
+                self.dataSource.dataProvider.managedObjectContext?.delete(set)
+                do {
+                    try self.dataSource.dataProvider.managedObjectContext!.save()
+                } catch let error {
+                    print(error)
+                }
+            }
+            tableView.deleteRows(at: [indexPath], with: .none)
+            let notification = Notification(name: Notification.Name(rawValue:"setsDidChange"), object: self.dataSource.dataProvider, userInfo: ["change":"delete"])
+            NotificationCenter.default.post(notification)
+        }
+    }
 }
 
 extension LiftCell: UITableViewDelegate { /*can't implement in extension with generic class*/ }
@@ -87,4 +118,3 @@ extension LiftCell: ConfigurableCell {
         source = object
     }
 }
-
