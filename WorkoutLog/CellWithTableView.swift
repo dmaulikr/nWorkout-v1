@@ -6,6 +6,11 @@ class CellWithTableView<Source: DataProvider, Type: NSManagedObject, Cell: UITab
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         tableView = UITableView()
+        tableView.layer.borderWidth = 2.0
+        tableView.layer.borderColor = UIColor.black.cgColor
+        tableView.isScrollEnabled = false
+        tableView.allowsMultipleSelectionDuringEditing = false
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(tableView)
         tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifierForRegistration(for: Cell.self))
@@ -22,15 +27,15 @@ class CellWithTableView<Source: DataProvider, Type: NSManagedObject, Cell: UITab
     var source: Source! {
         didSet {
             dataSource = TableViewDataSource(tableView: tableView, dataProvider: source, delegate: self)
+            
+            let frame = contentView.frame
+            let width = frame.width
+            print(source.numberOfItems(inSection: 0))
+            tableView.frame = CGRect(x: 8.0, y: 50.0, width: width - 16, height: (CGFloat(source.numberOfItems(inSection: 0)) + 1.0) * 45)
             tableView.reloadData()
         }
     }
-    var tableView: UITableView {
-        didSet {
-            tableView.isScrollEnabled = false
-            tableView.allowsMultipleSelectionDuringEditing = false
-        }
-    }
+    var tableView: UITableView
 
     internal var dataSource: TableViewDataSource<CellWithTableView, Source, Cell>!
     

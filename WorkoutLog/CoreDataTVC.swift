@@ -2,13 +2,12 @@ import UIKit
 import CoreData
 
 class CoreDataTVC<Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-            }
-    
-    
+    }
+        
     internal typealias DataProv = FetchedResultsDataProvider<CoreDataTVC>
     internal var dataSource: TableViewDataSource<CoreDataTVC, DataProv, Cell>!
     
@@ -16,7 +15,7 @@ class CoreDataTVC<Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext 
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 40
         tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifierForRegistration(for: Cell.self))
-
+        
         
         let request = Type.request
         request.returnsObjectsAsFaults = false

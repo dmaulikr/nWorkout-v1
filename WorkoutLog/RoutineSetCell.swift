@@ -55,7 +55,7 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate {
         currentlyEditing?.becomeFirstResponder()
     }
     
-    @IBOutlet weak var weightTextField: UITextField! { didSet { weightTextField.delegate = self } }
+    var weightTextField: UITextField! { didSet { weightTextField.delegate = self } }
     var weight: Int {
         get {
             return Int(set.weight)
@@ -68,7 +68,7 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate {
             weightTextField.text = "\(newValue)"
         }
     }
-    @IBOutlet weak var repsTextField: UITextField! { didSet { repsTextField.delegate = self } }
+    var repsTextField: UITextField! { didSet { repsTextField.delegate = self } }
     var reps: Int {
         get {
             return Int(set.reps)

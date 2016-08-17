@@ -72,7 +72,7 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
         let object = source.object(at: indexPath)
         let count = object.numberOfItems(inSection: 0)
         
-        return CGFloat(82 + (count + 1) * 46)
+        return CGFloat(52 + (count + 1) * 45)
     }
     
     

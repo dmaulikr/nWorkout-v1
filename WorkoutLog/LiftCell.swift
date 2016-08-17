@@ -2,7 +2,7 @@ import UIKit
 import CoreData
 
 extension Lift: DataProvider {
-
+    
     func object(at indexPath: IndexPath) -> LSet {
         return sets!.object(at: indexPath.row) as! LSet
     }
@@ -31,23 +31,18 @@ class LiftCell: CellWithTableView<Lift, LSet, SetCell> {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(nameLabel)
         
-        tableView.frame = CGRect(x: 0, y: 50, width: 300, height: 250)
         
         //let margins = contentView.layoutMarginsGuide
         //tableView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
         //tableView.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
         //tableView.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
         //tableView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
+        
+        tableView.delegate = self
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override var tableView: UITableView {
-        didSet {
-            tableView.delegate = self
-        }
     }
     
     override func cellIdentifier(for object: LSet) -> String {

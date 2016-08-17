@@ -36,7 +36,6 @@ extension Workout: DataProvider {
 
 class WorkoutTVC: TVCWithTableViewInCells<Workout, Lift, LiftCell> {
     
-
     override func stringForButton() -> String {
         return "New Lift"
     }

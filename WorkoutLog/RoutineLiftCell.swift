@@ -22,10 +22,26 @@ extension RoutineLift: DataProvider {
 class RoutineLiftCell: CellWithTableView<RoutineLift, RoutineSet, RoutineSetCell> {
     var nameLabel: UILabel!
     
-    override var tableView: UITableView {
-        didSet {
-            tableView.delegate = self
-        }
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        
+        let nameFrame = CGRect(x: 0, y: 0, width: 120, height: 40)
+        nameLabel = UILabel(frame: nameFrame)
+        
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(nameLabel)
+        
+        
+        //let margins = contentView.layoutMarginsGuide
+        //tableView.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        //tableView.trailingAnchor.constraint(equalTo: margins.trailingAnchor).isActive = true
+        //tableView.bottomAnchor.constraint(equalTo: margins.bottomAnchor).isActive = true
+        //tableView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor).isActive = true
+        
+        tableView.delegate = self
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func cellIdentifier(for object: RoutineSet) -> String {
@@ -63,3 +79,10 @@ class RoutineLiftCell: CellWithTableView<RoutineLift, RoutineSet, RoutineSetCell
 }
 
 extension RoutineLiftCell: UITableViewDelegate { }
+
+extension RoutineLiftCell: ConfigurableCell {
+    func configureForObject(object: RoutineLift, at indexPath: IndexPath) {
+        nameLabel.text = object.name
+        source = object
+    }
+}

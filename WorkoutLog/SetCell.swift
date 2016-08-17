@@ -24,9 +24,6 @@ extension SetCell: ConfigurableCell {
 }
 
 class SetCell: UITableViewCell, KeyboardDelegate {
-    
-   
-    
     var set: LSet! {
         didSet {
             targetReps = Int(set.targetReps)
@@ -77,13 +74,31 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         targetRepsTextField = UITextField()
         completedWeightTextField = UITextField()
         completedRepsTextField = UITextField()
+        statusButton = SetStatusButton(type: .system)
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        let stackView = UIStackView(arrangedSubviews: [targetWeightTextField, targetRepsTextField, completedWeightTextField, completedRepsTextField])
+        //Configure TextFields
+        var views: [UIView] = [targetWeightTextField, targetRepsTextField, completedWeightTextField, completedRepsTextField]
+        for textField in views as! [UITextField] {
+            textField.borderStyle = .line
+            textField.textAlignment = .center
+        }
+        
+        //Configure Button
+        views.append(statusButton)
+        statusButton.addTarget(self, action: #selector(statusButtonPushed(_:)), for: .touchUpInside)
+        
+        //Configure StackView
+        let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.spacing = 10
+        
+        let width = contentView.frame.width
+        let height = contentView.frame.height
+        
+        stackView.frame = CGRect(x: 8.0, y: 4.0, width: width - 16.0, height: height - 8.0)
         contentView.addSubview(stackView)
     }
     
@@ -91,7 +106,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    weak var targetWeightTextField: UITextField! { didSet { targetWeightTextField.delegate = self } }
+    var targetWeightTextField: UITextField { didSet { targetWeightTextField.delegate = self } }
     var targetWeight: Int {
         get {
             return Int(set.targetWeight)
@@ -104,7 +119,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
             targetWeightTextField.text = "\(newValue)"
         }
     }
-    weak var targetRepsTextField: UITextField! { didSet { targetRepsTextField.delegate = self } }
+    var targetRepsTextField: UITextField { didSet { targetRepsTextField.delegate = self } }
     var targetReps: Int {
         get {
             return Int(set.targetReps)
@@ -118,7 +133,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         }
     }
     
-    weak var completedWeightTextField: UITextField! { didSet { completedWeightTextField.delegate = self } }
+    var completedWeightTextField: UITextField { didSet { completedWeightTextField.delegate = self } }
     var completedWeight: Int {
         get {
             return Int(set.completedWeight)
@@ -131,7 +146,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
             completedWeightTextField.text = "\(newValue)"
         }
     }
-    weak var completedRepsTextField: UITextField! { didSet { completedRepsTextField.delegate = self } }
+    var completedRepsTextField: UITextField { didSet { completedRepsTextField.delegate = self } }
     var completedReps: Int {
         get {
             return Int(set.completedReps)
@@ -145,14 +160,14 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         }
     }
     
-    weak var statusButton: SetStatusButton!
+    var statusButton: SetStatusButton
     
-    func statusButtonPushed(_ sender: SetStatusButton) {
-        sender.status = sender.status.next()
+    func statusButtonPushed(_ button: SetStatusButton) {
+        button.status = button.status.next()
         set.managedObjectContext?.perform {
-            self.set.setStatus = sender.status
+            self.set.setStatus = button.status
         }
-        switch sender.status {
+        switch button.status {
         case .incomplete:
             completedWeight = 0
             completedReps = 0
