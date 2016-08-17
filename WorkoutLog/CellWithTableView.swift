@@ -1,7 +1,19 @@
 import UIKit
 import CoreData
 
-class CellWithTableView<Type: NSManagedObject, Cell: UITableViewCell, Source: DataProvider>: UITableViewCell where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type {
+class CellWithTableView<Source: DataProvider, Type: NSManagedObject, Cell: UITableViewCell>: UITableViewCell where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type {
+    
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        tableView = UITableView()
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.addSubview(tableView)
+        tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifierForRegistration(for: Cell.self))
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     lazy var context: NSManagedObjectContext = {
         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -10,9 +22,10 @@ class CellWithTableView<Type: NSManagedObject, Cell: UITableViewCell, Source: Da
     var source: Source! {
         didSet {
             dataSource = TableViewDataSource(tableView: tableView, dataProvider: source, delegate: self)
+            tableView.reloadData()
         }
     }
-    var tableView: UITableView! {
+    var tableView: UITableView {
         didSet {
             tableView.isScrollEnabled = false
             tableView.allowsMultipleSelectionDuringEditing = false
@@ -35,6 +48,7 @@ class CellWithTableView<Type: NSManagedObject, Cell: UITableViewCell, Source: Da
 }
 
 extension CellWithTableView: DataSourceDelegate { /*implementation is in main class as you can't override functions declared in extensions */}
+
 
 
 //extension CellWithTableView: UITableViewDelegate {

@@ -6,8 +6,7 @@ class CoreDataTVC<Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifierForRegistration(for: Cell.self))
-    }
+            }
     
     
     internal typealias DataProv = FetchedResultsDataProvider<CoreDataTVC>
@@ -16,6 +15,8 @@ class CoreDataTVC<Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext 
     private func setupTableView() {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 40
+        tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifierForRegistration(for: Cell.self))
+
         
         let request = Type.request
         request.returnsObjectsAsFaults = false

@@ -25,6 +25,8 @@ extension SetCell: ConfigurableCell {
 
 class SetCell: UITableViewCell, KeyboardDelegate {
     
+   
+    
     var set: LSet! {
         didSet {
             targetReps = Int(set.targetReps)
@@ -70,7 +72,26 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         currentlyEditing?.becomeFirstResponder()
     }
     
-    @IBOutlet weak var targetWeightTextField: UITextField! { didSet { targetWeightTextField.delegate = self } }
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        targetWeightTextField = UITextField()
+        targetRepsTextField = UITextField()
+        completedWeightTextField = UITextField()
+        completedRepsTextField = UITextField()
+        
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        let stackView = UIStackView(arrangedSubviews: [targetWeightTextField, targetRepsTextField, completedWeightTextField, completedRepsTextField])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10
+        contentView.addSubview(stackView)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    weak var targetWeightTextField: UITextField! { didSet { targetWeightTextField.delegate = self } }
     var targetWeight: Int {
         get {
             return Int(set.targetWeight)
@@ -83,7 +104,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
             targetWeightTextField.text = "\(newValue)"
         }
     }
-    @IBOutlet weak var targetRepsTextField: UITextField! { didSet { targetRepsTextField.delegate = self } }
+    weak var targetRepsTextField: UITextField! { didSet { targetRepsTextField.delegate = self } }
     var targetReps: Int {
         get {
             return Int(set.targetReps)
@@ -97,7 +118,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         }
     }
     
-    @IBOutlet weak var completedWeightTextField: UITextField! { didSet { completedWeightTextField.delegate = self } }
+    weak var completedWeightTextField: UITextField! { didSet { completedWeightTextField.delegate = self } }
     var completedWeight: Int {
         get {
             return Int(set.completedWeight)
@@ -110,7 +131,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
             completedWeightTextField.text = "\(newValue)"
         }
     }
-    @IBOutlet weak var completedRepsTextField: UITextField! { didSet { completedRepsTextField.delegate = self } }
+    weak var completedRepsTextField: UITextField! { didSet { completedRepsTextField.delegate = self } }
     var completedReps: Int {
         get {
             return Int(set.completedReps)
@@ -124,9 +145,9 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         }
     }
     
-    @IBOutlet weak var statusButton: SetStatusButton!
+    weak var statusButton: SetStatusButton!
     
-    @IBAction func statusButtonPushed(_ sender: SetStatusButton) {
+    func statusButtonPushed(_ sender: SetStatusButton) {
         sender.status = sender.status.next()
         set.managedObjectContext?.perform {
             self.set.setStatus = sender.status

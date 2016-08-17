@@ -52,8 +52,8 @@ extension SelectWorkoutTVC {
         switch (indexPath.row, indexPath.section) {
         case (0, 0):
             context.performAndWait {
-                wtvc.workout = Workout(context: self.context)
-                wtvc.workout.date = NSDate()
+                wtvc.source = Workout(context: self.context)
+                wtvc.source.date = NSDate()
                 do {
                     try self.context.save()
                 } catch {

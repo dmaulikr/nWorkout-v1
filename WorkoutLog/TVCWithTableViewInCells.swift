@@ -2,39 +2,41 @@ import UIKit
 import CoreData
 
 
-class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext where Type: ManagedObjectType, Source: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type {
+class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext where Type: ManagedObjectType, Source: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider {
     
     private var observer: ManagedObjectObserver?
-    
-    init(source: Source) {
-        self.source = source
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    var source: Source {
+
+    var source: Source! {
         didSet {
             observer = ManagedObjectObserver(object: source) { [unowned self] type in
                 guard type == .delete else { return }
                 let _ = self.navigationController?.popViewController(animated: true)
             }
-            //updateViews()
         }
     }
     
+    func stringForButton() -> String {
+        assertionFailure("Implement this")
+        return ""
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.allowseSelection = false
+        setUpTableView()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))        
+    }
+    
+    private func setUpTableView() {
+        tableView.allowsSelection = false
+        tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifierForRegistration(for: Cell.self))
+        dataSource = TableViewDataSource(tableView: tableView, dataProvider: source, delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "setsDidChange"), object: nil, queue: OperationQueue.main) { notification in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "subTVCellDidChange"), object: nil, queue: OperationQueue.main) { notification in
             let type = notification.object as! Type
             let indexPath = self.source.index(of: type)
             let cell = self.tableView.cellForRow(at: indexPath)!
@@ -47,52 +49,43 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
             self.tableView.endUpdates()
             //            self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
-        
-        if navigationController!.viewControllers[1] is SelectWorkoutTVC {
-            navigationController!.viewControllers.remove(at: 1)
-        }
     }
     
-    
-//    @IBAction func addLiftButtonTapped(_ sender: UIBarButtonItem) {
-//        let lift = Lift(context: context)
-//        lift.name = "Squat"
-//        let set1 = LSet(context: context)
-//        set1.targetReps = 5
-//        set1.targetWeight = 225
-//        lift.sets = [set1]
-//        workout.addToLifts(lift)
-//        try! context.save()
-//        tableView.reloadData()
-//    }
+    func addButtonTapped() {
+        var newIndexPath: IndexPath?
+        context.performAndWait {
+            newIndexPath = self.source.insert(object: Type(context: self.context))
+            do {
+                try self.context.save()
+            } catch {
+                print(error)
+            }
+        }
+        guard let indexPath = newIndexPath else { return }
+        tableView.insertRows(at: [indexPath], with: .automatic)
+    }
     
     internal var dataSource: TableViewDataSource<TVCWithTableViewInCells, Source, Cell>!
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let lift = workout.lifts![indexPath.row] as! Lift
-        let setCount = lift.sets!.count
         
-        return CGFloat(82 + (setCount + 1) * 46)
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let object = source.object(at: indexPath)
+        let count = object.numberOfItems(inSection: 0)
         
+        return CGFloat(82 + (count + 1) * 46)
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
+    //DataSourceDelegate
+    //Has to be here to be overrideable
+    func cellIdentifier(for object: Type) -> String {
+        assertionFailure("Implement")
+        return ""
     }
-    
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-        
-    }
-    
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        return false
+    func cellIdentifierForRegistration(for cell: Cell.Type) -> String {
+        assertionFailure("Implement")
+        return ""
     }
 }
 
+extension TVCWithTableViewInCells: DataSourceDelegate {}

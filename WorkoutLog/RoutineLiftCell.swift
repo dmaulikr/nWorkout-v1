@@ -19,10 +19,10 @@ extension RoutineLift: DataProvider {
     }
 }
 
-class RoutineLiftCell: CellWithTableView<RoutineSet, RoutineSetCell, RoutineLift> {
+class RoutineLiftCell: CellWithTableView<RoutineLift, RoutineSet, RoutineSetCell> {
     var nameLabel: UILabel!
     
-    override var tableView: UITableView! {
+    override var tableView: UITableView {
         didSet {
             tableView.delegate = self
         }

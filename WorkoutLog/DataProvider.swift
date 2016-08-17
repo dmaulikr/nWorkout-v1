@@ -1,8 +1,9 @@
-import Foundation
+import CoreData
 
 protocol DataProvider: class {
-    associatedtype Object
-    func object(at: IndexPath) -> Object
+    associatedtype Object: NSManagedObject
+    func object(at indexPath: IndexPath) -> Object
+    func insert(object: Object) -> IndexPath
     func index(of object: Object) -> IndexPath
     func numberOfItems(inSection section: Int) -> Int
     func numberOfSections() -> Int
@@ -10,6 +11,11 @@ protocol DataProvider: class {
 
 extension DataProvider {
     func index(of object: Object) -> IndexPath {
+        assertionFailure("Optional, you must implement this.")
+        return IndexPath()
+    }
+    
+    func insert(object: Object) -> IndexPath {
         assertionFailure("Optional, you must implement this.")
         return IndexPath()
     }

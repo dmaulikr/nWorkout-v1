@@ -19,7 +19,7 @@ class WorkoutsTVC: CoreDataTVC<Workout, WorkoutCell> {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let wtvc = WorkoutTVC()
-        wtvc.workout = dataSource.selectedObject
+        wtvc.source = dataSource.selectedObject
         navigationController?.pushViewController(wtvc, animated: true)
     }
     
@@ -33,7 +33,7 @@ class WorkoutsTVC: CoreDataTVC<Workout, WorkoutCell> {
         case "viewWorkout":
             let wtvc = segue.destination as! WorkoutTVC
             guard let workout = dataSource.selectedObject else { fatalError("Showing detail, but no selected row?") }
-            wtvc.workout = workout
+            wtvc.source = workout
         case "newWorkout":
             break
         default: fatalError("No segue identifier for \(segue.identifier)")

@@ -139,24 +139,12 @@ class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, 
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        //
+        guard let delegate = delegate else { return false }
+        return delegate.canEditRow(at: indexPath)
     }
     
-//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        return true
-//    }
-//    
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            let object = dataProvider.object(at: indexPath)
-//            object.managedObjectContext!.performAndWait {
-//                object.managedObjectContext!.delete(object)
-//            }
-//            try! object.managedObjectContext?.save()
-//        }
-//    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        delegate?.commit(editingStyle, for: indexPath)
+    }
 }
 
