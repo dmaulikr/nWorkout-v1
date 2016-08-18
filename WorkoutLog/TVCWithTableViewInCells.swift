@@ -56,9 +56,15 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
     }
     
     func addButtonTapped() {
+        let nlvc = NewVC(type: Type.self, placeholder: "Lift name...", barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
+        present(nlvc, animated: true)
+    }
+    
+    func insertNewObject(object: Type) {
         var newIndexPath: IndexPath?
+        
         context.performAndWait {
-            newIndexPath = self.source.insert(object: Type(context: self.context))
+            newIndexPath = self.source.insert(object: object)
             do {
                 try self.context.save()
             } catch {
@@ -92,10 +98,21 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
     }
     
     func canEditRow(at: IndexPath) -> Bool {
-        return false
+        return true
     }
     func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
-        //
+        if editingStyle == .delete {
+            dataSource.dataProvider.managedObjectContext?.performAndWait {
+                let object = self.dataSource.dataProvider.object(at: indexPath)
+                self.dataSource.dataProvider.managedObjectContext?.delete(object)
+                do {
+                    try self.dataSource.dataProvider.managedObjectContext!.save()
+                } catch let error {
+                    print(error)
+                }
+            }
+            tableView.deleteRows(at: [indexPath], with: .none)
+        }
     }
 }
 

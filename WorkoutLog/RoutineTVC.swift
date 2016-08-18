@@ -8,7 +8,6 @@ extension Routine: DataProvider {
     func insert(object: RoutineLift) -> IndexPath {
         guard let context = managedObjectContext else { assertionFailure("Why doesn't this exist"); return IndexPath() }
         context.performAndWait {
-            object.name = "Squat"
             let set = RoutineSet(context: context)
             set.weight = 225
             set.reps = 5

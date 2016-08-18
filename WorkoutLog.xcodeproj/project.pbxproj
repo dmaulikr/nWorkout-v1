@@ -12,6 +12,11 @@
 		B30365D91D6194450030705E /* LiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D81D6194450030705E /* LiftCell.swift */; };
 		B30365E01D61B6A50030705E /* RoutineLiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365DF1D61B6A50030705E /* RoutineLiftCell.swift */; };
 		B30365E21D61B6AC0030705E /* RoutineSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365E11D61B6AC0030705E /* RoutineSetCell.swift */; };
+		B31D11341D652F6D00010E9C /* Lets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11331D652F6D00010E9C /* Lets.swift */; };
+		B31D11361D65306D00010E9C /* TVWithTVInCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11351D65306D00010E9C /* TVWithTVInCells.swift */; };
+		B31D11381D65325F00010E9C /* CDandTVwithinTVCellTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11371D65325F00010E9C /* CDandTVwithinTVCellTVC.swift */; };
+		B31D113A1D6533A100010E9C /* TVCWithTVDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11391D6533A100010E9C /* TVCWithTVDS.swift */; };
+		B321420D1D644D000093A21E /* NewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B321420C1D644D000093A21E /* NewVC.swift */; };
 		B32296211D63EE42000B6F08 /* CellWithTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32296201D63EE42000B6F08 /* CellWithTableView.swift */; };
 		B32296231D63FA16000B6F08 /* CoreDataVCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32296221D63FA16000B6F08 /* CoreDataVCs.swift */; };
 		B366C6DF1D5497C200484784 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C6DE1D5497C200484784 /* AppDelegate.swift */; };
@@ -72,6 +77,11 @@
 		B30365D81D6194450030705E /* LiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiftCell.swift; sourceTree = "<group>"; };
 		B30365DF1D61B6A50030705E /* RoutineLiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineLiftCell.swift; sourceTree = "<group>"; };
 		B30365E11D61B6AC0030705E /* RoutineSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineSetCell.swift; sourceTree = "<group>"; };
+		B31D11331D652F6D00010E9C /* Lets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lets.swift; sourceTree = "<group>"; };
+		B31D11351D65306D00010E9C /* TVWithTVInCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVWithTVInCells.swift; sourceTree = "<group>"; };
+		B31D11371D65325F00010E9C /* CDandTVwithinTVCellTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDandTVwithinTVCellTVC.swift; sourceTree = "<group>"; };
+		B31D11391D6533A100010E9C /* TVCWithTVDS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVCWithTVDS.swift; sourceTree = "<group>"; };
+		B321420C1D644D000093A21E /* NewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewVC.swift; sourceTree = "<group>"; };
 		B32296201D63EE42000B6F08 /* CellWithTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellWithTableView.swift; sourceTree = "<group>"; };
 		B32296221D63FA16000B6F08 /* CoreDataVCs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataVCs.swift; sourceTree = "<group>"; };
 		B366C6DB1D5497C200484784 /* WorkoutLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				B366C71F1D5498BB00484784 /* WorkoutCell.swift */,
+				B31D11331D652F6D00010E9C /* Lets.swift */,
 				B30365D81D6194450030705E /* LiftCell.swift */,
 				B366C7231D5498C500484784 /* SetCell.swift */,
 			);
@@ -160,6 +171,19 @@
 			name = Routine;
 			sourceTree = "<group>";
 		};
+		B31D11321D64616300010E9C /* Generics */ = {
+			isa = PBXGroup;
+			children = (
+				B321420C1D644D000093A21E /* NewVC.swift */,
+				B32296221D63FA16000B6F08 /* CoreDataVCs.swift */,
+				B31D11391D6533A100010E9C /* TVCWithTVDS.swift */,
+				B3C2F0171D63DA6D005C67FF /* CoreDataTVC.swift */,
+				B31D11371D65325F00010E9C /* CDandTVwithinTVCellTVC.swift */,
+				B36DE1071D64010700A898B5 /* TVCWithTableViewInCells.swift */,
+			);
+			name = Generics;
+			sourceTree = "<group>";
+		};
 		B32295A41D63E0E8000B6F08 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +195,7 @@
 		B366C6D21D5497C200484784 = {
 			isa = PBXGroup;
 			children = (
+				B31D11351D65306D00010E9C /* TVWithTVInCells.swift */,
 				B366C6DD1D5497C200484784 /* WorkoutLog */,
 				B366C6F51D5497C200484784 /* WorkoutLogTests */,
 				B366C7001D5497C200484784 /* WorkoutLogUITests */,
@@ -268,9 +293,7 @@
 		B366C71B1D54989C00484784 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B32296221D63FA16000B6F08 /* CoreDataVCs.swift */,
-				B3C2F0171D63DA6D005C67FF /* CoreDataTVC.swift */,
-				B36DE1071D64010700A898B5 /* TVCWithTableViewInCells.swift */,
+				B31D11321D64616300010E9C /* Generics */,
 				B32295A41D63E0E8000B6F08 /* Statistics */,
 				B3E07C241D602507006D68AE /* Routines */,
 				B3E07C251D60250F006D68AE /* Workouts */,
@@ -466,6 +489,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B31D113A1D6533A100010E9C /* TVCWithTVDS.swift in Sources */,
 				B36DE1061D63FE4B00A898B5 /* BaseConfigurableCell.swift in Sources */,
 				B366C7261D5498C500484784 /* SetCell.swift in Sources */,
 				B366C73F1D54996800484784 /* DataProvider.swift in Sources */,
@@ -475,6 +499,7 @@
 				B366C7131D54987B00484784 /* ConfigurableCell.swift in Sources */,
 				B30365E21D61B6AC0030705E /* RoutineSetCell.swift in Sources */,
 				B3C2F0181D63DA6D005C67FF /* CoreDataTVC.swift in Sources */,
+				B31D11381D65325F00010E9C /* CDandTVwithinTVCellTVC.swift in Sources */,
 				B366C7401D54996800484784 /* DataProviderDelegate.swift in Sources */,
 				B3E07C231D554CE4006D68AE /* WorkoutLog.xcdatamodeld in Sources */,
 				B366C7361D54994600484784 /* ManagedObjectProtocols.swift in Sources */,
@@ -495,6 +520,9 @@
 				B36DE1081D64010700A898B5 /* TVCWithTableViewInCells.swift in Sources */,
 				B366C7421D54996800484784 /* FetchedResultsDataProvider.swift in Sources */,
 				B30365E01D61B6A50030705E /* RoutineLiftCell.swift in Sources */,
+				B31D11341D652F6D00010E9C /* Lets.swift in Sources */,
+				B321420D1D644D000093A21E /* NewVC.swift in Sources */,
+				B31D11361D65306D00010E9C /* TVWithTVInCells.swift in Sources */,
 				B30365D91D6194450030705E /* LiftCell.swift in Sources */,
 				B366C7281D5498CF00484784 /* RoutinesTVC.swift in Sources */,
 				B3BA3A0D1D606DC1001C23FB /* StatisticsTVC.swift in Sources */,

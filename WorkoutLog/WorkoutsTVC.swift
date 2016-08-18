@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class WorkoutsTVC: CoreDataTVC<Workout, WorkoutCell> {
+class WorkoutsTVC: TVCWithTVDS<FetchedResultsDataProvider<WorkoutsTVC>, Workout, WorkoutCell> {
     
     override func viewDidLoad() {
         super.viewDidLoad()

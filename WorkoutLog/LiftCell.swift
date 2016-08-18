@@ -109,7 +109,7 @@ class LiftCell: CellWithTableView<Lift, LSet, SetCell> {
             let width = frame.width
             let x = frame.origin.x
             let y = frame.origin.y
-            tableView.frame = CGRect(x: x, y: y, width: width, height: height - 45)
+            tableView.frame = CGRect(x: x, y: y, width: width, height: height -     45)
             let notification = Notification(name: Notification.Name(rawValue:"setChanged"), object: source, userInfo: ["change":"delete"])
             NotificationCenter.default.post(notification)
         }

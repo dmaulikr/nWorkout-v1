@@ -1,8 +1,12 @@
 import UIKit
 import CoreData
 
-class RoutinesTVC: CoreDataTVC<Routine, RoutineCell> {
+
+class RoutinesTVC: CoreDataTVC<Routine, RoutineCell>, UIPopoverPresentationControllerDelegate {
     
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -10,10 +14,8 @@ class RoutinesTVC: CoreDataTVC<Routine, RoutineCell> {
     }
     
     func newRoutine() {
-        let rtvc = RoutineTVC(style: .plain)
-        rtvc.source = Routine(context: context)
-        rtvc.source.name = "Starting Strength A"
-        navigationController?.pushViewController(rtvc, animated: true)
+        let nrtvc = NewVC(type: Routine.self, placeholder: "Insert new routine name", barButtonItem: navigationItem.rightBarButtonItem!) { object in }
+        present(nrtvc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -42,6 +42,7 @@ extension RoutineLift: ManagedObjectType {
         for set in sts {
             lift.addToSets(set)
         }
+        lift.name = name
         return lift
     }
 }

@@ -1,18 +1,25 @@
 import UIKit
 import CoreData
 
-class CoreDataTVC<Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type {
+class CoreDataTVC<Source: DataProvider, Type: NSManagedObject, Cell: UITableViewCell>: TVCWithTVDS<Source,Type,Cell> where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type {
+    
+    init() {
+        let request = Type.request
+        request.returnsObjectsAsFaults = false
+        request.fetchBatchSize = 20
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
     }
-        
-    internal typealias DataProv = FetchedResultsDataProvider<CoreDataTVC>
-    internal var dataSource: TableViewDataSource<CoreDataTVC, DataProv, Cell>!
-    
-    private func setupTableView() {
-        tableView.rowHeight = UITableViewAutomaticDimension
+            
+    override func setupTableView() {
+        super.setupTableView()
         tableView.estimatedRowHeight = 40
         tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifierForRegistration(for: Cell.self))
         
@@ -26,26 +33,7 @@ class CoreDataTVC<Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext 
         dataSource = TableViewDataSource(tableView: tableView, dataProvider: dataProvider, delegate: self)
     }
     
-    //DataSourceDelegate
-    //Has to be here to be overrideable
-    func cellIdentifier(for object: Type) -> String {
-        assertionFailure("You must override cellIdentifier(for object: Type")
-        return ""
-    }
-    func cellIdentifierForRegistration(for cell: Cell.Type) -> String {
-        assertionFailure("You must override cellIdentifier(for object: Type")
-        return ""
-    }
-    
-    func canEditRow(at: IndexPath) -> Bool {
-        return false
-    }
-    func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
-        //
-    }
 }
-
-extension CoreDataTVC: DataSourceDelegate {}
 
 extension CoreDataTVC: DataProviderDelegate {
     func dataProviderDidUpdate(updates: [DataProviderUpdate<Type>]?) {

@@ -8,7 +8,6 @@ extension Workout: DataProvider {
     func insert(object: Lift) -> IndexPath {
         guard let context = managedObjectContext else { assertionFailure("Why doesn't this exist"); return IndexPath() }
         context.performAndWait {
-            object.name = "Squat"
             let set = LSet(context: context)
             set.targetWeight = 225
             set.targetReps = 5
