@@ -1,20 +1,21 @@
 import UIKit
 import CoreData
 
+//private var observer: ManagedObjectObserver?
+//{
+//didSet {
+//    observer = ManagedObjectObserver(object: source) { [unowned self] type in
+//        guard type == .delete else { return }
+//        let _ = self.navigationController?.popViewController(animated: true)
+//    }
+//}
+//}
 
-class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell: UITableViewCell>: TVCWithContext where Type: ManagedObjectType, Source: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider {
-    
-    private var observer: ManagedObjectObserver?
-    
-    var source: Source! {
-        didSet {
-            observer = ManagedObjectObserver(object: source) { [unowned self] type in
-                guard type == .delete else { return }
-                let _ = self.navigationController?.popViewController(animated: true)
-            }
-        }
-    }
-    
+
+
+
+class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell: UITableViewCell>: TVCWithTVDS<Source,Type,Cell> where Type: ManagedObjectType, Source: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider {
+
     func stringForButton() -> String {
         assertionFailure("Implement this")
         return ""
@@ -22,26 +23,24 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUpTableView()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))
-    }
-    
-    private func setUpTableView() {
         tableView.allowsSelection = false
-        tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifierForRegistration(for: Cell.self))
-        dataSource = TableViewDataSource(tableView: tableView, dataProvider: source, delegate: self)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))
     }
     
     func observeNotification(named name: String) {
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: name), object: nil, queue: OperationQueue.main) { notification in
             let type = notification.object as! Type
-            let indexPath = self.source.index(of: type)
+            var indexPath = self.dataProvider.index(of: type)
+            if indexPath.row > 1000000 {
+                print("WTF THE ROW IS \(indexPath.row))")
+                indexPath.row = 0
+            }
             let cell = self.tableView.cellForRow(at: indexPath)!
-            let change: CGFloat = notification.userInfo!["change"] as! String == "add" ? 45 : -45
+            let change: CGFloat = notification.userInfo!["change"] as! String == "add" ? CGFloat(Lets.subTVCellSize) : -CGFloat(Lets.subTVCellSize)
             //TODO: This sould not be a number.
             self.tableView.beginUpdates()
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: Lets.tableCellAdditionAnimationDuration) {
                 cell.frame = CGRect(x: cell.frame.origin.x, y: cell.frame.origin.y, width: cell.frame.width, height: cell.frame.height + change)
             }
             self.tableView.endUpdates()
@@ -56,7 +55,7 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
     }
     
     func addButtonTapped() {
-        let nlvc = NewVC(type: Type.self, placeholder: "Lift name...", barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
+        let nlvc = NewVC(type: Type.self, placeholder: Lets.newLiftPlaceholderText, barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
         present(nlvc, animated: true)
     }
     
@@ -64,7 +63,7 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
         var newIndexPath: IndexPath?
         
         context.performAndWait {
-            newIndexPath = self.source.insert(object: object)
+            newIndexPath = self.dataProvider.insert(object: object)
             do {
                 try self.context.save()
             } catch {
@@ -75,32 +74,24 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
-    internal var dataSource: TableViewDataSource<TVCWithTableViewInCells, Source, Cell>!
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        let object = source.object(at: indexPath)
+        let object = dataProvider.object(at: indexPath)
         let count = object.numberOfItems(inSection: 0)
         
-        return CGFloat(52 + (count + 1) * 45)
+        return CGFloat(Lets.heightBetweenTopOfCellAndTV + Double(count + 1) * Lets.subTVCellSize)
     }
     
+
     
     //DataSourceDelegate
     //Has to be here to be overrideable
-    func cellIdentifier(for object: Type) -> String {
-        assertionFailure("Implement")
-        return ""
-    }
-    func cellIdentifierForRegistration(for cell: Cell.Type) -> String {
-        assertionFailure("Implement")
-        return ""
-    }
     
-    func canEditRow(at: IndexPath) -> Bool {
+    override func canEditRow(at: IndexPath) -> Bool {
         return true
     }
-    func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
+    override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
         if editingStyle == .delete {
             dataSource.dataProvider.managedObjectContext?.performAndWait {
                 let object = self.dataSource.dataProvider.object(at: indexPath)
@@ -115,5 +106,3 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
         }
     }
 }
-
-extension TVCWithTableViewInCells: DataSourceDelegate {}

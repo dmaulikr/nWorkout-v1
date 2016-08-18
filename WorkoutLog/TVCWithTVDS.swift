@@ -8,6 +8,10 @@ class TVCWithTVDS<Source: DataProvider, Type: NSManagedObject, Cell: UITableView
         super.init(nibName: nil, bundle: nil)
     }
     
+    override init(nibName: String? , bundle: Bundle?) {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

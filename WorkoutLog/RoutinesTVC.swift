@@ -2,7 +2,7 @@ import UIKit
 import CoreData
 
 
-class RoutinesTVC: CoreDataTVC<Routine, RoutineCell>, UIPopoverPresentationControllerDelegate {
+class RoutinesTVC: CDTVCWithTVDS<Routine, RoutineCell>, UIPopoverPresentationControllerDelegate {
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
@@ -19,8 +19,7 @@ class RoutinesTVC: CoreDataTVC<Routine, RoutineCell>, UIPopoverPresentationContr
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let rtvc = RoutineTVC()
-        rtvc.source = dataSource.selectedObject
+        let rtvc = RoutineTVC(dataProvider: dataSource.selectedObject!)
         navigationController?.pushViewController(rtvc, animated: true)
     }
     

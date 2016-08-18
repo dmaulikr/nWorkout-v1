@@ -22,6 +22,8 @@ extension Workout: DataProvider {
         return IndexPath(row: lifts!.count - 1, section: 0)
     }
     func index(of object: Lift) -> IndexPath {
+        print(object)
+        print(lifts!.index(of: object))
         return IndexPath(row: lifts!.index(of: object), section: 0)
     }
     func numberOfSections() -> Int {
@@ -33,10 +35,11 @@ extension Workout: DataProvider {
 }
 
 
+
 class WorkoutTVC: TVCWithTableViewInCells<Workout, Lift, LiftCell> {
     
     override func stringForButton() -> String {
-        return "New Lift"
+        return Lets.newLiftBarButtonText
     }
     
     override func viewWillAppear(_ animated: Bool) {

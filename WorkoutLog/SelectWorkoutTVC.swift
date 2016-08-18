@@ -11,7 +11,7 @@ class SelectWorkoutTVC: TVCWithContext {
         
         let request = Routine.request
         request.returnsObjectsAsFaults = false
-        request.fetchBatchSize = 20
+        request.fetchBatchSize = Lets.selectWorkoutBatchSize
         
         frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         try! frc.performFetch()
@@ -36,7 +36,7 @@ extension SelectWorkoutTVC {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         if indexPath.section == 0 {
-            cell.textLabel?.text = "Blank workout"
+            cell.textLabel?.text = Lets.blankWorkoutText
         } else {
             cell.textLabel?.text = frc.fetchedObjects![indexPath.row].name
         }
@@ -47,12 +47,11 @@ extension SelectWorkoutTVC {
 // MARK: UITableViewDelegate
 extension SelectWorkoutTVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let wtvc = WorkoutTVC()
+        var workout: Workout?
         switch (indexPath.row, indexPath.section) {
         case (0, 0):
             context.performAndWait {
-                wtvc.source = Workout(context: self.context)
-                wtvc.source.date = NSDate()
+                workout = Workout(context: self.context)
                 do {
                     try self.context.save()
                 } catch {
@@ -61,8 +60,7 @@ extension SelectWorkoutTVC {
             }
         case (let row, 1):
             context.performAndWait {
-                wtvc.source = self.frc.fetchedObjects![row].toWorkout()
-                wtvc.source.date = NSDate()
+                workout = self.frc.fetchedObjects![row].toWorkout()
                 do {
                     try self.context.save()
                 } catch {
@@ -72,6 +70,8 @@ extension SelectWorkoutTVC {
         default:
             assertionFailure("shouldn't happen")
         }
+        workout!.date = NSDate()
+        let wtvc = WorkoutTVC(dataProvider: workout!)
         navigationController?.pushViewController(wtvc, animated: true)
     }
 }

@@ -1,8 +1,8 @@
-import Foundation
+import CoreData
 
-enum DataProviderUpdate<Object> {
+enum DataProviderUpdate {
     case insert(IndexPath)
-    case update(IndexPath, Object)
+    case update(IndexPath, NSManagedObject)
     case move(IndexPath, IndexPath)
     case delete(IndexPath)
 }

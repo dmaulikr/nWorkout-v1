@@ -14,7 +14,7 @@
 		B30365E21D61B6AC0030705E /* RoutineSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365E11D61B6AC0030705E /* RoutineSetCell.swift */; };
 		B31D11341D652F6D00010E9C /* Lets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11331D652F6D00010E9C /* Lets.swift */; };
 		B31D11361D65306D00010E9C /* TVWithTVInCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11351D65306D00010E9C /* TVWithTVInCells.swift */; };
-		B31D11381D65325F00010E9C /* CDandTVwithinTVCellTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11371D65325F00010E9C /* CDandTVwithinTVCellTVC.swift */; };
+		B31D11381D65325F00010E9C /* CDTVCWithTVDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11371D65325F00010E9C /* CDTVCWithTVDS.swift */; };
 		B31D113A1D6533A100010E9C /* TVCWithTVDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11391D6533A100010E9C /* TVCWithTVDS.swift */; };
 		B321420D1D644D000093A21E /* NewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B321420C1D644D000093A21E /* NewVC.swift */; };
 		B32296211D63EE42000B6F08 /* CellWithTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32296201D63EE42000B6F08 /* CellWithTableView.swift */; };
@@ -49,7 +49,6 @@
 		B3791F841D614FDD003DD70F /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3791F831D614FDD003DD70F /* Keyboard.swift */; };
 		B3BA3A0B1D606882001C23FB /* SelectWorkoutTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BA3A0A1D606882001C23FB /* SelectWorkoutTVC.swift */; };
 		B3BA3A0D1D606DC1001C23FB /* StatisticsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3BA3A0C1D606DC1001C23FB /* StatisticsTVC.swift */; };
-		B3C2F0181D63DA6D005C67FF /* CoreDataTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C2F0171D63DA6D005C67FF /* CoreDataTVC.swift */; };
 		B3E07C231D554CE4006D68AE /* WorkoutLog.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B3E07C211D554CE4006D68AE /* WorkoutLog.xcdatamodeld */; };
 		B3E07C271D602AD1006D68AE /* OldLiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E07C261D602AD1006D68AE /* OldLiftCell.swift */; };
 /* End PBXBuildFile section */
@@ -79,7 +78,7 @@
 		B30365E11D61B6AC0030705E /* RoutineSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineSetCell.swift; sourceTree = "<group>"; };
 		B31D11331D652F6D00010E9C /* Lets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lets.swift; sourceTree = "<group>"; };
 		B31D11351D65306D00010E9C /* TVWithTVInCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVWithTVInCells.swift; sourceTree = "<group>"; };
-		B31D11371D65325F00010E9C /* CDandTVwithinTVCellTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDandTVwithinTVCellTVC.swift; sourceTree = "<group>"; };
+		B31D11371D65325F00010E9C /* CDTVCWithTVDS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDTVCWithTVDS.swift; sourceTree = "<group>"; };
 		B31D11391D6533A100010E9C /* TVCWithTVDS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVCWithTVDS.swift; sourceTree = "<group>"; };
 		B321420C1D644D000093A21E /* NewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewVC.swift; sourceTree = "<group>"; };
 		B32296201D63EE42000B6F08 /* CellWithTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellWithTableView.swift; sourceTree = "<group>"; };
@@ -120,7 +119,6 @@
 		B3791F831D614FDD003DD70F /* Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		B3BA3A0A1D606882001C23FB /* SelectWorkoutTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectWorkoutTVC.swift; sourceTree = "<group>"; };
 		B3BA3A0C1D606DC1001C23FB /* StatisticsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsTVC.swift; sourceTree = "<group>"; };
-		B3C2F0171D63DA6D005C67FF /* CoreDataTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataTVC.swift; sourceTree = "<group>"; };
 		B3E07C221D554CE4006D68AE /* WorkoutLog.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WorkoutLog.xcdatamodel; sourceTree = "<group>"; };
 		B3E07C261D602AD1006D68AE /* OldLiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OldLiftCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,7 +152,6 @@
 			isa = PBXGroup;
 			children = (
 				B366C71F1D5498BB00484784 /* WorkoutCell.swift */,
-				B31D11331D652F6D00010E9C /* Lets.swift */,
 				B30365D81D6194450030705E /* LiftCell.swift */,
 				B366C7231D5498C500484784 /* SetCell.swift */,
 			);
@@ -177,8 +174,7 @@
 				B321420C1D644D000093A21E /* NewVC.swift */,
 				B32296221D63FA16000B6F08 /* CoreDataVCs.swift */,
 				B31D11391D6533A100010E9C /* TVCWithTVDS.swift */,
-				B3C2F0171D63DA6D005C67FF /* CoreDataTVC.swift */,
-				B31D11371D65325F00010E9C /* CDandTVwithinTVCellTVC.swift */,
+				B31D11371D65325F00010E9C /* CDTVCWithTVDS.swift */,
 				B36DE1071D64010700A898B5 /* TVCWithTableViewInCells.swift */,
 			);
 			name = Generics;
@@ -217,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				B366C7391D54995E00484784 /* Utilities.swift */,
+				B31D11331D652F6D00010E9C /* Lets.swift */,
 				B366C7111D54986000484784 /* CoreData */,
 				B366C72D1D5498E200484784 /* TableViewDataSource */,
 				B366C71B1D54989C00484784 /* Controller */,
@@ -498,8 +495,7 @@
 				B366C7351D54994600484784 /* ManagedObjectObserver.swift in Sources */,
 				B366C7131D54987B00484784 /* ConfigurableCell.swift in Sources */,
 				B30365E21D61B6AC0030705E /* RoutineSetCell.swift in Sources */,
-				B3C2F0181D63DA6D005C67FF /* CoreDataTVC.swift in Sources */,
-				B31D11381D65325F00010E9C /* CDandTVwithinTVCellTVC.swift in Sources */,
+				B31D11381D65325F00010E9C /* CDTVCWithTVDS.swift in Sources */,
 				B366C7401D54996800484784 /* DataProviderDelegate.swift in Sources */,
 				B3E07C231D554CE4006D68AE /* WorkoutLog.xcdatamodeld in Sources */,
 				B366C7361D54994600484784 /* ManagedObjectProtocols.swift in Sources */,

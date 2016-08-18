@@ -1,12 +1,13 @@
 import UIKit
 import CoreData
 
-class WorkoutsTVC: TVCWithTVDS<FetchedResultsDataProvider<WorkoutsTVC>, Workout, WorkoutCell> {
+
+class WorkoutsTVC: CDTVCWithTVDS<Workout, WorkoutCell> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New Workout", style: .plain, target: self, action: #selector(newWorkout))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Lets.newWorkoutBarButtonText, style: .plain, target: self, action: #selector(newWorkout))
     }
     
     func newWorkout() {
@@ -15,8 +16,8 @@ class WorkoutsTVC: TVCWithTVDS<FetchedResultsDataProvider<WorkoutsTVC>, Workout,
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let wtvc = WorkoutTVC()
-        wtvc.source = dataSource.selectedObject
+        let wtvc = WorkoutTVC(dataProvider: dataSource.selectedObject!)
+
         navigationController?.pushViewController(wtvc, animated: true)
     }
     

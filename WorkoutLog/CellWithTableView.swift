@@ -1,6 +1,7 @@
 import UIKit
 import CoreData
 
+
 class CellWithTableView<Source: DataProvider, Type: NSManagedObject, Cell: UITableViewCell>: UITableViewCell where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type {
     
 
@@ -29,9 +30,8 @@ class CellWithTableView<Source: DataProvider, Type: NSManagedObject, Cell: UITab
             dataSource = TableViewDataSource(tableView: tableView, dataProvider: source, delegate: self)
             
             let frame = contentView.frame
-            let width = frame.width
-            print(source.numberOfItems(inSection: 0))
-            tableView.frame = CGRect(x: 8.0, y: 50.0, width: width - 16, height: (CGFloat(source.numberOfItems(inSection: 0)) + 1.0) * 45)
+            let width = Double(frame.width)
+            tableView.frame = CGRect(x: Lets.buffer, y: Lets.heightBetweenTopOfCellAndTV, width: width - Lets.buffer * 2, height: (Double(source.numberOfItems(inSection: 0)) + 1.0) * Lets.subTVCellSize)
             tableView.reloadData()
         }
     }

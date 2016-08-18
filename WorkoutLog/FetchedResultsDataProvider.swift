@@ -1,11 +1,10 @@
 import Foundation
 import CoreData
 
-class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, NSFetchedResultsControllerDelegate, DataProvider {
+class FetchedResultsDataProvider<Object: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate, DataProvider {
     
-    typealias Object = Delegate.Object
     
-    init(fetchedResultsController: NSFetchedResultsController<Delegate.Object>, delegate: Delegate) {
+    init(fetchedResultsController: NSFetchedResultsController<Object>, delegate: DataProviderDelegate) {
         self.fetchedResultsController = fetchedResultsController
         self.delegate = delegate
         super.init()
@@ -30,9 +29,9 @@ class FetchedResultsDataProvider<Delegate: DataProviderDelegate>: NSObject, NSFe
     
     // MARK: Private
     
-    private let fetchedResultsController: NSFetchedResultsController<Delegate.Object>
-    private let delegate: Delegate
-    private var updates: [DataProviderUpdate<Object>] = []
+    private let fetchedResultsController: NSFetchedResultsController<Object>
+    private let delegate: DataProviderDelegate
+    private var updates: [DataProviderUpdate] = []
     
     // MARK: NSFetchedResultsControllerDelegate
     

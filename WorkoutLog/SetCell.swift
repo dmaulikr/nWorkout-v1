@@ -1,10 +1,11 @@
 import UIKit
 
+
 extension SetCell: ConfigurableCell {
     typealias DataSource = LSet
     func configureForObject(object: LSet, at indexPath: IndexPath) {
         if indexPath.section == 1 {
-            textLabel?.text = "Add set..."
+            textLabel?.text = Lets.addSetText
             textFields.forEach { $0.isHidden = true }
             statusButton.isHidden = true
         } else {
@@ -149,7 +150,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         }
     }
     
-    var keyboardView: Keyboard = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: (UIApplication.shared.windows.first?.rootViewController?.view.frame.size.height)! / 3))
+    var keyboardView: Keyboard = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: Double((UIApplication.shared.windows.first?.rootViewController?.view.frame.size.height)!) * Lets.keyboardToViewRatio))
     var currentlyEditing: UITextField?
     
     func keyWasTapped(character: String) {

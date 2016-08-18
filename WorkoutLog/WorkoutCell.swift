@@ -9,7 +9,8 @@ extension WorkoutCell: ConfigurableCell {
         let formatter = DateFormatter()
         formatter.dateFormat = Lets.dateString
         formatter.timeZone = TimeZone(abbreviation: Lets.timeZoneAbbreviation)
-        textLabel?.text = formatter.string(from: object.date! as Date)
+        guard let date = object.date else { return }
+        textLabel?.text = formatter.string(from: date as Date)
     }
 }
 

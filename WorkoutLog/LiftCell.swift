@@ -4,7 +4,10 @@ import CoreData
 extension Lift: DataProvider {
     
     func object(at indexPath: IndexPath) -> LSet {
-        return sets!.object(at: indexPath.row) as! LSet
+        guard let sets = sets else { fatalError() }
+        let lset = sets.object(at: indexPath.row)
+        print(lset)
+        return sets.object(at: indexPath.row) as! LSet
     }
     func numberOfItems(inSection section: Int) -> Int {
         guard section == 0 else { return 1 }
@@ -25,7 +28,7 @@ class LiftCell: CellWithTableView<Lift, LSet, SetCell> {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         
-        let nameFrame = CGRect(x: 0, y: 0, width: 120, height: 40)
+        let nameFrame = CGRect(x: 0, y: 0, width: Lets.liftCellNameLabelWidth, height: Lets.liftCellNameLabelHeight)
         nameLabel = UILabel(frame: nameFrame)
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
