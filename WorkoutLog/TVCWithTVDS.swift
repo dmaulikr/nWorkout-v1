@@ -22,8 +22,8 @@ class TVCWithTVDS<Source: DataProvider, Type: NSManagedObject, Cell: UITableView
     }
 
 
-    internal var dataSource: TableViewDataSource<TVCWithTVDS, Source, Cell>!
-    internal var dataProvider: Source!
+    var dataSource: TableViewDataSource<TVCWithTVDS, Source, Cell>!
+    var dataProvider: Source!
     
     internal func setupTableView() {
         tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifierForRegistration(for: Cell.self))
@@ -46,6 +46,9 @@ class TVCWithTVDS<Source: DataProvider, Type: NSManagedObject, Cell: UITableView
     }
     func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
         print("Implement \(#function)")
+    }
+    func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
+        return nil
     }
 }
 

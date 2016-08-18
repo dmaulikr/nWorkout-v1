@@ -59,4 +59,8 @@ class CellWithTableView<Source: DataProvider, Type: NSManagedObject, Cell: UITab
     }
 }
 
-extension CellWithTableView: DataSourceDelegate {}
+extension CellWithTableView: DataSourceDelegate {
+    internal func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
+        return nil
+    }
+}

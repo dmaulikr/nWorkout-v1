@@ -56,7 +56,7 @@ class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let object = dataProvider.object(at: indexPath)
         let identifier = delegate.cellIdentifier(for: object)
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as? Cell else { fatalError("Unexpected cell type at \(indexPath)") }
+        let cell = (delegate.cell(forRowAt: indexPath, identifier: identifier) ?? tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)) as! Cell
         cell.configureForObject(object: object, at: indexPath)
         return cell
     }

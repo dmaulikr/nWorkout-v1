@@ -19,6 +19,7 @@
 		B321420D1D644D000093A21E /* NewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B321420C1D644D000093A21E /* NewVC.swift */; };
 		B32296211D63EE42000B6F08 /* CellWithTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32296201D63EE42000B6F08 /* CellWithTableView.swift */; };
 		B32296231D63FA16000B6F08 /* CoreDataVCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32296221D63FA16000B6F08 /* CoreDataVCs.swift */; };
+		B339D7AA1D65829F0026287C /* TableViewWithTableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = B339D7A91D65829F0026287C /* TableViewWithTableViewCells.swift */; };
 		B366C6DF1D5497C200484784 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C6DE1D5497C200484784 /* AppDelegate.swift */; };
 		B366C6E91D5497C200484784 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B366C6E81D5497C200484784 /* Assets.xcassets */; };
 		B366C6EC1D5497C200484784 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B366C6EA1D5497C200484784 /* LaunchScreen.storyboard */; };
@@ -83,6 +84,7 @@
 		B321420C1D644D000093A21E /* NewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewVC.swift; sourceTree = "<group>"; };
 		B32296201D63EE42000B6F08 /* CellWithTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellWithTableView.swift; sourceTree = "<group>"; };
 		B32296221D63FA16000B6F08 /* CoreDataVCs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataVCs.swift; sourceTree = "<group>"; };
+		B339D7A91D65829F0026287C /* TableViewWithTableViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewWithTableViewCells.swift; sourceTree = "<group>"; };
 		B366C6DB1D5497C200484784 /* WorkoutLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B366C6DE1D5497C200484784 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B366C6E81D5497C200484784 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 		B366C7101D54984E00484784 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B339D7A91D65829F0026287C /* TableViewWithTableViewCells.swift */,
 				B3791F811D614E3E003DD70F /* Keyboard.xib */,
 				B3791F831D614FDD003DD70F /* Keyboard.swift */,
 				B366C72E1D54993300484784 /* Main.storyboard */,
@@ -490,6 +493,7 @@
 				B36DE1061D63FE4B00A898B5 /* BaseConfigurableCell.swift in Sources */,
 				B366C7261D5498C500484784 /* SetCell.swift in Sources */,
 				B366C73F1D54996800484784 /* DataProvider.swift in Sources */,
+				B339D7AA1D65829F0026287C /* TableViewWithTableViewCells.swift in Sources */,
 				B30365D31D617A3F0030705E /* RoutineCell.swift in Sources */,
 				B32296231D63FA16000B6F08 /* CoreDataVCs.swift in Sources */,
 				B366C7351D54994600484784 /* ManagedObjectObserver.swift in Sources */,

@@ -6,14 +6,8 @@ protocol DataSourceDelegate: class {
     associatedtype Cell: UITableViewCell
     func cellIdentifier(for object: Object) -> String
     func cellIdentifierForRegistration(for cell: Cell.Type) -> String
-    
+
+    func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell?
     func canEditRow(at indexPath: IndexPath) -> Bool
     func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath)
 }
-
-//extension DataSourceDelegate {
-//    func canEditRow(at indexPath: IndexPath) -> Bool {
-//        return false
-//    }
-//    func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) { }
-//}
