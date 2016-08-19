@@ -35,7 +35,7 @@ extension Workout: DataProvider {
 }
 
 class WorkoutsTVC: WorkoutsAndRoutinesTVC<Workout, WorkoutCell> {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

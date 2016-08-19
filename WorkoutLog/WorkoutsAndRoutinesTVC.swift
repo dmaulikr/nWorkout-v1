@@ -42,7 +42,5 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
     }
 }
 
-extension WorkoutsAndRoutinesTVC: TableViewCellWithTableViewDataSource {
-}
-extension WorkoutsAndRoutinesTVC: TableViewCellWithTableViewDelegate {
-}
+
+extension WorkoutsAndRoutinesTVC: TableViewCellWithTableViewDelegateAndDataSource {}

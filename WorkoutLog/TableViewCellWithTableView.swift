@@ -24,13 +24,9 @@ extension ViewController {
         return cell
     }
 }
-extension ViewController: TableViewCellWithTableViewDelegate {
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
-    }
-}
+
 //MARK: CellTableView
-extension ViewController: TableViewCellWithTableViewDataSource {
+extension ViewController: TableViewCellWithTableViewDelegateAndDataSource {
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
         return people[cell.indexPath.row].dogs.count
     }
@@ -45,8 +41,7 @@ extension ViewController: TableViewCellWithTableViewDataSource {
 //MARK: TableViewCelLWithTableView
 class TableViewCellWithTableView: UITableViewCell {
     var indexPath: IndexPath!
-    weak var delegate: TableViewCellWithTableViewDelegate?
-    weak var dataSource: TableViewCellWithTableViewDataSource?
+    weak var delegate: TableViewCellWithTableViewDelegateAndDataSource?
     
     var gapBetweenTopAndTableView: CGFloat = 80.0
     let tableView: UITableView
@@ -54,17 +49,15 @@ class TableViewCellWithTableView: UITableViewCell {
         return SubTableViewDelegateAndDataSource(cell: self)
     }()
 
-    required init(delegateAndDataSource: TableViewCellWithTableViewDelegate & TableViewCellWithTableViewDataSource,
+    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource,
          indexPath: IndexPath) {
         self.indexPath = indexPath
         self.delegate = delegateAndDataSource
-        self.dataSource = delegateAndDataSource
         
         tableView = UITableView(frame: CGRect(), style: .plain)
         super.init(style: .default, reuseIdentifier: "")
         
         subTableViewDelegateAndDataSource.delegate = delegateAndDataSource
-        subTableViewDelegateAndDataSource.dataSource = delegateAndDataSource
         heightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize))
         heightConstraint.isActive = true
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -95,9 +88,6 @@ class TableViewCellWithTableView: UITableViewCell {
         tableView.reloadData()
     }
     
-
-    
-    
     private func customizeTableView() {
         tableView.isScrollEnabled = false
         tableView.layer.borderColor = UIColor.blue.cgColor
@@ -120,14 +110,14 @@ class TableViewCellWithTableView: UITableViewCell {
     }
 }
 //MARK: TableViewCellWithTableView Delegate and DataSource
-protocol TableViewCellWithTableViewDataSource: class {
+protocol TableViewCellWithTableViewDelegateAndDataSource: class {
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     func cell(_ cell: TableViewCellWithTableView, didCommit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool
 }
-extension TableViewCellWithTableViewDataSource {
+extension TableViewCellWithTableViewDelegateAndDataSource {
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
         return 1
     }
@@ -138,9 +128,7 @@ extension TableViewCellWithTableViewDataSource {
         return false
     }
 }
-protocol TableViewCellWithTableViewDelegate: class {
-    
-}
+
 
 //MARK: SubTableViewDelegateAndDataSource
 class SubTableViewDelegateAndDataSource: NSObject {
@@ -149,28 +137,27 @@ class SubTableViewDelegateAndDataSource: NSObject {
         self.cell = cell
     }
     
-    weak var dataSource: TableViewCellWithTableViewDataSource?
-    weak var delegate: TableViewCellWithTableViewDelegate?
+    weak var delegate: TableViewCellWithTableViewDelegateAndDataSource?
 }
 extension SubTableViewDelegateAndDataSource: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let dataSource = dataSource else { return 0 }
-        return dataSource.numberOfSections(in: cell)
+        guard let delegate = delegate else { return 0 }
+        return delegate.numberOfSections(in: cell)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let dataSource = dataSource else { return 0 }
-        return dataSource.cell(cell, numberOfRowsInSection: section)
+        guard let delegate = delegate else { return 0 }
+        return delegate.cell(cell, numberOfRowsInSection: section)
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let dataSource = dataSource else { fatalError("134") }
-        return dataSource.cell(cell, cellForRowAt: indexPath)
+        guard let delegate = delegate else { fatalError("134") }
+        return delegate.cell(cell, cellForRowAt: indexPath)
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        dataSource?.cell(cell, didCommit: editingStyle, forRowAt: indexPath)
+        delegate?.cell(cell, didCommit: editingStyle, forRowAt: indexPath)
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        guard let dataSource = dataSource else { return false }
-        return dataSource.cell(cell, canEditRowAt: indexPath)
+        guard let delegate = delegate else { return false }
+        return delegate.cell(cell, canEditRowAt: indexPath)
     }
 }
 extension SubTableViewDelegateAndDataSource: UITableViewDelegate {

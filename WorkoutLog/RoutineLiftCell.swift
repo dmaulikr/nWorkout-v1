@@ -6,7 +6,7 @@ import CoreData
 class RoutineLiftCell: TableViewCellWithTableView {
     var nameLabel: UILabel
     
-    required init(delegateAndDataSource: TableViewCellWithTableViewDelegate & TableViewCellWithTableViewDataSource,
+    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource,
                   indexPath: IndexPath) {
         
         let nameFrame = CGRect(x: 0, y: 0, width: Lets.liftCellNameLabelWidth, height: Lets.liftCellNameLabelHeight)
