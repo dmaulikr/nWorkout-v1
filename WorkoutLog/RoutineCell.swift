@@ -1,11 +1,8 @@
 import UIKit
 
-class RoutineCell: TableViewCellWithTableView {
-    
-}
-
-extension RoutineCell: ConfigurableCell {
+class RoutineCell: WorkoutAndRoutineCell<Routine>, ConfigurableCell {
     func configureForObject(object: Routine, at indexPath: IndexPath) {
-        textLabel?.text = "\(object.name!)"
+        nameLabel.text = object.name!
     }
 }
+

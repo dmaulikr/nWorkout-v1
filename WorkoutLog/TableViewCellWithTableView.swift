@@ -99,6 +99,7 @@ class TableViewCellWithTableView: UITableViewCell {
     
     
     private func customizeTableView() {
+        tableView.isScrollEnabled = false
         tableView.layer.borderColor = UIColor.blue.cgColor
         tableView.layer.borderWidth = 2.0
         
