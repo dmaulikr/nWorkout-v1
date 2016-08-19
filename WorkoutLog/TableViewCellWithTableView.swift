@@ -122,25 +122,34 @@ class TableViewCellWithTableView: UITableViewCell {
 
 class AnyTVCWTVDADS<InnerCell>: TableViewCellWithTableViewDelegateAndDataSource {
     init<DADS: TableViewCellWithTableViewDelegateAndDataSource>(dads: DADS) where DADS.InnerCell == InnerCell {
-
+        numberOfSections = dads.numberOfSections
+        numberOfRowsInSection = dads.cell
+        cellForRowAt = dads.cell
+        didCommit = dads.cell
+        canEditRowAt = dads.cell
     }
     func thing(innerCell: InnerCell) {
         
     }
+    private let numberOfSections: ((TableViewCellWithTableView) -> Int)
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
-        return 0
+        return numberOfSections(cell)
     }
+    private let numberOfRowsInSection: ((TableViewCellWithTableView, Int) -> Int)
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return numberOfRowsInSection(cell,section)
     }
+    private let cellForRowAt: ((TableViewCellWithTableView, IndexPath) -> UITableViewCell)
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        return cellForRowAt(cell,indexPath)
     }
+    private let didCommit: ((TableViewCellWithTableView, UITableViewCellEditingStyle, IndexPath) -> ())
     func cell(_ cell: TableViewCellWithTableView, didCommit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
+        didCommit(cell,editingSyle,indexPath)
     }
+    private let canEditRowAt: ((TableViewCellWithTableView, IndexPath) -> Bool)
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool{
-        return false
+        return canEditRowAt(cell,indexPath)
     }
 }
 
