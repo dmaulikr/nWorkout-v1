@@ -65,7 +65,8 @@ class TableViewCellWithTableView: UITableViewCell {
         
         subTableViewDelegateAndDataSource.delegate = delegateAndDataSource
         subTableViewDelegateAndDataSource.dataSource = delegateAndDataSource
-        
+        heightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize))
+        heightConstraint.isActive = true
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = subTableViewDelegateAndDataSource
         tableView.dataSource = subTableViewDelegateAndDataSource
@@ -73,9 +74,28 @@ class TableViewCellWithTableView: UITableViewCell {
         contentView.addSubview(tableView)
 
         customizeTableView()
+        tableView.reloadData()
         
+        let numberOfSections = tableView.numberOfSections
+        var cellCounts = [Int]()
+        for i in 0..<numberOfSections {
+            cellCounts.append(tableView.numberOfRows(inSection: i))
+        }
+        var heights = [CGFloat]()
+        for i in 0..<cellCounts.count {
+            if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: i)) {
+                heights.append(cell.frame.height * CGFloat(cellCounts[i]))
+            }
+        }
+        let height = heights.reduce(0) { $0 + $1 }
+
+        frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: height + CGFloat(Lets.heightBetweenTopOfCellAndTV))
+        
+        heightConstraint.constant = height
         tableView.reloadData()
     }
+    
+
     
     
     private func customizeTableView() {
@@ -87,8 +107,7 @@ class TableViewCellWithTableView: UITableViewCell {
         tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
         //        tableView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: gapBetweenTopAndTableView).isActive = true
-        heightConstraint = tableView.heightAnchor.constraint(equalToConstant: 45)
-        heightConstraint.isActive = true
+        
     }
 
     var heightConstraint: NSLayoutConstraint!

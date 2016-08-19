@@ -100,14 +100,27 @@ class RoutineTVC: TVCWithTVDS<Routine, RoutineLift, RoutineLiftCell> {
     override func cell(forRowAt indexPath: IndexPath, identifier: String) -> RoutineLiftCell? {
         return RoutineLiftCell(delegateAndDataSource: self, indexPath: indexPath)
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
+    }
 }
 
 extension RoutineTVC: TableViewCellWithTableViewDataSource {
+    func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
+        return 2
+    }
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        return dataProvider.numberOfItems(inSection: section)
+        if section == 0 {
+            return dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
+        } else {
+            return 1
+        }
     }
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        innerCell.textLabel?.text = dataProvider.object(at: cell.indexPath).name
+        return innerCell
     }
 }
 

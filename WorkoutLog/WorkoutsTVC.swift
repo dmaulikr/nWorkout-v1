@@ -50,7 +50,7 @@ class WorkoutsTVC: CDTVCWithTVDS<Workout, WorkoutCell> {
         return WorkoutCell(delegateAndDataSource: self, indexPath: indexPath)
     }
  
-    override func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
     }
 }
