@@ -1,6 +1,6 @@
 import UIKit
 
-class RoutineCell: UITableViewCell {
+class RoutineCell: TableViewCellWithTableView {
     
 }
 
