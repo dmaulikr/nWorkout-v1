@@ -49,7 +49,7 @@ extension ViewController: TableViewCellWithTableViewDelegateAndDataSource {
 //MARK: TableViewCelLWithTableView
 class TableViewCellWithTableView: UITableViewCell {
     var indexPath: IndexPath!
-    weak var delegate: AnyTVCWTVDADS<Int>?
+    var delegate: AnyTVCWTVDADS<Int>?
     
     var gapBetweenTopAndTableView: CGFloat = 80.0
     let tableView: UITableView
@@ -186,7 +186,7 @@ class SubTableViewDelegateAndDataSource: NSObject {
         self.cell = cell
     }
     
-    weak var delegate: AnyTVCWTVDADS<Int>?
+    var delegate: AnyTVCWTVDADS<Int>?
 }
 extension SubTableViewDelegateAndDataSource: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
