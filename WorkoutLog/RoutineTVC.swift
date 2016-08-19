@@ -96,6 +96,10 @@ class RoutineTVC: TVCWithTVDS<Routine, RoutineLift, RoutineLiftCell> {
             tableView.deleteRows(at: [indexPath], with: .none)
         }
     }
+    
+    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> RoutineLiftCell? {
+        return RoutineLiftCell(delegateAndDataSource: self, indexPath: indexPath)
+    }
 }
 
 extension RoutineTVC: TableViewCellWithTableViewDataSource {
@@ -106,3 +110,5 @@ extension RoutineTVC: TableViewCellWithTableViewDataSource {
         return UITableViewCell()
     }
 }
+
+extension RoutineTVC: TableViewCellWithTableViewDelegate {}
