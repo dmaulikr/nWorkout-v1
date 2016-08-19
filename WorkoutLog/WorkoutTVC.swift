@@ -1,94 +1,18 @@
 import UIKit
 import CoreData
 
-
-
-
-
-class WorkoutTVC: TVCWithTVDS<Workout, Lift, LiftCell> {
-    
-    func stringForButton() -> String {
-        return Lets.newLiftBarButtonText
-    }
+class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         if navigationController!.viewControllers[1] is SelectWorkoutTVC {
             navigationController!.viewControllers.remove(at: 1)
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))
-    }
-    
-    func addButtonTapped() {
-        let nlvc = NewVC(type: Lift.self, placeholder: Lets.newLiftPlaceholderText, barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
-        present(nlvc, animated: true)
-    }
-    
-    func insertNewObject(object: Lift) {
-        var newIndexPath: IndexPath?
-        
-        context.performAndWait {
-            newIndexPath = self.dataProvider.insert(object: object)
-            do {
-                try self.context.save()
-            } catch {
-                print(error)
-            }
-        }
-        guard let indexPath = newIndexPath else { return }
-        tableView.insertRows(at: [indexPath], with: .automatic)
-    }
-    
-    override func canEditRow(at: IndexPath) -> Bool {
-        return true
-    }
-    override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
-        if editingStyle == .delete {
-            dataSource.dataProvider.managedObjectContext?.performAndWait {
-                let object = self.dataSource.dataProvider.object(at: indexPath)
-                self.dataSource.dataProvider.managedObjectContext?.delete(object)
-                do {
-                    try self.dataSource.dataProvider.managedObjectContext!.save()
-                } catch let error {
-                    print(error)
-                }
-            }
-            tableView.deleteRows(at: [indexPath], with: .none)
-        }
-    }
-    
-    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> LiftCell? {
-        return LiftCell(delegateAndDataSource: self, indexPath: indexPath)
-    }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
-    }
-}
-
-extension WorkoutTVC: TableViewCellWithTableViewDataSource {
-    func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
-        return 2
-    }
-    func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
-        } else {
-            return 1
-        }
-    }
-    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         innerCell.textLabel?.text = "\(dataProvider.object(at: cell.indexPath).object(at: indexPath).targetWeight)"
         return innerCell
     }
 }
-
-extension WorkoutTVC: TableViewCellWithTableViewDelegate {}
-

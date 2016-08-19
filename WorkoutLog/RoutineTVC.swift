@@ -38,90 +38,31 @@ extension RoutineLiftCell: ConfigurableCell {
     }
 }
 
-
-class RoutineTVC: TVCWithTVDS<Routine, RoutineLift, RoutineLiftCell> {
-
-    func stringForButton() -> String {
-        return Lets.newLiftBarButtonText
-    }
+extension RoutineLift: DataProvider {
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if navigationController!.viewControllers[1] is SelectWorkoutTVC {
-            navigationController!.viewControllers.remove(at: 1)
+    func object(at: IndexPath) -> RoutineSet {
+        return sets!.object(at: at.row) as! RoutineSet
+    }
+    func numberOfItems(inSection section: Int) -> Int {
+        guard section == 0 else { return 1 }
+        if let sets = sets {
+            return sets.count
+        } else {
+            return 0
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))
-    }
-    
-    func addButtonTapped() {
-        let nlvc = NewVC(type: RoutineLift.self, placeholder: Lets.newLiftPlaceholderText, barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
-        present(nlvc, animated: true)
-    }
-    
-    func insertNewObject(object: RoutineLift) {
-        var newIndexPath: IndexPath?
-        
-        context.performAndWait {
-            newIndexPath = self.dataProvider.insert(object: object)
-            do {
-                try self.context.save()
-            } catch {
-                print(error)
-            }
-        }
-        guard let indexPath = newIndexPath else { return }
-        tableView.insertRows(at: [indexPath], with: .automatic)
-    }
-    
-    override func canEditRow(at: IndexPath) -> Bool {
-        return true
-    }
-    override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
-        if editingStyle == .delete {
-            dataSource.dataProvider.managedObjectContext?.performAndWait {
-                let object = self.dataSource.dataProvider.object(at: indexPath)
-                self.dataSource.dataProvider.managedObjectContext?.delete(object)
-                do {
-                    try self.dataSource.dataProvider.managedObjectContext!.save()
-                } catch let error {
-                    print(error)
-                }
-            }
-            tableView.deleteRows(at: [indexPath], with: .none)
-        }
-    }
-    
-    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> RoutineLiftCell? {
-        return RoutineLiftCell(delegateAndDataSource: self, indexPath: indexPath)
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
+    func numberOfSections() -> Int {
+        return 2
     }
 }
 
-extension RoutineTVC: TableViewCellWithTableViewDataSource {
-    func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
-        return 2
-    }
-    func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
-        } else {
-            return 1
-        }
-    }
-    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+class RoutineTVC: WorkoutAndRoutineTVC<Routine, RoutineLift, RoutineLiftCell> {
+
+    override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         innerCell.textLabel?.text = dataProvider.object(at: cell.indexPath).name
         return innerCell
     }
 }
 
-extension RoutineTVC: TableViewCellWithTableViewDelegate {}
+

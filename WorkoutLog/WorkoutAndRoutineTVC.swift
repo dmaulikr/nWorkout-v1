@@ -1,25 +1,50 @@
 import UIKit
 import CoreData
 
+class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell: TableViewCellWithTableView>: TVCWithTVDS<Source, Type, Cell> where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider, Source: DataProvider {
+    
+    func stringForButton() -> String {
+        return Lets.newLiftBarButtonText
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))
+    }
+    func addButtonTapped() {
+        let nlvc = NewVC(type: Type.self, placeholder: Lets.newLiftPlaceholderText, barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
+        present(nlvc, animated: true)
+    }
 
-class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTableView>: CDTVCWithTVDS<Type, Cell> where Cell: ConfigurableCell, Type: ManagedObjectType, Cell.DataSource == Type, Type: DataProvider {
+    func insertNewObject(object: Type) {
+        var newIndexPath: IndexPath?
+        
+        context.performAndWait {
+            newIndexPath = self.dataProvider.insert(object: object)
+            do {
+                try self.context.save()
+            } catch {
+                print(error)
+            }
+        }
+        guard let indexPath = newIndexPath else { return }
+        tableView.insertRows(at: [indexPath], with: .automatic)
+    }
     
-    
-    // DataSourceDelegate
-    override func canEditRow(at indexPath: IndexPath) -> Bool {
+    override func canEditRow(at: IndexPath) -> Bool {
         return true
     }
     override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
         if editingStyle == .delete {
-            let object = dataSource.dataProvider.object(at: indexPath)
-            object.managedObjectContext!.performAndWait {
-                object.managedObjectContext!.delete(object)
+            dataSource.dataProvider.managedObjectContext?.performAndWait {
+                let object = self.dataSource.dataProvider.object(at: indexPath)
+                self.dataSource.dataProvider.managedObjectContext?.delete(object)
+                do {
+                    try self.dataSource.dataProvider.managedObjectContext!.save()
+                } catch let error {
+                    print(error)
+                }
             }
-            do {
-                try object.managedObjectContext?.save()
-            } catch {
-                print(error)
-            }
+            tableView.deleteRows(at: [indexPath], with: .none)
         }
     }
     
@@ -30,11 +55,15 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
     }
-    
+    func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
+        return 2
+    }
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        let num = dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
-        cell.heightConstraint.constant = CGFloat(num) * CGFloat(Lets.subTVCellSize)
-        return num
+        if section == 0 {
+            return dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
+        } else {
+            return 1
+        }
     }
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
@@ -42,7 +71,6 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
     }
 }
 
-extension WorkoutsAndRoutinesTVC: TableViewCellWithTableViewDataSource {
-}
-extension WorkoutsAndRoutinesTVC: TableViewCellWithTableViewDelegate {
-}
+extension WorkoutAndRoutineTVC: TableViewCellWithTableViewDataSource {}
+extension WorkoutAndRoutineTVC: TableViewCellWithTableViewDelegate {}
+
