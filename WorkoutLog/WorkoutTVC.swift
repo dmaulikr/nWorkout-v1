@@ -36,27 +36,63 @@ extension Workout: DataProvider {
 
 
 
-class WorkoutTVC: TVCWithTableViewInCells<Workout, Lift, LiftCell> {
+class WorkoutTVC: TVCWithTVDS<Workout, Lift, LiftCell> {
     
-    override func stringForButton() -> String {
+    func stringForButton() -> String {
         return Lets.newLiftBarButtonText
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         if navigationController!.viewControllers[1] is SelectWorkoutTVC {
             navigationController!.viewControllers.remove(at: 1)
         }
-        
-        observeNotification(named: "setChanged")
     }
     
-    override func cellIdentifier(for object: Lift) -> String {
-        return "liftCell"
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))
     }
-    override func cellIdentifierForRegistration(for cell: LiftCell.Type) -> String {
-        return "liftCell"
+    
+    func addButtonTapped() {
+        let nlvc = NewVC(type: Lift.self, placeholder: Lets.newLiftPlaceholderText, barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
+        present(nlvc, animated: true)
     }
+    
+    func insertNewObject(object: Lift) {
+        var newIndexPath: IndexPath?
+        
+        context.performAndWait {
+            newIndexPath = self.dataProvider.insert(object: object)
+            do {
+                try self.context.save()
+            } catch {
+                print(error)
+            }
+        }
+        guard let indexPath = newIndexPath else { return }
+        tableView.insertRows(at: [indexPath], with: .automatic)
+    }
+    
+    override func canEditRow(at: IndexPath) -> Bool {
+        return true
+    }
+    override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
+        if editingStyle == .delete {
+            dataSource.dataProvider.managedObjectContext?.performAndWait {
+                let object = self.dataSource.dataProvider.object(at: indexPath)
+                self.dataSource.dataProvider.managedObjectContext?.delete(object)
+                do {
+                    try self.dataSource.dataProvider.managedObjectContext!.save()
+                } catch let error {
+                    print(error)
+                }
+            }
+            tableView.deleteRows(at: [indexPath], with: .none)
+        }
+    }
+    
 }
 
