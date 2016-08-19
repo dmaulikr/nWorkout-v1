@@ -54,7 +54,7 @@ class TableViewCellWithTableView: UITableViewCell {
         return SubTableViewDelegateAndDataSource(cell: self)
     }()
 
-    init(delegateAndDataSource: TableViewCellWithTableViewDelegate & TableViewCellWithTableViewDataSource,
+    required init(delegateAndDataSource: TableViewCellWithTableViewDelegate & TableViewCellWithTableViewDataSource,
          indexPath: IndexPath) {
         self.indexPath = indexPath
         self.delegate = delegateAndDataSource
@@ -72,15 +72,23 @@ class TableViewCellWithTableView: UITableViewCell {
 
         contentView.addSubview(tableView)
 
+        customizeTableView()
+        
+        tableView.reloadData()
+    }
+    
+    
+    private func customizeTableView() {
+        tableView.layer.borderColor = UIColor.blue.cgColor
+        tableView.layer.borderWidth = 2.0
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-//        tableView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: gapBetweenTopAndTableView).isActive = true
+        //        tableView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: gapBetweenTopAndTableView).isActive = true
         heightConstraint = tableView.heightAnchor.constraint(equalToConstant: 45)
         heightConstraint.isActive = true
-        
-        tableView.reloadData()
     }
 
     var heightConstraint: NSLayoutConstraint!

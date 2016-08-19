@@ -17,7 +17,6 @@
 		B31D11381D65325F00010E9C /* CDTVCWithTVDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11371D65325F00010E9C /* CDTVCWithTVDS.swift */; };
 		B31D113A1D6533A100010E9C /* TVCWithTVDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11391D6533A100010E9C /* TVCWithTVDS.swift */; };
 		B321420D1D644D000093A21E /* NewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B321420C1D644D000093A21E /* NewVC.swift */; };
-		B32296211D63EE42000B6F08 /* CellWithTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32296201D63EE42000B6F08 /* CellWithTableView.swift */; };
 		B32296231D63FA16000B6F08 /* CoreDataVCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32296221D63FA16000B6F08 /* CoreDataVCs.swift */; };
 		B339D7AA1D65829F0026287C /* TableViewWithTableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = B339D7A91D65829F0026287C /* TableViewWithTableViewCells.swift */; };
 		B366C6DF1D5497C200484784 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C6DE1D5497C200484784 /* AppDelegate.swift */; };
@@ -81,7 +80,6 @@
 		B31D11371D65325F00010E9C /* CDTVCWithTVDS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDTVCWithTVDS.swift; sourceTree = "<group>"; };
 		B31D11391D6533A100010E9C /* TVCWithTVDS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVCWithTVDS.swift; sourceTree = "<group>"; };
 		B321420C1D644D000093A21E /* NewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewVC.swift; sourceTree = "<group>"; };
-		B32296201D63EE42000B6F08 /* CellWithTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellWithTableView.swift; sourceTree = "<group>"; };
 		B32296221D63FA16000B6F08 /* CoreDataVCs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataVCs.swift; sourceTree = "<group>"; };
 		B339D7A91D65829F0026287C /* TableViewWithTableViewCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewWithTableViewCells.swift; sourceTree = "<group>"; };
 		B366C6DB1D5497C200484784 /* WorkoutLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,7 +253,6 @@
 		B366C7101D54984E00484784 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B339D7A91D65829F0026287C /* TableViewWithTableViewCells.swift */,
 				B3791F811D614E3E003DD70F /* Keyboard.xib */,
 				B3791F831D614FDD003DD70F /* Keyboard.swift */,
 				B366C72E1D54993300484784 /* Main.storyboard */,
@@ -277,7 +274,7 @@
 		B366C7141D54987E00484784 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B32296201D63EE42000B6F08 /* CellWithTableView.swift */,
+				B339D7A91D65829F0026287C /* TableViewWithTableViewCells.swift */,
 				B366C7121D54987B00484784 /* ConfigurableCell.swift */,
 				B36DE1051D63FE4B00A898B5 /* BaseConfigurableCell.swift */,
 				B30365DD1D61B6860030705E /* Workout */,
@@ -508,7 +505,6 @@
 				B366C7411D54996800484784 /* DataProviderUpdate.swift in Sources */,
 				B366C72B1D5498DD00484784 /* DataSourceDelegate.swift in Sources */,
 				B30365D71D61863C0030705E /* RoutineTVC.swift in Sources */,
-				B32296211D63EE42000B6F08 /* CellWithTableView.swift in Sources */,
 				B366C6DF1D5497C200484784 /* AppDelegate.swift in Sources */,
 				B366C7161D54988900484784 /* ContextExtensions.swift in Sources */,
 				B366C73A1D54995E00484784 /* Utilities.swift in Sources */,

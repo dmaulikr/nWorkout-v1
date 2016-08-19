@@ -32,6 +32,12 @@ extension Routine: DataProvider {
     }
 }
 
+extension RoutineLiftCell: ConfigurableCell {
+    func configureForObject(object: RoutineLift, at indexPath: IndexPath) {
+        nameLabel.text = object.name
+    }
+}
+
 
 class RoutineTVC: TVCWithTVDS<Routine, RoutineLift, RoutineLiftCell> {
 
@@ -90,6 +96,13 @@ class RoutineTVC: TVCWithTVDS<Routine, RoutineLift, RoutineLiftCell> {
             tableView.deleteRows(at: [indexPath], with: .none)
         }
     }
+}
 
-
+extension RoutineTVC: TableViewCellWithTableViewDataSource {
+    func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
+        return dataProvider.numberOfItems(inSection: section)
+    }
+    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
 }

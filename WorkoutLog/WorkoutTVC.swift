@@ -93,6 +93,14 @@ class WorkoutTVC: TVCWithTVDS<Workout, Lift, LiftCell> {
             tableView.deleteRows(at: [indexPath], with: .none)
         }
     }
-    
+}
+
+extension WorkoutTVC: TableViewCellWithTableViewDataSource {
+    func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
+        return dataProvider.numberOfItems(inSection: section)
+    }
+    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
 }
 

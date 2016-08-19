@@ -2,7 +2,7 @@ import UIKit
 
 class WorkoutCell: TableViewCellWithTableView {
     var nameLabel: UILabel
-    override init(delegateAndDataSource: TableViewCellWithTableViewDelegate & TableViewCellWithTableViewDataSource, indexPath: IndexPath) {
+    required init(delegateAndDataSource: TableViewCellWithTableViewDelegate & TableViewCellWithTableViewDataSource, indexPath: IndexPath) {
         nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 120, height: 35))
         super.init(delegateAndDataSource: delegateAndDataSource, indexPath: indexPath)
         contentView.addSubview(nameLabel)
