@@ -11,11 +11,8 @@ import CoreData
 //}
 //}
 
-
-
-
-class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell: UITableViewCell>: TVCWithTVDS<Source,Type,Cell> where Type: ManagedObjectType, Source: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider {
-
+class TVCWithTableViewCellWithTableView<Source: DataProvider, Type: NSManagedObject, Cell: TableViewCellWithTableView>: TVCWithTVDS<Source,Type,Cell> where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider, Source: NSManagedObject {
+    
     func stringForButton() -> String {
         assertionFailure("Implement this")
         return ""
@@ -28,31 +25,6 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))
     }
     
-    func observeNotification(named name: String) {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: name), object: nil, queue: OperationQueue.main) { notification in
-            let type = notification.object as! Type
-            var indexPath = self.dataProvider.index(of: type)
-            if indexPath.row > 1000000 {
-                print("WTF THE ROW IS \(indexPath.row))")
-                indexPath.row = 0
-            }
-            let cell = self.tableView.cellForRow(at: indexPath)!
-            let change: CGFloat = notification.userInfo!["change"] as! String == "add" ? CGFloat(Lets.subTVCellSize) : -CGFloat(Lets.subTVCellSize)
-            //TODO: This sould not be a number.
-            self.tableView.beginUpdates()
-            UIView.animate(withDuration: Lets.tableCellAdditionAnimationDuration) {
-                cell.frame = CGRect(x: cell.frame.origin.x, y: cell.frame.origin.y, width: cell.frame.width, height: cell.frame.height + change)
-            }
-            self.tableView.endUpdates()
-            //            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-    }
-    
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        NotificationCenter.default.removeObserver(self)
-    }
     
     func addButtonTapped() {
         let nlvc = NewVC(type: Type.self, placeholder: Lets.newLiftPlaceholderText, barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
@@ -83,7 +55,6 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
         return CGFloat(Lets.heightBetweenTopOfCellAndTV + Double(count + 1) * Lets.subTVCellSize)
     }
     
-
     
     //DataSourceDelegate
     //Has to be here to be overrideable
@@ -93,7 +64,7 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
     }
     override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
         if editingStyle == .delete {
-            dataSource.dataProvider.managedObjectContext?.performAndWait {
+            dataProvider.managedObjectContext?.performAndWait {
                 let object = self.dataSource.dataProvider.object(at: indexPath)
                 self.dataSource.dataProvider.managedObjectContext?.delete(object)
                 do {
@@ -105,4 +76,49 @@ class TVCWithTableViewInCells<Source: DataProvider, Type: NSManagedObject, Cell:
             tableView.deleteRows(at: [indexPath], with: .none)
         }
     }
+    
+    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
+        return Cell(delegateAndDataSource: self, indexPath: indexPath, subTableViewCellType: UITableViewCell.self)
+    }
+    
+    func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
+        let num = dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
+        cell.heightConstraint.constant = CGFloat(num) * CGFloat(Lets.subTVCellSize)
+        return num
+    }
+    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let tvcell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let lift = dataProvider.object(at: cell.indexPath).object(at: indexPath)
+        tvcell.textLabel?.text = lift.description
+        return tvcell
+    }
 }
+
+extension TVCWithTableViewCellWithTableView: TableViewCellWithTableViewDataSource {
+
+}
+
+extension TVCWithTableViewCellWithTableView: TableViewCellWithTableViewDelegate {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

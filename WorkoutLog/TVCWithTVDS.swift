@@ -33,12 +33,10 @@ class TVCWithTVDS<Source: DataProvider, Type: NSManagedObject, Cell: UITableView
     //DataSourceDelegate
     //Has to be here to be overrideable
     func cellIdentifier(for object: Type) -> String {
-        assertionFailure("You must override cellIdentifier(for object: Type")
-        return ""
+        return "cell"
     }
     func cellIdentifierForRegistration(for cell: Cell.Type) -> String {
-        assertionFailure("You must override cellIdentifier(for object: Type")
-        return ""
+        return "cell"
     }
     func canEditRow(at: IndexPath) -> Bool {
         print("Implement \(#function)")

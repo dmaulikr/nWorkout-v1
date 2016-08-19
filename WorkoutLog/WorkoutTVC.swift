@@ -36,7 +36,7 @@ extension Workout: DataProvider {
 
 
 
-class WorkoutTVC: TVCWithTableViewInCells<Workout, Lift, LiftCell> {
+class WorkoutTVC: TVCWithTableViewCellWithTableView<Workout, Lift, LiftCell> {
     
     override func stringForButton() -> String {
         return Lets.newLiftBarButtonText
@@ -44,19 +44,29 @@ class WorkoutTVC: TVCWithTableViewInCells<Workout, Lift, LiftCell> {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         if navigationController!.viewControllers[1] is SelectWorkoutTVC {
             navigationController!.viewControllers.remove(at: 1)
         }
-        
-        observeNotification(named: "setChanged")
     }
     
-    override func cellIdentifier(for object: Lift) -> String {
-        return "liftCell"
+    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> LiftCell? {
+        return LiftCell(delegateAndDataSource: self, indexPath: indexPath, subTableViewCellType: SetCell.self)
     }
-    override func cellIdentifierForRegistration(for cell: LiftCell.Type) -> String {
-        return "liftCell"
+}
+
+extension WorkoutTVC {
+    func cell(_ cell: TableViewCellWithTableView, didSelectRowAt indexPath: IndexPath) {
+        let lift = dataProvider.object(at: indexPath)
+        
+        context.performAndWait {
+            let newSet = LSet(context: self.context)
+            newSet.targetWeight = (lift.sets?.lastObject as? LSet)?.targetWeight ?? 0
+            newSet.targetReps = (lift.sets?.lastObject as? LSet)?.targetReps ?? 0
+            
+            lift.addToSets(newSet)
+            try! self.context.save()
+        }
     }
 }
 

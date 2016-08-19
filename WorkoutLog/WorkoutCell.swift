@@ -1,10 +1,10 @@
 import UIKit
 
-class WorkoutCell: TableViewCellWithTableView {
+class WorkoutCell: TableViewCellWithTableView<UITableViewCell, WorkoutsTVC> {
     var nameLabel: UILabel
-    override init(delegateAndDataSource: TableViewCellWithTableViewDelegate & TableViewCellWithTableViewDataSource, indexPath: IndexPath) {
+    required init(delegateAndDataSource: WorkoutTVC, indexPath: IndexPath, subTableViewCellType: UITableViewCell.Type) {
         nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 120, height: 35))
-        super.init(delegateAndDataSource: delegateAndDataSource, indexPath: indexPath)
+        super.init(delegateAndDataSource: delegateAndDataSource, indexPath: indexPath, subTableViewCellType: subTableViewCellType)
         contentView.addSubview(nameLabel)
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -17,6 +17,7 @@ class WorkoutCell: TableViewCellWithTableView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 }
 
 extension WorkoutCell: ConfigurableCell {
@@ -27,6 +28,7 @@ extension WorkoutCell: ConfigurableCell {
         guard let date = object.date else { return }
         nameLabel.text = formatter.string(from: date as Date)
         tableView.isScrollEnabled = false
+        tableView.isUserInteractionEnabled = false
     }
 }
 

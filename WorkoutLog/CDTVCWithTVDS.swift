@@ -19,14 +19,7 @@ class CDTVCWithTVDS<Type: NSManagedObject, Cell: UITableViewCell> : TVCWithTVDS<
 
     //DataSourceDelegate
     //Has to be here to be overrideable
-    override func cellIdentifier(for object: Type) -> String {
-        assertionFailure("You must override cellIdentifier(for object: Type")
-        return ""
-    }
-    override func cellIdentifierForRegistration(for cell: Cell.Type) -> String {
-        assertionFailure("You must override cellIdentifier(for object: Type")
-        return ""
-    }
+
     override func canEditRow(at: IndexPath) -> Bool {
         print("Implement \(#function)")
         return false

@@ -1,13 +1,5 @@
 import CoreData
 
-extension Workout: ManagedObjectType {
-    public static var entityName: String {
-        return "Workout"
-    }
-    public static var defaultSortDescriptors: [NSSortDescriptor] {
-        return [NSSortDescriptor(key: "date", ascending: false)]
-    }
-}
 
 
 extension Lift: ManagedObjectType {
