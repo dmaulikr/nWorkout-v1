@@ -3,7 +3,7 @@ import CoreData
 
 class WorkoutAndRoutineCell<Type: NSManagedObject>: TableViewCellWithTableView {
     var nameLabel: UILabel
-    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource, indexPath: IndexPath) {
+    required init(delegateAndDataSource: AnyTVCWTVDADS<Int>, indexPath: IndexPath) {
         nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 120, height: 35))
         super.init(delegateAndDataSource: delegateAndDataSource, indexPath: indexPath)
         contentView.addSubview(nameLabel)

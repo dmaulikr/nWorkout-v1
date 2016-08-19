@@ -19,7 +19,8 @@ extension ViewController {
         return people.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = TableViewCellWithTableView(delegateAndDataSource: self, indexPath: indexPath)
+        let anyDADS = AnyTVCWTVDADS(dads: self)
+        let cell = TableViewCellWithTableView(delegateAndDataSource: anyDADS, indexPath: indexPath)
         cell.textLabel?.text = people[indexPath.row].name
         return cell
     }
@@ -27,6 +28,9 @@ extension ViewController {
 
 //MARK: CellTableView
 extension ViewController: TableViewCellWithTableViewDelegateAndDataSource {
+    func thing(innerCell: Int) {
+        //
+    }
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
         return people[cell.indexPath.row].dogs.count
     }
@@ -38,10 +42,14 @@ extension ViewController: TableViewCellWithTableViewDelegateAndDataSource {
     }
 }
 
+
+
+
+
 //MARK: TableViewCelLWithTableView
 class TableViewCellWithTableView: UITableViewCell {
     var indexPath: IndexPath!
-    weak var delegate: TableViewCellWithTableViewDelegateAndDataSource?
+    weak var delegate: AnyTVCWTVDADS<Int>?
     
     var gapBetweenTopAndTableView: CGFloat = 80.0
     let tableView: UITableView
@@ -49,7 +57,7 @@ class TableViewCellWithTableView: UITableViewCell {
         return SubTableViewDelegateAndDataSource(cell: self)
     }()
 
-    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource,
+    required init(delegateAndDataSource: AnyTVCWTVDADS<Int>,
          indexPath: IndexPath) {
         self.indexPath = indexPath
         self.delegate = delegateAndDataSource
@@ -110,7 +118,36 @@ class TableViewCellWithTableView: UITableViewCell {
     }
 }
 //MARK: TableViewCellWithTableView Delegate and DataSource
+
+
+class AnyTVCWTVDADS<InnerCell>: TableViewCellWithTableViewDelegateAndDataSource {
+    init<DADS: TableViewCellWithTableViewDelegateAndDataSource>(dads: DADS) where DADS.InnerCell == InnerCell {
+
+    }
+    func thing(innerCell: InnerCell) {
+        
+    }
+    func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
+        return 0
+    }
+    func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    func cell(_ cell: TableViewCellWithTableView, didCommit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+    }
+    func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool{
+        return false
+    }
+}
+
+
 protocol TableViewCellWithTableViewDelegateAndDataSource: class {
+    associatedtype InnerCell
+    func thing(innerCell: InnerCell)
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -118,6 +155,9 @@ protocol TableViewCellWithTableViewDelegateAndDataSource: class {
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool
 }
 extension TableViewCellWithTableViewDelegateAndDataSource {
+    func thing(innerCell: InnerCell) {
+        
+    }
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
         return 1
     }
@@ -137,7 +177,7 @@ class SubTableViewDelegateAndDataSource: NSObject {
         self.cell = cell
     }
     
-    weak var delegate: TableViewCellWithTableViewDelegateAndDataSource?
+    weak var delegate: AnyTVCWTVDADS<Int>?
 }
 extension SubTableViewDelegateAndDataSource: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {

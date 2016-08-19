@@ -49,7 +49,8 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
     }
     
     override func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
-        return Cell(delegateAndDataSource: self, indexPath: indexPath)
+        let anyDADS = AnyTVCWTVDADS(dads: self)
+        return Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -68,6 +69,9 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         return innerCell
+    }
+    func thing(innerCell: Int) {
+        //
     }
 }
 

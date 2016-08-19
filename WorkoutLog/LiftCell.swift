@@ -26,7 +26,7 @@ class LiftCell: TableViewCellWithTableView {
     
     var nameLabel: UILabel
     
-    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource,
+    required init(delegateAndDataSource: AnyTVCWTVDADS<Int>,
                   indexPath: IndexPath) {
         
         let nameFrame = CGRect(x: 0, y: 0, width: Lets.liftCellNameLabelWidth, height: Lets.liftCellNameLabelHeight)
