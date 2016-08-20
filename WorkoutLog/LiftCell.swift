@@ -47,10 +47,38 @@ extension Lift: DataProvider {
 }
 
 class LiftCell: WorkoutAndRoutineCell<Lift> {
+    var labelStackView: UIStackView!
 }
 
 extension LiftCell: ConfigurableCell {
+    
     func configureForObject(object: Lift, at indexPath: IndexPath) {
         nameLabel.text = object.name
+        
+        let twLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        twLabel.text = "Target Weight"
+        let trLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        trLabel.text = "Target Reps"
+        let cwLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        cwLabel.text = "Completed Weight"
+        let crLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        crLabel.text = "Completed Reps"
+        let labels = [twLabel,trLabel,cwLabel,crLabel, UILabel()]
+        for label in labels {
+            label.textAlignment = .center
+            label.numberOfLines = 0
+        }
+        labelStackView = UIStackView(arrangedSubviews: labels)
+        labelStackView.spacing = 10
+        labelStackView.axis = .horizontal
+        labelStackView.distribution = .fillEqually
+        contentView.addSubview(labelStackView)
+        
+        labelStackView.translatesAutoresizingMaskIntoConstraints = false
+        labelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8).isActive = true
+        labelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
+        labelStackView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize)).isActive = true
+        labelStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
+        
     }
 }
