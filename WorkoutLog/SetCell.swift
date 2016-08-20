@@ -237,7 +237,7 @@ extension SetCell: UITextFieldDelegate {
         }
         if self.completedWeight == self.targetWeight && self.completedReps == self.targetReps {
             self.statusButton.status = .done
-        } else {
+        } else if completedWeightTextField == textField || completedRepsTextField == textField {
             self.statusButton.status = .fail
         }
     }
