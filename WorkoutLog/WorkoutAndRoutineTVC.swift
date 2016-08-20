@@ -14,10 +14,8 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
         let nlvc = NewVC(type: Type.self, placeholder: Lets.newLiftPlaceholderText, barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
         present(nlvc, animated: true)
     }
-
     func insertNewObject(object: Type) {
         var newIndexPath: IndexPath?
-        
         context.performAndWait {
             newIndexPath = self.dataProvider.insert(object: object)
             do {
@@ -30,6 +28,7 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
+    //DataSourceDelegate
     override func canEditRow(at: IndexPath) -> Bool {
         return true
     }
@@ -47,15 +46,16 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
             tableView.deleteRows(at: [indexPath], with: .none)
         }
     }
-    
     override func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
         let anyDADS = AnyTVCWTVDADS(dads: self)
         return Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
     }
-    
+    //UITableViewDelegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return (CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) + 1.0) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
     }
+    
+    //TVCWTVDaDS
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
         return 2
     }
@@ -89,6 +89,18 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
         guard let indexPath = newInnerIndexPath else { return }
         tableView.beginUpdates()
         cell.tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+    }
+    func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.section == 1 { return false } else { return true }
+    }
+    func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let outerObject = dataProvider.object(at: cell.indexPath)
+        let toRemove = outerObject.object(at: indexPath)
+        outerObject.remove(object: toRemove)
+        
+        tableView.beginUpdates()
+        cell.tableView.deleteRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
     }
     

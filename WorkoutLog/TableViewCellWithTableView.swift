@@ -9,11 +9,15 @@ class InnerTableView: UITableView {
     }
     override func deleteRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
         super.deleteRows(at: indexPaths, with: animation)
+        outerCell.didDeleteRows(at: indexPaths)
     }
 }
 //MARK: TableViewCelLWithTableView
 class TableViewCellWithTableView: UITableViewCell {
     func didInsertRows(at indexPaths: [IndexPath]) {
+        updateTableViewHeight()
+    }
+    func didDeleteRows(at indexPaths: [IndexPath]) {
         updateTableViewHeight()
     }
     func updateTableViewHeight() {
@@ -27,7 +31,6 @@ class TableViewCellWithTableView: UITableViewCell {
         let height = cellCounts.reduce(CGFloat(0)) { $0 + CGFloat($1) * CGFloat(Lets.subTVCellSize) }
         
         frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: height + CGFloat(Lets.heightBetweenTopOfCellAndTV))
-
         
         heightConstraint.constant = height
     }
@@ -97,7 +100,7 @@ class AnyTVCWTVDADS<InnerCell>: TableViewCellWithTableViewDelegateAndDataSource 
         numberOfSections = dads.numberOfSections
         numberOfRowsInSection = dads.cell
         cellForRowAt = dads.cell
-        didCommit = dads.cell
+        commit = dads.cell
         canEditRowAt = dads.cell
         registerInnerCellForSection = dads.cell
         heightForRowAtInner = dads.cell
@@ -116,9 +119,9 @@ class AnyTVCWTVDADS<InnerCell>: TableViewCellWithTableViewDelegateAndDataSource 
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return cellForRowAt(cell,indexPath)
     }
-    private let didCommit: ((TableViewCellWithTableView, UITableViewCellEditingStyle, IndexPath) -> ())
-    func cell(_ cell: TableViewCellWithTableView, didCommit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        didCommit(cell,editingSyle,indexPath)
+    private let commit: ((TableViewCellWithTableView, UITableViewCellEditingStyle, IndexPath) -> ())
+    func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        commit(cell,editingSyle,indexPath)
     }
     private let canEditRowAt: ((TableViewCellWithTableView, IndexPath) -> Bool)
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool{
@@ -151,7 +154,7 @@ protocol TableViewCellWithTableViewDelegateAndDataSource: class {
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int)
     //Optional
-    func cell(_ cell: TableViewCellWithTableView, didCommit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
+    func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int
     func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat
@@ -161,7 +164,7 @@ protocol TableViewCellWithTableViewDelegateAndDataSource: class {
 extension TableViewCellWithTableViewDelegateAndDataSource {
     func thing(innerCell: InnerCell) { }
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int { return 1 }
-    func cell(_ cell: TableViewCellWithTableView, didCommit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { }
+    func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { }
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool { return false }
     func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat { return cell.tableView.rowHeight }
     func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return innerIndexPath }
@@ -195,13 +198,12 @@ extension SubTableViewDelegateAndDataSource: UITableViewDataSource {
         return delegate.cell(cell, cellForRowAt: indexPath)
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        delegate?.cell(cell, didCommit: editingStyle, forRowAt: indexPath)
+        delegate?.cell(cell, commit: editingStyle, forRowAt: indexPath)
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         guard let delegate = delegate else { return false }
         return delegate.cell(cell, canEditRowAt: indexPath)
     }
-    
 }
 extension SubTableViewDelegateAndDataSource: UITableViewDelegate {
     @objc(tableView:heightForRowAtIndexPath:) func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -4,6 +4,10 @@ import CoreData
 
 class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTableView>: CDTVCWithTVDS<Type, Cell> where Cell: ConfigurableCell, Type: ManagedObjectType, Cell.DataSource == Type, Type: DataProvider {
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
     
     // DataSourceDelegate
     override func canEditRow(at indexPath: IndexPath) -> Bool {
@@ -22,16 +26,18 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
             }
         }
     }
-    
     override func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
         let anyDADS = AnyTVCWTVDADS(dads: self)
         return Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
     }
     
+    
+    //UITableViewDelegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
     }
     
+    //TVCWTVDaDS
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
         let num = dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
         cell.heightConstraint.constant = CGFloat(num) * CGFloat(Lets.subTVCellSize)
@@ -41,9 +47,7 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         return innerCell
     }
-    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
-        fatalError()
-    }
+    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { fatalError() }
     func thing(innerCell: Int) { }
 }
 

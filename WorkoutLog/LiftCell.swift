@@ -34,6 +34,16 @@ extension Lift: DataProvider {
         let row = sets?.count ?? 1
         return IndexPath(row: row - 1, section: 0)
     }
+    func remove(object: LSet) {
+        managedObjectContext?.performAndWait {
+            self.removeFromSets(object)
+            do {
+                try self.managedObjectContext?.save()
+            } catch {
+                print(error)
+            }
+        }
+    }
 }
 
 class LiftCell: WorkoutAndRoutineCell<Lift> {

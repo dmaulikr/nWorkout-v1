@@ -68,6 +68,16 @@ extension RoutineLift: DataProvider {
         let row = sets?.count ?? 1
         return IndexPath(row: row - 1, section: 0)
     }
+    func remove(object: RoutineSet) {
+        managedObjectContext?.performAndWait {
+            self.removeFromSets(object)
+            do {
+                try self.managedObjectContext?.save()
+            } catch {
+                print(error)
+            }
+        }
+    }
 }
 
 class RoutineTVC: WorkoutAndRoutineTVC<Routine, RoutineLift, RoutineLiftCell> {
