@@ -1,12 +1,41 @@
 import UIKit
 
+//MARK: InnerTableView
+class InnerTableView: UITableView {
+    weak var outerCell: TableViewCellWithTableView!
+    override func insertRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
+        super.insertRows(at: indexPaths, with: animation)
+        outerCell.didInsertRows(at: indexPaths)
+    }
+    override func deleteRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
+        super.deleteRows(at: indexPaths, with: animation)
+    }
+}
 //MARK: TableViewCelLWithTableView
 class TableViewCellWithTableView: UITableViewCell {
+    func didInsertRows(at indexPaths: [IndexPath]) {
+        updateTableViewHeight()
+    }
+    func updateTableViewHeight() {
+        
+        let numberOfSections = tableView.numberOfSections
+        var cellCounts = [Int]()
+        for i in 0..<numberOfSections {
+            cellCounts.append(tableView.numberOfRows(inSection: i))
+        }
+        
+        let height = cellCounts.reduce(CGFloat(0)) { $0 + CGFloat($1) * CGFloat(Lets.subTVCellSize) }
+        
+        frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: height + CGFloat(Lets.heightBetweenTopOfCellAndTV))
+
+        
+        heightConstraint.constant = height
+    }
     var indexPath: IndexPath!
     var delegate: AnyTVCWTVDADS<Int>?
     
     var gapBetweenTopAndTableView: CGFloat = 80.0
-    let tableView: UITableView
+    let tableView: InnerTableView
     lazy var subTableViewDelegateAndDataSource: SubTableViewDelegateAndDataSource = {
         return SubTableViewDelegateAndDataSource(cell: self)
     }()
@@ -15,10 +44,11 @@ class TableViewCellWithTableView: UITableViewCell {
                   indexPath: IndexPath) {
         self.indexPath = indexPath
         self.delegate = delegateAndDataSource
+        self.tableView = InnerTableView(frame: CGRect(), style: .plain)
         
-        tableView = UITableView(frame: CGRect(), style: .plain)
         super.init(style: .default, reuseIdentifier: "")
         
+        tableView.outerCell = self
         subTableViewDelegateAndDataSource.delegate = delegateAndDataSource
         heightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize))
         heightConstraint.isActive = true
@@ -31,17 +61,8 @@ class TableViewCellWithTableView: UITableViewCell {
         customizeTableView()
         tableView.reloadData()
         
-        let numberOfSections = tableView.numberOfSections
-        var cellCounts = [Int]()
-        for i in 0..<numberOfSections {
-            cellCounts.append(tableView.numberOfRows(inSection: i))
-        }
-
-        let height = cellCounts.reduce(CGFloat(0)) { $0 + CGFloat($1) * CGFloat(Lets.subTVCellSize) }
+        updateTableViewHeight()
         
-        frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: height + CGFloat(Lets.heightBetweenTopOfCellAndTV))
-        
-        heightConstraint.constant = height
         tableView.reloadData()
     }
     
@@ -146,6 +167,8 @@ extension TableViewCellWithTableViewDelegateAndDataSource {
     func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return innerIndexPath }
     func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) {  }
 }
+
+
 
 
 //MARK: SubTableViewDelegateAndDataSource

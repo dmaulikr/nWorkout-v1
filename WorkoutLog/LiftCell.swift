@@ -20,6 +20,20 @@ extension Lift: DataProvider {
     func numberOfSections() -> Int {
         return 2
     }
+    func insert(object: LSet) -> IndexPath {
+        managedObjectContext?.performAndWait {
+            self.addToSets(object)
+            object.targetReps = 6
+            object.targetWeight = 225
+            do {
+                try self.managedObjectContext?.save()
+            } catch {
+                print(error)
+            }
+        }
+        let row = sets?.count ?? 1
+        return IndexPath(row: row - 1, section: 0)
+    }
 }
 
 class LiftCell: WorkoutAndRoutineCell<Lift> {

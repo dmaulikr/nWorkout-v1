@@ -66,16 +66,35 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
             return 1
         }
     }
-    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        fatalError()
+    func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? {
+        if innerIndexPath.section == 1 {
+            return innerIndexPath
+        } else {
+            return nil
+        }
     }
-    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
-        fatalError()
+    func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) {
+        cell.tableView.deselectRow(at: innerIndexPath, animated: true)
+        var newInnerIndexPath: IndexPath?
+        context.performAndWait {
+            let set = Type.Object(context: self.context)
+            let lift = self.dataProvider.object(at: cell.indexPath)
+            newInnerIndexPath = lift.insert(object: set)
+            do {
+                try self.context.save()
+            } catch {
+                print(error)
+            }
+        }
+        guard let indexPath = newInnerIndexPath else { return }
+        tableView.beginUpdates()
+        cell.tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
     }
-//    func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat {
-//        let sets = dataProvider.object(at: cell.indexPath).numberOfItems(inSection: 0)
-//        return CGFloat(1 + sets) * CGFloat(Lets.subTVCellSize)
-//    }
+    
+    //Dummy since Swift can't find Subclass implementation without something to override.
+    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { fatalError() }
+    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { fatalError() }
     func thing(innerCell: Int) { }
 }
 

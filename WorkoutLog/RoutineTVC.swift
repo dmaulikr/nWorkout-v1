@@ -54,6 +54,20 @@ extension RoutineLift: DataProvider {
     func numberOfSections() -> Int {
         return 2
     }
+    func insert(object: RoutineSet) -> IndexPath {
+        managedObjectContext?.performAndWait {
+            self.addToSets(object)
+            object.reps = 6
+            object.weight = 225
+            do {
+                try self.managedObjectContext?.save()
+            } catch {
+                print(error)
+            }
+        }
+        let row = sets?.count ?? 1
+        return IndexPath(row: row - 1, section: 0)
+    }
 }
 
 class RoutineTVC: WorkoutAndRoutineTVC<Routine, RoutineLift, RoutineLiftCell> {
