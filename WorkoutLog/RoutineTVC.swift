@@ -84,8 +84,13 @@ class RoutineTVC: WorkoutAndRoutineTVC<Routine, RoutineLift, RoutineLiftCell> {
 
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RoutineSetCell
-        let set = dataProvider.object(at: cell.indexPath).object(at: indexPath)
-        innerCell.configureForObject(object: set, at: indexPath)
+        if indexPath.section == 0 {
+            innerCell.textLabel?.text = "Add set..."
+            innerCell.textFields.forEach { $0.isHidden = false }
+        } else {
+            let set = dataProvider.object(at: cell.indexPath).object(at: indexPath)
+            innerCell.configureForObject(object: set, at: indexPath)
+        }
         return innerCell
     }
     override func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {

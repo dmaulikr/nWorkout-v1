@@ -9,11 +9,17 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
             navigationController!.viewControllers.remove(at: 1)
         }
     }
-
+    
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SetCell
-        let set = dataProvider.object(at: cell.indexPath).object(at: indexPath)
-        innerCell.configureForObject(object: set, at: indexPath)
+        if indexPath.section == 0 {
+            innerCell.textLabel?.text = "Add set..."
+            innerCell.textFields.forEach { $0.isHidden = false }
+            innerCell.statusButton.isHidden = false
+        } else {
+            let set = dataProvider.object(at: cell.indexPath).object(at: indexPath)
+            innerCell.configureForObject(object: set, at: indexPath)
+        }
         return innerCell
     }
     

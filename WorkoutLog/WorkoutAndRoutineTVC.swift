@@ -34,16 +34,24 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
     }
     override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
         if editingStyle == .delete {
-            dataSource.dataProvider.managedObjectContext?.performAndWait {
-                let object = self.dataSource.dataProvider.object(at: indexPath)
-                self.dataSource.dataProvider.managedObjectContext?.delete(object)
-                do {
-                    try self.dataSource.dataProvider.managedObjectContext!.save()
-                } catch let error {
-                    print(error)
+            
+            let alert = UIAlertController(title: "Are you sure?", message: "Do you want to delete this entry?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive) { _ in
+                self.dataSource.dataProvider.managedObjectContext?.performAndWait {
+                    let object = self.dataSource.dataProvider.object(at: indexPath)
+                    self.dataSource.dataProvider.managedObjectContext?.delete(object)
+                    do {
+                        try self.dataSource.dataProvider.managedObjectContext!.save()
+                    } catch let error {
+                        print(error)
+                    }
                 }
-            }
-            tableView.deleteRows(at: [indexPath], with: .none)
+                self.tableView.deleteRows(at: [indexPath], with: .none)
+            })
+            alert.addAction(UIAlertAction(title: "No", style: .cancel){ _ in
+                self.tableView.endEditing(true)
+            })
+            present(alert, animated: true)
         }
     }
     override func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
