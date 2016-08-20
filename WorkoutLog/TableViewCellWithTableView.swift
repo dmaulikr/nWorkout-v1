@@ -80,6 +80,8 @@ class AnyTVCWTVDADS<InnerCell>: TableViewCellWithTableViewDelegateAndDataSource 
         canEditRowAt = dads.cell
         registerInnerCellForSection = dads.cell
         heightForRowAtInner = dads.cell
+        willSelectRowAtInner = dads.cell
+        didSelectRowAtInner = dads.cell
     }
     private let numberOfSections: ((TableViewCellWithTableView) -> Int)
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
@@ -109,6 +111,14 @@ class AnyTVCWTVDADS<InnerCell>: TableViewCellWithTableViewDelegateAndDataSource 
     func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat {
         return heightForRowAtInner(cell,innerIndexPath)
     }
+    private let willSelectRowAtInner: ((TableViewCellWithTableView, IndexPath) -> IndexPath?)
+    func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? {
+        return willSelectRowAtInner(cell,innerIndexPath)
+    }
+    private let didSelectRowAtInner: ((TableViewCellWithTableView, IndexPath) -> ())
+    func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) {
+        didSelectRowAtInner(cell,innerIndexPath)
+    }
 }
 
 
@@ -124,6 +134,8 @@ protocol TableViewCellWithTableViewDelegateAndDataSource: class {
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int
     func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat
+    func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath?
+    func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath)
 }
 extension TableViewCellWithTableViewDelegateAndDataSource {
     func thing(innerCell: InnerCell) { }
@@ -131,6 +143,8 @@ extension TableViewCellWithTableViewDelegateAndDataSource {
     func cell(_ cell: TableViewCellWithTableView, didCommit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { }
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool { return false }
     func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat { return cell.tableView.rowHeight }
+    func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return innerIndexPath }
+    func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) {  }
 }
 
 
@@ -164,10 +178,19 @@ extension SubTableViewDelegateAndDataSource: UITableViewDataSource {
         guard let delegate = delegate else { return false }
         return delegate.cell(cell, canEditRowAt: indexPath)
     }
+    
+}
+extension SubTableViewDelegateAndDataSource: UITableViewDelegate {
     @objc(tableView:heightForRowAtIndexPath:) func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let delegate = delegate else { return 0.0 }
         return delegate.cell(cell, heightForRowAtInner: indexPath)
     }
-}
-extension SubTableViewDelegateAndDataSource: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        guard let delegate = delegate else { return indexPath }
+        return delegate.cell(cell, willSelectRowAtInner: indexPath)
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let delegate = delegate else { return }
+        return delegate.cell(cell, didSelectRowAtInner: indexPath)
+    }
 }
