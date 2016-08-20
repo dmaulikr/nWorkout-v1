@@ -61,11 +61,15 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         stackView.distribution = .fillEqually
         stackView.spacing = 10
         
-        let width = contentView.frame.width
-        let height = contentView.frame.height
-        
-        stackView.frame = CGRect(x: 8.0, y: 4.0, width: width - 32.0, height: height - 8.0)
         contentView.addSubview(stackView)
+        
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8.0).isActive = true
+        stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8.0).isActive = true
+        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8.0).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8.0).isActive = true
+        
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
