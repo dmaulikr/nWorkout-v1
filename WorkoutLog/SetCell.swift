@@ -12,8 +12,9 @@ extension SetCell: ConfigurableCell {
             textLabel?.text = ""
             textFields.forEach { $0.isHidden = false }
             statusButton.isHidden = false
+            
+            set = object
         }
-        set = object
     }
 }
 
