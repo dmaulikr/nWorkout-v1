@@ -15,15 +15,23 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
     }
     override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
         if editingStyle == .delete {
-            let object = dataSource.dataProvider.object(at: indexPath)
-            object.managedObjectContext!.performAndWait {
-                object.managedObjectContext!.delete(object)
-            }
-            do {
-                try object.managedObjectContext?.save()
-            } catch {
-                print(error)
-            }
+            
+            let alert = UIAlertController(title: "Are you sure?", message: "Do you want to delete this entry?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive) { _ in
+                let object = self.dataSource.dataProvider.object(at: indexPath)
+                object.managedObjectContext!.performAndWait {
+                    object.managedObjectContext!.delete(object)
+                }
+                do {
+                    try object.managedObjectContext?.save()
+                } catch {
+                    print(error)
+                }
+            })
+            alert.addAction(UIAlertAction(title: "No", style: .cancel){ _ in
+                //
+            })
+            present(alert, animated: true)
         }
     }
     override func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
@@ -47,7 +55,7 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         return innerCell
     }
-    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { fatalError() }
+    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { fatalError()}
     func thing(innerCell: Int) { }
 }
 
