@@ -12,7 +12,8 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
 
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SetCell
-        innerCell.textLabel?.text = "\(dataProvider.object(at: cell.indexPath).object(at: indexPath).targetWeight)"
+        let set = dataProvider.object(at: cell.indexPath).object(at: indexPath)
+        innerCell.configureForObject(object: set, at: indexPath)
         return innerCell
     }
     

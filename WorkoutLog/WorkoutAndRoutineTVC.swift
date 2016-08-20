@@ -54,7 +54,7 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
+        return (CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) + 1.0) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
     }
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
         return 2
@@ -67,12 +67,15 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
         }
     }
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        return innerCell
+        fatalError()
     }
     func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
         fatalError()
     }
+//    func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat {
+//        let sets = dataProvider.object(at: cell.indexPath).numberOfItems(inSection: 0)
+//        return CGFloat(1 + sets) * CGFloat(Lets.subTVCellSize)
+//    }
     func thing(innerCell: Int) { }
 }
 
