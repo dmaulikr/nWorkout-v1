@@ -111,6 +111,9 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
         cell.tableView.deleteRows(at: [indexPath], with: .automatic)
         tableView.endUpdates()
     }
+    func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat {
+        return Lets.subTVCellSize
+    }
     
     //Dummy since Swift can't find Subclass implementation without something to override.
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { fatalError() }

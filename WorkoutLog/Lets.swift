@@ -1,11 +1,12 @@
 import Foundation
+import CoreGraphics
 
 struct Lets {
     static let dateString = "EEEE - MM/d/yyyy - h:mm a"
     static let timeZoneAbbreviation = "EST"
     
     static let heightBetweenTopOfCellAndTV = 52.0
-    static let subTVCellSize = 45.0
+    static let subTVCellSize = CGFloat(37.0)
     
     static let newWorkoutBarButtonText = "New Workout"
     static let newLiftBarButtonText = "New Lift"

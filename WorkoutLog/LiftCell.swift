@@ -55,6 +55,10 @@ extension LiftCell: ConfigurableCell {
     func configureForObject(object: Lift, at indexPath: IndexPath) {
         nameLabel.text = object.name
         
+        setupTableLabels()
+    }
+    
+    func setupTableLabels() {
         let twLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         twLabel.text = "Target Weight"
         let trLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
@@ -63,7 +67,9 @@ extension LiftCell: ConfigurableCell {
         cwLabel.text = "Completed Weight"
         let crLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
         crLabel.text = "Completed Reps"
-        let labels = [twLabel,trLabel,cwLabel,crLabel, UILabel()]
+        let statusLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        statusLabel.text = "Status"
+        let labels = [twLabel,trLabel,cwLabel,crLabel, statusLabel]
         for label in labels {
             label.textAlignment = .center
             label.numberOfLines = 0
@@ -79,6 +85,5 @@ extension LiftCell: ConfigurableCell {
         labelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
         labelStackView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize)).isActive = true
         labelStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
-        
     }
 }

@@ -55,6 +55,13 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         return innerCell
     }
+    func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat {
+        return Lets.subTVCellSize
+    }
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
+    
     func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { fatalError()}
     func thing(innerCell: Int) { }
 }

@@ -10,7 +10,11 @@ extension SetCell: ConfigurableCell {
             statusButton.isHidden = true
         } else {
             textLabel?.text = ""
-            textFields.forEach { $0.isHidden = false }
+            textFields.forEach {
+                $0.isHidden = false
+                $0.layer.borderWidth = 1.0
+                $0.layer.borderColor = UIColor.blue.cgColor
+            }
             statusButton.isHidden = false
             
             set = object
@@ -68,8 +72,6 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8.0).isActive = true
         stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8.0).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8.0).isActive = true
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -185,7 +187,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
 }
 
 enum SetStatus: String {
-    case incomplete = "Incomplete"
+    case incomplete = " "
     case done = "Done"
     case fail = "Fail"
     case skip = "Skip"
@@ -201,9 +203,21 @@ enum SetStatus: String {
 }
 
 class SetStatusButton: UIButton {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        layer.borderColor = UIColor.blue.cgColor
+        layer.borderWidth = 1.0
+    }
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     var status: SetStatus = .incomplete {
         didSet {
             setTitle(status.rawValue, for: UIControlState())
+            if status == .incomplete {
+                
+            }
         }
     }
 }
