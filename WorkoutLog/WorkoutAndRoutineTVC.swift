@@ -70,10 +70,11 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         return innerCell
     }
-    func thing(innerCell: Int) {
-        //
+    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
+        fatalError()
     }
+    func thing(innerCell: Int) { }
 }
 
-extension WorkoutAndRoutineTVC: TableViewCellWithTableViewDelegateAndDataSource {}
+extension WorkoutAndRoutineTVC: TableViewCellWithTableViewDelegateAndDataSource { }
 

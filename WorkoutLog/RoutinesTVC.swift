@@ -26,4 +26,8 @@ class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresen
         innerCell.textLabel?.text = lift.name
         return innerCell
     }
+    
+    override func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
+        cell.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
 }

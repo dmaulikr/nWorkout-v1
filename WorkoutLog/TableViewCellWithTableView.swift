@@ -1,51 +1,5 @@
 import UIKit
 
-struct Person {
-    var name: String
-    var dogs: [String]
-}
-class ViewController: UITableViewController {
-    
-    let people: [Person] = [Person(name: "Nathan", dogs: ["Muffin","Riley","Belle"]), Person(name: "Mom", dogs: ["Muffin","Riley","Belle"])]
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.register(TableViewCellWithTableView.self, forCellReuseIdentifier: "cell")
-    }
-}
-
-//MARK: MainTableView
-extension ViewController {
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return people.count
-    }
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let anyDADS = AnyTVCWTVDADS(dads: self)
-        let cell = TableViewCellWithTableView(delegateAndDataSource: anyDADS, indexPath: indexPath)
-        cell.textLabel?.text = people[indexPath.row].name
-        return cell
-    }
-}
-
-//MARK: CellTableView
-extension ViewController: TableViewCellWithTableViewDelegateAndDataSource {
-    func thing(innerCell: Int) {
-        //
-    }
-    func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        return people[cell.indexPath.row].dogs.count
-    }
-    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tvcell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let dog = people[cell.indexPath.row].dogs[indexPath.row]
-        tvcell.textLabel?.text = dog
-        return tvcell
-    }
-}
-
-
-
-
-
 //MARK: TableViewCelLWithTableView
 class TableViewCellWithTableView: UITableViewCell {
     var indexPath: IndexPath!
@@ -121,15 +75,15 @@ class TableViewCellWithTableView: UITableViewCell {
 
 
 class AnyTVCWTVDADS<InnerCell>: TableViewCellWithTableViewDelegateAndDataSource {
+    
+    func thing(innerCell: InnerCell) { }
     init<DADS: TableViewCellWithTableViewDelegateAndDataSource>(dads: DADS) where DADS.InnerCell == InnerCell {
         numberOfSections = dads.numberOfSections
         numberOfRowsInSection = dads.cell
         cellForRowAt = dads.cell
         didCommit = dads.cell
         canEditRowAt = dads.cell
-    }
-    func thing(innerCell: InnerCell) {
-        
+        registerInnerCellForSection = dads.cell
     }
     private let numberOfSections: ((TableViewCellWithTableView) -> Int)
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
@@ -151,17 +105,25 @@ class AnyTVCWTVDADS<InnerCell>: TableViewCellWithTableViewDelegateAndDataSource 
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool{
         return canEditRowAt(cell,indexPath)
     }
+    private let registerInnerCellForSection: ((TableViewCellWithTableView, Int) -> ())
+    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
+        registerInnerCellForSection(cell,section)
+    }
+
 }
 
 
 protocol TableViewCellWithTableViewDelegateAndDataSource: class {
     associatedtype InnerCell
     func thing(innerCell: InnerCell)
-    func numberOfSections(in cell: TableViewCellWithTableView) -> Int
+    //Required
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int)
+    //Optional
     func cell(_ cell: TableViewCellWithTableView, didCommit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool
+    func numberOfSections(in cell: TableViewCellWithTableView) -> Int
 }
 extension TableViewCellWithTableViewDelegateAndDataSource {
     func thing(innerCell: InnerCell) {
@@ -195,6 +157,7 @@ extension SubTableViewDelegateAndDataSource: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let delegate = delegate else { return 0 }
+        delegate.cell(cell, registerInnerCellForSection: section)
         return delegate.cell(cell, numberOfRowsInSection: section)
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
