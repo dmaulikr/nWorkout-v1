@@ -50,7 +50,8 @@ class TableViewCellWithTableView: UITableViewCell {
         self.tableView = InnerTableView(frame: CGRect(), style: .plain)
         
         super.init(style: .default, reuseIdentifier: "")
-        
+        backgroundColor = #colorLiteral(red: 0.9386536593, green: 0.9386536593, blue: 0.9386536593, alpha: 1)
+        tableView.backgroundColor = #colorLiteral(red: 0.9568895725, green: 0.9568895725, blue: 0.9568895725, alpha: 1)
         tableView.outerCell = self
         subTableViewDelegateAndDataSource.delegate = delegateAndDataSource
         heightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize))

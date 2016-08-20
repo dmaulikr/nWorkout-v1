@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="16A270f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3bc-xC-CuT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="16A294a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3bc-xC-CuT">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -417,10 +417,10 @@
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <prototypes>
                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="routineSetCell" rowHeight="43" id="Uwy-dy-SDX" customClass="RoutineSetCell" customModule="WorkoutLog" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="28" width="1000" height="43"/>
+                                                    <rect key="frame" x="0.0" y="28" width="359" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Uwy-dy-SDX" id="wqK-Ub-9m7">
-                                                        <frame key="frameInset" width="1000" height="42.5"/>
+                                                        <frame key="frameInset" width="359" height="42.5"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r9q-Ep-Dai">
@@ -475,6 +475,7 @@
                                         <constraint firstItem="lbg-dh-bbA" firstAttribute="top" secondItem="dd0-2Q-0gz" secondAttribute="topMargin" constant="80" id="kvt-5i-vQ4"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.93865365932642486" green="0.93865365932642486" blue="0.93865365932642486" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="nameLabel" destination="rdc-j8-nh4" id="yyp-XY-iBJ"/>
                                     <outlet property="tableView" destination="lbg-dh-bbA" id="ALk-E0-Tmq"/>

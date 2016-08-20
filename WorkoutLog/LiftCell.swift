@@ -54,7 +54,6 @@ extension LiftCell: ConfigurableCell {
     
     func configureForObject(object: Lift, at indexPath: IndexPath) {
         nameLabel.text = object.name
-        //backgroundColor = nil
         setupTableLabels()
     }
     

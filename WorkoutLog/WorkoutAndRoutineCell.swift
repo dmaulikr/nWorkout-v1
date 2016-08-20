@@ -8,7 +8,6 @@ class WorkoutAndRoutineCell<Type: NSManagedObject>: TableViewCellWithTableView {
         super.init(delegateAndDataSource: delegateAndDataSource, indexPath: indexPath)
         contentView.addSubview(nameLabel)
         
-        backgroundColor = nil
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
