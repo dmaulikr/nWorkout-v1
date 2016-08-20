@@ -36,7 +36,9 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
     }
     override func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
         let anyDADS = AnyTVCWTVDADS(dads: self)
-        return Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
+        let outerCell = Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
+        outerCell.tableView.isUserInteractionEnabled = false
+        return outerCell
     }
     
     
@@ -51,18 +53,10 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
         cell.heightConstraint.constant = CGFloat(num) * CGFloat(Lets.subTVCellSize)
         return num
     }
-    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        return innerCell
-    }
-    func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat {
-        return Lets.subTVCellSize
-    }
-    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return nil
-    }
-    
-    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { fatalError()}
+    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { fatalError() }
+    func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat { return Lets.subTVCellSize }
+    func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return nil }
+    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { cell.tableView.register(WRSetCell.self, forCellReuseIdentifier: "cell") }
     func thing(innerCell: Int) { }
 }
 

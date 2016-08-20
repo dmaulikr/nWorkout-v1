@@ -75,9 +75,9 @@ class TableViewCellWithTableView: UITableViewCell {
         tableView.layer.borderWidth = 2.0
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8).isActive = true
+        tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
         //        tableView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: gapBetweenTopAndTableView).isActive = true
         
     }

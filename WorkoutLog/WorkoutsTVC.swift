@@ -52,13 +52,10 @@ class WorkoutsTVC: WorkoutsAndRoutinesTVC<Workout, WorkoutCell> {
     
     // DataSourceDelegate
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WRSetCell
         let lift = dataProvider.object(at: cell.indexPath).object(at: indexPath)
         innerCell.textLabel?.text = lift.name
         return innerCell
     }
-    
-    override func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
-        cell.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    }
+
 }

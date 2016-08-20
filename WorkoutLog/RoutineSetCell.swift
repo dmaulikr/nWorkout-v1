@@ -4,11 +4,15 @@ extension RoutineSetCell: ConfigurableCell {
     typealias DataSource = RoutineSet
     func configureForObject(object: RoutineSet, at indexPath: IndexPath) {
         if indexPath.section == 1 {
-            textLabel?.text = "Add set..."
+            textLabel?.text = Lets.addSetText
             textFields.forEach { $0.isHidden = true }
         } else {
             textLabel?.text = ""
-            textFields.forEach { $0.isHidden = false }
+            textFields.forEach {
+                $0.isHidden = false
+                $0.layer.borderColor = UIColor.blue.cgColor
+                $0.layer.borderWidth = 1.0
+            }
             
             set = object
         }
@@ -33,7 +37,7 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate {
         textFields += [weightTextField, repsTextField]
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        backgroundColor = nil
         //Configure TextFields
         for textField in textFields {
             textField.borderStyle = .line

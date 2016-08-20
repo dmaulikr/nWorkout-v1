@@ -35,6 +35,7 @@ extension Routine: DataProvider {
 extension RoutineLiftCell: ConfigurableCell {
     func configureForObject(object: RoutineLift, at indexPath: IndexPath) {
         nameLabel.text = object.name
+        backgroundColor = nil
     }
 }
 

@@ -54,7 +54,7 @@ extension LiftCell: ConfigurableCell {
     
     func configureForObject(object: Lift, at indexPath: IndexPath) {
         nameLabel.text = object.name
-        
+        //backgroundColor = nil
         setupTableLabels()
     }
     
@@ -81,8 +81,8 @@ extension LiftCell: ConfigurableCell {
         contentView.addSubview(labelStackView)
         
         labelStackView.translatesAutoresizingMaskIntoConstraints = false
-        labelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8).isActive = true
-        labelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
+        labelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8 * 2).isActive = true
+        labelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8 * 2).isActive = true
         labelStackView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize)).isActive = true
         labelStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
     }

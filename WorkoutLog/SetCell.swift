@@ -47,7 +47,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         statusButton = SetStatusButton(type: .system)
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        backgroundColor = nil
         //Configure TextFields
         for textField in textFields {
             textField.borderStyle = .line
