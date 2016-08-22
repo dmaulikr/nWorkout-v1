@@ -183,6 +183,15 @@
 			name = Generics;
 			sourceTree = "<group>";
 		};
+		B31EAE091D6AE3F400ECBCD2 /* NewWorkout */ = {
+			isa = PBXGroup;
+			children = (
+				B3BA3A0A1D606882001C23FB /* SelectWorkoutTVC.swift */,
+				B366C7181D54989800484784 /* WorkoutTVC.swift */,
+			);
+			name = NewWorkout;
+			sourceTree = "<group>";
+		};
 		B32295A41D63E0E8000B6F08 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
@@ -295,8 +304,9 @@
 			children = (
 				B32295A41D63E0E8000B6F08 /* Statistics */,
 				B31D11321D64616300010E9C /* Generics */,
-				B3E07C241D602507006D68AE /* Routines */,
 				B3E07C251D60250F006D68AE /* Workouts */,
+				B31EAE091D6AE3F400ECBCD2 /* NewWorkout */,
+				B3E07C241D602507006D68AE /* Routines */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -345,8 +355,6 @@
 			isa = PBXGroup;
 			children = (
 				B366C7171D54989800484784 /* WorkoutsTVC.swift */,
-				B3BA3A0A1D606882001C23FB /* SelectWorkoutTVC.swift */,
-				B366C7181D54989800484784 /* WorkoutTVC.swift */,
 			);
 			name = Workouts;
 			sourceTree = "<group>";

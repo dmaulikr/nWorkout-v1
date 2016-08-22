@@ -34,7 +34,7 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
             present(alert, animated: true)
         }
     }
-    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
+    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> UITableViewCell? {
         let anyDADS = AnyTVCWTVDADS(dads: self)
         let outerCell = Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
         outerCell.tableView.isUserInteractionEnabled = false

@@ -3,21 +3,32 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDelegate, UITabBarControllerDelegate {
-
+    
     var window: UIWindow?
     var tabBarController: UITabBarController?
-
+    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         
         
-        let workoutNav = UINavigationController()
-        workoutNav.delegate = self
+        let workoutsNav = UINavigationController()
+        workoutsNav.delegate = self
         let workoutsTVC = WorkoutsTVC()
-        workoutNav.pushViewController(workoutsTVC, animated: false)
-        workoutNav.tabBarItem.title = "Workouts"
-        workoutNav.tabBarItem.image = UIImage(named: "workout")
+        workoutsNav.pushViewController(workoutsTVC, animated: false)
+        workoutsNav.tabBarItem.title = "Workouts"
+        workoutsNav.tabBarItem.image = UIImage(named: "workout")
+        
+        let newWorkoutNav = UINavigationController()
+        self.newWorkoutNav = newWorkoutNav
+        let selectWorkoutTVC = SelectWorkoutTVC(style: .grouped)
+        newWorkoutNav.pushViewController(selectWorkoutTVC, animated: false)
+        newWorkoutNav.delegate = self
+        
+        let dummy = UIViewController()
+        self.dummy = dummy
+        dummy.tabBarItem.title = "New"
+        dummy.tabBarItem.image = UIImage(named: "newWorkout")
         
         let routineNav = UINavigationController()
         routineNav.delegate = self
@@ -26,9 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         routineNav.tabBarItem.title = "Routines"
         routineNav.tabBarItem.image = UIImage(named: "routine")
         
+        let vcs = [workoutsNav, dummy, routineNav]
         tabBarController = UITabBarController()
-        let vcs = [workoutNav, routineNav]
         tabBarController?.viewControllers = vcs
+        tabBarController?.delegate = self
+        
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         
@@ -47,18 +60,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         tabBarAppearance.barTintColor = Theme.Colors.foreground.color
         
         let barButtonItemAppearance = UIBarButtonItem.appearance()
-        var attr = [ NSFontAttributeName: Theme.Fonts.titleFont.font ]
+        let attr = [ NSFontAttributeName: Theme.Fonts.titleFont.font ]
         barButtonItemAppearance.setTitleTextAttributes(attr, for: UIControlState())
         
         
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
-        
-        
         return true
     }
-
+    
+    var dummy: UIViewController!
+    var newWorkoutNav: UINavigationController!
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if viewController == dummy {
+            window?.rootViewController?.present(newWorkoutNav, animated: true) {
+                
+            }
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    
+    
+    
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -82,22 +111,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
-
+    
     // MARK: - Core Data stack
-
+    
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
          creates and returns a container, having loaded the store for the
          application to it. This property is optional since there are legitimate
          error conditions that could cause the creation of the store to fail.
-        */
+         */
         let container = NSPersistentContainer(name: "WorkoutLog")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 
+                
                 /*
                  Typical reasons for an error here include:
                  * The parent directory does not exist, cannot be created, or disallows writing.
@@ -111,9 +140,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         })
         return container
     }()
-
+    
     // MARK: - Core Data Saving support
-
+    
     func saveContext () {
         let context = persistentContainer.viewContext
         if context.hasChanges {
@@ -127,6 +156,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
             }
         }
     }
-
+    
 }
 

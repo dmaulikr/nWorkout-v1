@@ -55,9 +55,15 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
             present(alert, animated: true)
         }
     }
-    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
+    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> UITableViewCell? {
         let anyDADS = AnyTVCWTVDADS(dads: self)
         return Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
+    }
+    override func numberOfSections() -> Int? {
+        return nil
+    }
+    override func numberOfRows(inSection section: Int) -> Int? {
+        return nil
     }
     //UITableViewDelegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -46,19 +46,35 @@ class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, 
     // MARK: UITableViewDataSource
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataProvider.numberOfSections()
+        if let num = delegate?.numberOfSections() {
+            return num
+        } else {
+            return dataProvider.numberOfSections()
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataProvider.numberOfItems(inSection: section)
+        if let num = delegate?.numberOfRows(inSection: section) {
+            return num
+        } else {
+            return dataProvider.numberOfItems(inSection: section)
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let object = dataProvider.object(at: indexPath)
         let identifier = delegate.cellIdentifier(for: object)
-        let cell = (delegate.cell(forRowAt: indexPath, identifier: identifier) ?? tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)) as! Cell
-        cell.configureForObject(object: object, at: indexPath)
-        return cell
+        let cell = delegate.cell(forRowAt: indexPath, identifier: identifier)
+        if let theCell = cell as? Cell {
+            theCell.configureForObject(object: object, at: indexPath)
+            return theCell
+        } else if let theCell = cell {
+            return theCell
+        } else {
+            let dqcell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! Cell
+            dqcell.configureForObject(object: object, at: indexPath)
+            return dqcell
+        }        
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

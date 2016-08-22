@@ -13,6 +13,7 @@ struct Lets {
     static let newWorkoutBarButtonText = "New Workout"
     static let newLiftBarButtonText = "New Lift"
     static let addSetText = "Add set..."
+    static let finishWorkout = "Finish Workout"
     
     static let keyboardToViewRatio = 0.4
     

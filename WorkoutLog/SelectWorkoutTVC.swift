@@ -15,6 +15,16 @@ class SelectWorkoutTVC: TVCWithContext {
         
         frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         try! frc.performFetch()
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonPushed))
+    }
+    
+    func cancelButtonPushed() {
+        self.navigationController?.tabBarItem.image = #imageLiteral(resourceName: "newWorkout")
+        self.navigationController?.tabBarItem.title = "new"
+        presentingViewController?.dismiss(animated: true) {
+            
+        }
     }
 }
 
@@ -71,7 +81,12 @@ extension SelectWorkoutTVC {
             assertionFailure("shouldn't happen")
         }
         workout!.date = NSDate()
+        let dummyNavBarItem = (UIApplication.shared.delegate as! AppDelegate).dummy.tabBarItem!
+        dummyNavBarItem.image = #imageLiteral(resourceName: "show")
+        dummyNavBarItem.title = "show"
+
         let wtvc = WorkoutTVC(dataProvider: workout!)
+        wtvc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "hide", style: .plain, target: wtvc, action: #selector(wtvc.hideButtonPushed))
         navigationController?.pushViewController(wtvc, animated: true)
     }
 }

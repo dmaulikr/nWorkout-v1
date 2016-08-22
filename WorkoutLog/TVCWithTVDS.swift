@@ -47,13 +47,19 @@ class TVCWithTVDS<Source: DataProvider, Type: NSManagedObject, Cell: UITableView
     func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
         print("Implement \(#function)")
     }
-    func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
+    func cell(forRowAt indexPath: IndexPath, identifier: String) -> UITableViewCell? {
         return nil
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         cell.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    func numberOfSections() -> Int? {
+        return nil
+    }
+    func numberOfRows(inSection section: Int) -> Int? {
+        return nil
     }
 }
 

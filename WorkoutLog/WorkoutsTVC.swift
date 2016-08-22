@@ -36,16 +36,6 @@ extension Workout: DataProvider {
 
 class WorkoutsTVC: WorkoutsAndRoutinesTVC<Workout, WorkoutCell> {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Lets.newWorkoutBarButtonText, style: .plain, target: self, action: #selector(newWorkout))
-        navigationItem.title = "Workouts"
-    }
-    func newWorkout() {
-        let swtvc = SelectWorkoutTVC(style: .grouped)
-        navigationController?.pushViewController(swtvc, animated: true)
-    }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let wtvc = WorkoutTVC(dataProvider: dataSource.selectedObject!)
         navigationController?.pushViewController(wtvc, animated: true)
