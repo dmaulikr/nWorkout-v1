@@ -18,17 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         workoutsNav.pushViewController(workoutsTVC, animated: false)
         workoutsNav.tabBarItem.title = "Workouts"
         workoutsNav.tabBarItem.image = UIImage(named: "workout")
-        
-        let newWorkoutNav = UINavigationController()
-        self.newWorkoutNav = newWorkoutNav
-        let selectWorkoutTVC = SelectWorkoutTVC(style: .grouped)
-        newWorkoutNav.pushViewController(selectWorkoutTVC, animated: false)
-        newWorkoutNav.delegate = self
-        
-        let dummy = UIViewController()
-        self.dummy = dummy
-        dummy.tabBarItem.title = "New"
-        dummy.tabBarItem.image = UIImage(named: "newWorkout")
+        workoutsTVC.navigationItem.title = "Workouts"
         
         let routineNav = UINavigationController()
         routineNav.delegate = self
@@ -36,8 +26,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         routineNav.pushViewController(routinesTVC, animated: false)
         routineNav.tabBarItem.title = "Routines"
         routineNav.tabBarItem.image = UIImage(named: "routine")
+        routinesTVC.navigationItem.title = "Routines"
         
-        let vcs = [workoutsNav, dummy, routineNav]
+        let newWorkoutNav = UINavigationController()
+        self.newWorkoutNav = newWorkoutNav
+        let selectWorkoutTVC = SelectWorkoutTVC(style: .grouped)
+        newWorkoutNav.pushViewController(selectWorkoutTVC, animated: false)
+        newWorkoutNav.delegate = self
+        selectWorkoutTVC.navigationItem.title = "New Workout"
+        
+        let dummy = UIViewController()
+        self.dummy = dummy
+        dummy.tabBarItem.title = "New"
+        dummy.tabBarItem.image = UIImage(named: "newWorkout")
+        
+        
+        
+        let statisticsNav = UINavigationController()
+        statisticsNav.delegate = self
+        let statisticsTVC = StatisticsTVC()
+        statisticsNav.pushViewController(statisticsTVC, animated: false)
+        statisticsNav.tabBarItem.title = "Statistics"
+        statisticsTVC.navigationItem.title = "Statistics"
+        statisticsNav.tabBarItem.image = #imageLiteral(resourceName: "statistics")
+        
+        let settingsNav = UINavigationController()
+        settingsNav.delegate = self
+        let settingsTVC = UIViewController()
+        settingsNav.pushViewController(settingsTVC, animated: false)
+        settingsNav.tabBarItem.title = "Settings"
+        settingsNav.tabBarItem.image = #imageLiteral(resourceName: "settings")
+        settingsTVC.navigationItem.title = "Settings"
+        
+        let vcs = [workoutsNav, routineNav, dummy, statisticsNav, settingsNav]
         tabBarController = UITabBarController()
         tabBarController?.viewControllers = vcs
         tabBarController?.delegate = self
