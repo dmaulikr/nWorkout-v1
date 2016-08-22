@@ -7,7 +7,6 @@ class SelectWorkoutTVC: TVCWithContext {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         let request = Routine.request
         request.returnsObjectsAsFaults = false
@@ -44,13 +43,32 @@ extension SelectWorkoutTVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        cell.backgroundColor = Theme.Colors.lightBackgroundColor.color
+        cell.textLabel?.font = Theme.Fonts.titleFont.font
+        cell.detailTextLabel?.font = Theme.Fonts.subTitleFont.font
         if indexPath.section == 0 {
             cell.textLabel?.text = Lets.blankWorkoutText
+            cell.detailTextLabel?.text = "Start a workout with no preset lifts."
         } else {
-            cell.textLabel?.text = frc.fetchedObjects![indexPath.row].name
+            let routine = frc.fetchedObjects![indexPath.row]
+            cell.textLabel?.text = routine.name!
+            let lifts = routine.lifts?.array as! [RoutineLift]
+            let label = lifts.map { $0.name! }.joined(separator: ", ")
+            cell.detailTextLabel?.text = label
         }
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Default"
+        case 1:
+            return "Choose from your routines"
+        default:
+            fatalError()
+        }
     }
 }
 

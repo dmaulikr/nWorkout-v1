@@ -40,8 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         dummy.tabBarItem.title = "New"
         dummy.tabBarItem.image = UIImage(named: "newWorkout")
         
-        
-        
         let statisticsNav = UINavigationController()
         statisticsNav.delegate = self
         let statisticsTVC = StatisticsTVC()
@@ -83,6 +81,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
         let barButtonItemAppearance = UIBarButtonItem.appearance()
         let attr = [ NSFontAttributeName: Theme.Fonts.titleFont.font ]
         barButtonItemAppearance.setTitleTextAttributes(attr, for: UIControlState())
+        
+        let tableViewAppearance = UITableView.appearance()
+        tableViewAppearance.backgroundColor = Theme.Colors.backgroundColor.color
+        
+        let cellAppearance = UITableViewCell.appearance()
+        cellAppearance.backgroundColor = UIColor.clear
+        
+        let labelAppearance = UILabel.appearance()
+        labelAppearance.font = Theme.Fonts.titleFont.font
         
         
         window?.rootViewController = tabBarController

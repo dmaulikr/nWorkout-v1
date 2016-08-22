@@ -51,7 +51,7 @@ class TableViewCellWithTableView: UITableViewCell {
         
         super.init(style: .default, reuseIdentifier: "")
         backgroundColor = Theme.Colors.backgroundColor.color
-        tableView.backgroundColor = #colorLiteral(red: 0.9568895725, green: 0.9568895725, blue: 0.9568895725, alpha: 1)
+        tableView.backgroundColor = Theme.Colors.lightBackgroundColor.color
         tableView.outerCell = self
         subTableViewDelegateAndDataSource.delegate = delegateAndDataSource
         heightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize))
