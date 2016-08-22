@@ -50,7 +50,7 @@ class TableViewCellWithTableView: UITableViewCell {
         self.tableView = InnerTableView(frame: CGRect(), style: .plain)
         
         super.init(style: .default, reuseIdentifier: "")
-        backgroundColor = #colorLiteral(red: 0.9386536593, green: 0.9386536593, blue: 0.9386536593, alpha: 1)
+        backgroundColor = Theme.Colors.backgroundColor.color
         tableView.backgroundColor = #colorLiteral(red: 0.9568895725, green: 0.9568895725, blue: 0.9568895725, alpha: 1)
         tableView.outerCell = self
         subTableViewDelegateAndDataSource.delegate = delegateAndDataSource
@@ -72,7 +72,7 @@ class TableViewCellWithTableView: UITableViewCell {
     
     private func customizeTableView() {
         tableView.isScrollEnabled = false
-        tableView.layer.borderColor = UIColor.blue.cgColor
+        tableView.layer.borderColor = UIColor.darkGray.cgColor
         tableView.layer.borderWidth = 2.0
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,6 +81,7 @@ class TableViewCellWithTableView: UITableViewCell {
         tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
         //        tableView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: gapBetweenTopAndTableView).isActive = true
         
+        tableView.tableFooterView = UIView()
     }
     
     var heightConstraint: NSLayoutConstraint!
@@ -218,5 +219,11 @@ extension SubTableViewDelegateAndDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let delegate = delegate else { return }
         return delegate.cell(cell, didSelectRowAtInner: indexPath)
+    }
+    
+    //IMPLEMENT THIS
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        cell.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }

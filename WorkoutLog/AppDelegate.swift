@@ -10,25 +10,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        
+        
         let workoutNav = UINavigationController()
         workoutNav.delegate = self
         let workoutsTVC = WorkoutsTVC()
         workoutNav.pushViewController(workoutsTVC, animated: false)
         workoutNav.tabBarItem.title = "Workouts"
+        workoutNav.tabBarItem.image = UIImage(named: "workout")
         
         let routineNav = UINavigationController()
         routineNav.delegate = self
         let routinesTVC = RoutinesTVC()
         routineNav.pushViewController(routinesTVC, animated: false)
         routineNav.tabBarItem.title = "Routines"
+        routineNav.tabBarItem.image = UIImage(named: "routine")
         
         tabBarController = UITabBarController()
         let vcs = [workoutNav, routineNav]
         tabBarController?.viewControllers = vcs
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
+        
+        
+        window?.tintColor = Theme.Colors.tintColor.color
+        let navBarAppearance = UINavigationBar.appearance()
+        navBarAppearance.titleTextAttributes = [
+            NSFontAttributeName: Theme.Fonts.boldTitleFont.font,
+            NSForegroundColorAttributeName: Theme.Colors.tintColor.color
+        ]
+        navBarAppearance.barStyle = UIBarStyle.black
+        navBarAppearance.barTintColor = Theme.Colors.foreground.color
+        
+        let tabBarAppearance = UITabBar.appearance()
+        tabBarAppearance.barStyle = UIBarStyle.black
+        tabBarAppearance.barTintColor = Theme.Colors.foreground.color
+        
+        let barButtonItemAppearance = UIBarButtonItem.appearance()
+        var attr = [ NSFontAttributeName: Theme.Fonts.titleFont.font ]
+        barButtonItemAppearance.setTitleTextAttributes(attr, for: UIControlState())
+        
+        
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
+        
+        
+        
         return true
     }
 

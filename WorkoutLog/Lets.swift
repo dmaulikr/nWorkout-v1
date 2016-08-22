@@ -5,8 +5,10 @@ struct Lets {
     static let dateString = "EEEE - MM/d/yyyy - h:mm a"
     static let timeZoneAbbreviation = "EST"
     
-    static let heightBetweenTopOfCellAndTV = 52.0
-    static let subTVCellSize = CGFloat(37.0)
+    static let liftCellNameLabelHeight: CGFloat = 25
+    static let liftCellTableHeaderHeight: CGFloat = 23
+    static let heightBetweenTopOfCellAndTV: CGFloat = 23 + 25 + 16
+    static let subTVCellSize: CGFloat = 37.0
     
     static let newWorkoutBarButtonText = "New Workout"
     static let newLiftBarButtonText = "New Lift"
@@ -14,10 +16,9 @@ struct Lets {
     
     static let keyboardToViewRatio = 0.4
     
-    static let liftCellNameLabelHeight = 40.0
-    static let liftCellNameLabelWidth = 120.0
     
-    static let buffer = 8.0
+    
+    static let buffer: CGFloat = 8.0
     
     static let selectWorkoutBatchSize = 20
     static let CDTVCWithTVDSBatchSize = 20
@@ -27,5 +28,7 @@ struct Lets {
     static let tableCellAdditionAnimationDuration = 0.3
     
     static let newLiftPlaceholderText = "Lift name..."
+    
+    
 }
 

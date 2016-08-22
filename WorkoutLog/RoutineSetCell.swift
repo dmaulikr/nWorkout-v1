@@ -10,7 +10,7 @@ extension RoutineSetCell: ConfigurableCell {
             textLabel?.text = ""
             textFields.forEach {
                 $0.isHidden = false
-                $0.layer.borderColor = UIColor.blue.cgColor
+                $0.layer.borderColor = UIColor.darkGray.cgColor
                 $0.layer.borderWidth = 1.0
             }
             

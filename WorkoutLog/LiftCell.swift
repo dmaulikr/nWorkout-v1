@@ -47,7 +47,8 @@ extension Lift: DataProvider {
 }
 
 class LiftCell: WorkoutAndRoutineCell<Lift> {
-    var labelStackView: UIStackView!
+    var topLabelStackView: UIStackView!
+    var bottomLabelStackView: UIStackView!
 }
 
 extension LiftCell: ConfigurableCell {
@@ -58,31 +59,60 @@ extension LiftCell: ConfigurableCell {
     }
     
     func setupTableLabels() {
-        let twLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        twLabel.text = "Target Weight"
-        let trLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        trLabel.text = "Target Reps"
-        let cwLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        cwLabel.text = "Completed Weight"
-        let crLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
-        crLabel.text = "Completed Reps"
-        let statusLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 1, height: 1))
+        let twLabel = UILabel()
+        twLabel.text = "Weight"
+        let trLabel = UILabel()
+        trLabel.text = "Reps"
+        let cwLabel = UILabel()
+        cwLabel.text = "Weight"
+        let crLabel = UILabel()
+        crLabel.text = "Reps"
+        let statusLabel = UILabel()
         statusLabel.text = "Status"
-        let labels = [twLabel,trLabel,cwLabel,crLabel, statusLabel]
-        for label in labels {
+        let bottomLabels = [twLabel,trLabel,cwLabel,crLabel, statusLabel]
+        for label in bottomLabels {
             label.textAlignment = .center
             label.numberOfLines = 0
+            label.font = Theme.Fonts.tableHeaderFont.font
+            label.layer.borderColor = UIColor.darkGray.cgColor
+            label.layer.borderWidth = 1.0
         }
-        labelStackView = UIStackView(arrangedSubviews: labels)
-        labelStackView.spacing = 10
-        labelStackView.axis = .horizontal
-        labelStackView.distribution = .fillEqually
-        contentView.addSubview(labelStackView)
+        bottomLabelStackView = UIStackView(arrangedSubviews: bottomLabels)
+        bottomLabelStackView.spacing = 0
+        bottomLabelStackView.axis = .horizontal
+        bottomLabelStackView.distribution = .fillEqually
+
+        let targetLabel = UILabel()
+        targetLabel.text = "Target"
+        let completedLabel = UILabel()
+        completedLabel.text = "Completed"
+        let topLabels = [targetLabel,completedLabel]
+        for label in topLabels {
+            label.textAlignment = .center
+            label.numberOfLines = 0
+            label.font = Theme.Fonts.tableHeaderFont.font
+//            label.layer.borderColor = UIColor.darkGray.cgColor
+//            label.layer.borderWidth = 1.0
+        }
+        topLabelStackView = UIStackView(arrangedSubviews: topLabels)
+        topLabelStackView.spacing = 0
+        topLabelStackView.axis = .horizontal
+        topLabelStackView.distribution = .fillEqually
         
-        labelStackView.translatesAutoresizingMaskIntoConstraints = false
-        labelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8 * 2).isActive = true
-        labelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8 * 2).isActive = true
-        labelStackView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize)).isActive = true
-        labelStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
+        
+        contentView.addSubview(bottomLabelStackView)
+        bottomLabelStackView.translatesAutoresizingMaskIntoConstraints = false
+        bottomLabelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer).isActive = true
+        bottomLabelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Lets.buffer).isActive = true
+        bottomLabelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2).isActive = true
+        bottomLabelStackView.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+        
+        contentView.addSubview(topLabelStackView)
+        topLabelStackView.translatesAutoresizingMaskIntoConstraints = false
+        topLabelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer).isActive = true
+        topLabelStackView.widthAnchor.constraint(equalTo: bottomLabelStackView.widthAnchor, multiplier: 0.8).isActive = true
+        topLabelStackView.bottomAnchor.constraint(equalTo: bottomLabelStackView.topAnchor).isActive = true
+        topLabelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2).isActive = true
+        
     }
 }

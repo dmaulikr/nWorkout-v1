@@ -45,6 +45,7 @@
 		B3791F821D614E3E003DD70F /* Keyboard.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3791F811D614E3E003DD70F /* Keyboard.xib */; };
 		B3791F841D614FDD003DD70F /* Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3791F831D614FDD003DD70F /* Keyboard.swift */; };
 		B387F6EE1D690BC1004EC05F /* WRSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B387F6ED1D690BC1004EC05F /* WRSetCell.swift */; };
+		B387F6F01D691283004EC05F /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B387F6EF1D691283004EC05F /* Theme.swift */; };
 		B3AEE5601D6707C10076F100 /* WorkoutsAndRoutinesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AEE55F1D6707C10076F100 /* WorkoutsAndRoutinesTVC.swift */; };
 		B3AEE5621D670CAC0076F100 /* WorkoutAndRoutineTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AEE5611D670CAC0076F100 /* WorkoutAndRoutineTVC.swift */; };
 		B3AEE5641D6710E10076F100 /* WorkoutAndRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AEE5631D6710E10076F100 /* WorkoutAndRoutineCell.swift */; };
@@ -115,6 +116,7 @@
 		B3791F811D614E3E003DD70F /* Keyboard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Keyboard.xib; sourceTree = "<group>"; };
 		B3791F831D614FDD003DD70F /* Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
 		B387F6ED1D690BC1004EC05F /* WRSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WRSetCell.swift; sourceTree = "<group>"; };
+		B387F6EF1D691283004EC05F /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		B3AEE55F1D6707C10076F100 /* WorkoutsAndRoutinesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsAndRoutinesTVC.swift; sourceTree = "<group>"; };
 		B3AEE5611D670CAC0076F100 /* WorkoutAndRoutineTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutAndRoutineTVC.swift; sourceTree = "<group>"; };
 		B3AEE5631D6710E10076F100 /* WorkoutAndRoutineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutAndRoutineCell.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				B3791F811D614E3E003DD70F /* Keyboard.xib */,
 				B3791F831D614FDD003DD70F /* Keyboard.swift */,
 				B366C72E1D54993300484784 /* Main.storyboard */,
+				B387F6EF1D691283004EC05F /* Theme.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -277,8 +280,8 @@
 		B366C7141D54987E00484784 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				B339D7A91D65829F0026287C /* TableViewCellWithTableView.swift */,
 				B366C7121D54987B00484784 /* ConfigurableCell.swift */,
+				B339D7A91D65829F0026287C /* TableViewCellWithTableView.swift */,
 				B3AEE5631D6710E10076F100 /* WorkoutAndRoutineCell.swift */,
 				B387F6ED1D690BC1004EC05F /* WRSetCell.swift */,
 				B30365DD1D61B6860030705E /* Workout */,
@@ -516,6 +519,7 @@
 				B366C7421D54996800484784 /* FetchedResultsDataProvider.swift in Sources */,
 				B30365E01D61B6A50030705E /* RoutineLiftCell.swift in Sources */,
 				B31D11341D652F6D00010E9C /* Lets.swift in Sources */,
+				B387F6F01D691283004EC05F /* Theme.swift in Sources */,
 				B321420D1D644D000093A21E /* NewVC.swift in Sources */,
 				B387F6EE1D690BC1004EC05F /* WRSetCell.swift in Sources */,
 				B30365D91D6194450030705E /* LiftCell.swift in Sources */,

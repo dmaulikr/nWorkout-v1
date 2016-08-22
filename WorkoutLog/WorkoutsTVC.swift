@@ -40,6 +40,7 @@ class WorkoutsTVC: WorkoutsAndRoutinesTVC<Workout, WorkoutCell> {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Lets.newWorkoutBarButtonText, style: .plain, target: self, action: #selector(newWorkout))
+        navigationItem.title = "Workouts"
     }
     func newWorkout() {
         let swtvc = SelectWorkoutTVC(style: .grouped)

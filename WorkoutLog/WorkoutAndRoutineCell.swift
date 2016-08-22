@@ -4,15 +4,18 @@ import CoreData
 class WorkoutAndRoutineCell<Type: NSManagedObject>: TableViewCellWithTableView {
     var nameLabel: UILabel
     required init(delegateAndDataSource: AnyTVCWTVDADS<Int>, indexPath: IndexPath) {
-        nameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 120, height: 35))
+        nameLabel = UILabel()
         super.init(delegateAndDataSource: delegateAndDataSource, indexPath: indexPath)
         contentView.addSubview(nameLabel)
         
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 8).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: Lets.liftCellNameLabelHeight).isActive = true
+        
+        nameLabel.font = Theme.Fonts.titleFont.font
     }
     
     required init?(coder aDecoder: NSCoder) {

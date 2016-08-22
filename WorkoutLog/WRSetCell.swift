@@ -8,7 +8,8 @@ class WRSetCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = nil        
+        backgroundColor = nil
+        textLabel?.font = Theme.Fonts.titleFont.font
     }
     
 }

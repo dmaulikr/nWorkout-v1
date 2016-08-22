@@ -10,6 +10,7 @@ class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresen
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New Routine", style: .plain, target: self, action: #selector(newRoutine))
+        navigationItem.title = "Workouts"
     }
     func newRoutine() {
         let nrtvc = NewVC(type: Routine.self, placeholder: "Insert new routine name", barButtonItem: navigationItem.rightBarButtonItem!) { object in }

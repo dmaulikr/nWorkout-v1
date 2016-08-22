@@ -28,6 +28,8 @@ class TVCWithTVDS<Source: DataProvider, Type: NSManagedObject, Cell: UITableView
     internal func setupTableView() {
         tableView.register(Cell.self, forCellReuseIdentifier: cellIdentifierForRegistration(for: Cell.self))
         dataSource = TableViewDataSource(tableView: tableView, dataProvider: dataProvider, delegate: self)
+        tableView.tableFooterView = UIView()
+        tableView.backgroundColor = Theme.Colors.backgroundColor.color
     }
     
     //DataSourceDelegate
@@ -47,6 +49,11 @@ class TVCWithTVDS<Source: DataProvider, Type: NSManagedObject, Cell: UITableView
     }
     func cell(forRowAt indexPath: IndexPath, identifier: String) -> Cell? {
         return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        cell.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }
 
