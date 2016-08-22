@@ -47,7 +47,7 @@ class TVCWithTVDS<Source: DataProvider, Type: NSManagedObject, Cell: UITableView
     func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
         print("Implement \(#function)")
     }
-    func cell(forRowAt indexPath: IndexPath, identifier: String) -> UITableViewCell? {
+    func cell(forRowAt indexPath: IndexPath) -> UITableViewCell? {
         return nil
     }
     

@@ -37,6 +37,7 @@ class NewVC<Type: NSManagedObject>: VCWithContext, UIPopoverPresentationControll
             do {
                 try self.context.save()
             } catch {
+                print("===============ERROR==============")
                 print(error)
             }
         }

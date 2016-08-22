@@ -9,7 +9,6 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: stringForButton(), style: .plain, target: self, action: #selector(addButtonTapped))
-        tableView.allowsSelection = false
     }
     func addButtonTapped() {
         let nlvc = NewVC(type: Type.self, placeholder: Lets.newLiftPlaceholderText, barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
@@ -22,6 +21,7 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
             do {
                 try self.context.save()
             } catch {
+                print("===============ERROR==============")
                 print(error)
             }
         }
@@ -44,6 +44,7 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
                     do {
                         try self.dataSource.dataProvider.managedObjectContext!.save()
                     } catch let error {
+                        print("===============ERROR==============")
                         print(error)
                     }
                 }
@@ -55,7 +56,7 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
             present(alert, animated: true)
         }
     }
-    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> UITableViewCell? {
+    override func cell(forRowAt indexPath: IndexPath) -> UITableViewCell? {
         let anyDADS = AnyTVCWTVDADS(dads: self)
         return Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
     }
@@ -101,6 +102,7 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
             do {
                 try self.context.save()
             } catch {
+                print("===============ERROR==============")
                 print(error)
             }
         }

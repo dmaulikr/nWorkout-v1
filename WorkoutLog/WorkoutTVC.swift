@@ -4,19 +4,18 @@ import CoreData
 class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
     
     func hideButtonPushed() {
-        presentingViewController?.dismiss(animated: true) {
+        navigationController?.presentingViewController?.dismiss(animated: true) {
             
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if navigationController!.viewControllers[0] is SelectWorkoutTVC {
-            navigationController!.viewControllers.remove(at: 0)
-        }
-    }
     override func numberOfSections() -> Int? {
-        return 2
+        let newWorkoutNav = (UIApplication.shared.delegate as! AppDelegate).newWorkoutNav
+        if navigationController == newWorkoutNav {
+            return 2
+        } else {
+            return 1
+        }
     }
     override func numberOfRows(inSection section: Int) -> Int? {
         if section == 0 {
@@ -25,11 +24,11 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
             return 1
         }
     }
-    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> UITableViewCell? {
+    override func cell(forRowAt indexPath: IndexPath) -> UITableViewCell? {
         if indexPath.section == 0 {
-            return super.cell(forRowAt: indexPath, identifier: identifier)
+            return super.cell(forRowAt: indexPath)
         } else {
-            let cell = UITableViewCell()
+            let cell = WRSetCell()
             cell.textLabel?.text = "Finish Workout"
             return cell
         }
@@ -56,6 +55,36 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
             return Lets.subTVCellSize
         } else {
             return super.tableView(tableView, heightForRowAt: indexPath)
+        }
+    }
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if indexPath.section == 1 {
+            return indexPath
+        } else {
+            return super.tableView(tableView, willSelectRowAt: indexPath)
+        }
+    }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 1 {
+            let dummyTabBarItem = (UIApplication.shared.delegate as! AppDelegate).dummy.tabBarItem
+            dummyTabBarItem?.title = "new"
+            dummyTabBarItem?.image = #imageLiteral(resourceName: "newWorkout")
+            context.perform {
+                self.dataProvider.complete = true
+                do {
+                    try self.context.save()
+                } catch {
+                    print("===============ERROR==============")
+                    print(error)
+                }
+            }
+            
+            navigationController?.presentingViewController?.dismiss(animated: true) {
+                self.navigationController?.viewControllers.removeLast()
+            }
+        }
+        else {
+            super.tableView(tableView, didSelectRowAt: indexPath)
         }
     }
 }

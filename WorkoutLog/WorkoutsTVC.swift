@@ -16,6 +16,7 @@ extension Workout: DataProvider {
             do {
                 try context.save()
             } catch {
+                print("===============ERROR==============")
                 print(error)
             }
         }
@@ -35,6 +36,10 @@ extension Workout: DataProvider {
 }
 
 class WorkoutsTVC: WorkoutsAndRoutinesTVC<Workout, WorkoutCell> {
+    
+    override func getPredicates() -> NSPredicate? {
+        return NSPredicate(format: "complete == true")
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let wtvc = WorkoutTVC(dataProvider: dataSource.selectedObject!)

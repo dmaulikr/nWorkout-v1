@@ -9,7 +9,7 @@ protocol DataSourceDelegate: class {
 
     func numberOfSections() -> Int?
     func numberOfRows(inSection section: Int) -> Int?
-    func cell(forRowAt indexPath: IndexPath, identifier: String) -> UITableViewCell?
+    func cell(forRowAt indexPath: IndexPath) -> UITableViewCell?
     func canEditRow(at indexPath: IndexPath) -> Bool
     func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath)
     

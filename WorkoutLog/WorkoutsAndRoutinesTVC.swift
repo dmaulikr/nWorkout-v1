@@ -25,6 +25,7 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
                 do {
                     try object.managedObjectContext?.save()
                 } catch {
+                    print("===============ERROR==============")
                     print(error)
                 }
             })
@@ -34,7 +35,7 @@ class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTable
             present(alert, animated: true)
         }
     }
-    override func cell(forRowAt indexPath: IndexPath, identifier: String) -> UITableViewCell? {
+    override func cell(forRowAt indexPath: IndexPath) -> UITableViewCell? {
         let anyDADS = AnyTVCWTVDADS(dads: self)
         let outerCell = Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
         outerCell.tableView.isUserInteractionEnabled = false

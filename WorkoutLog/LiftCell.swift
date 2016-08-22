@@ -28,6 +28,7 @@ extension Lift: DataProvider {
             do {
                 try self.managedObjectContext?.save()
             } catch {
+                print("===============ERROR==============")
                 print(error)
             }
         }
@@ -40,6 +41,7 @@ extension Lift: DataProvider {
             do {
                 try self.managedObjectContext?.save()
             } catch {
+                print("===============ERROR==============")
                 print(error)
             }
         }

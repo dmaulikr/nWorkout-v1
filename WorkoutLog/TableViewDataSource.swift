@@ -62,19 +62,20 @@ class TableViewDataSource<Delegate: DataSourceDelegate, DataProv: DataProvider, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let object = dataProvider.object(at: indexPath)
-        let identifier = delegate.cellIdentifier(for: object)
-        let cell = delegate.cell(forRowAt: indexPath, identifier: identifier)
+        let cell = delegate.cell(forRowAt: indexPath)
         if let theCell = cell as? Cell {
+            let object = dataProvider.object(at: indexPath)
             theCell.configureForObject(object: object, at: indexPath)
             return theCell
         } else if let theCell = cell {
             return theCell
         } else {
+            let object = dataProvider.object(at: indexPath)
+            let identifier = delegate.cellIdentifier(for: object)
             let dqcell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! Cell
             dqcell.configureForObject(object: object, at: indexPath)
             return dqcell
-        }        
+        }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

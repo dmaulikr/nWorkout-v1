@@ -8,7 +8,7 @@ struct Lets {
     static let liftCellNameLabelHeight: CGFloat = 25
     static let liftCellTableHeaderHeight: CGFloat = 23
     static let heightBetweenTopOfCellAndTV: CGFloat = 23 + 25 + 16
-    static let subTVCellSize: CGFloat = 37.0
+    static let subTVCellSize: CGFloat = 29.0
     
     static let newWorkoutBarButtonText = "New Workout"
     static let newLiftBarButtonText = "New Lift"

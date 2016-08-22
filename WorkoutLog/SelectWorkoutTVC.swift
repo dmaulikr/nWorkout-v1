@@ -58,34 +58,28 @@ extension SelectWorkoutTVC {
 extension SelectWorkoutTVC {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var workout: Workout?
-        switch (indexPath.row, indexPath.section) {
-        case (0, 0):
-            context.performAndWait {
+        context.performAndWait {
+            switch (indexPath.row, indexPath.section) {
+            case (0, 0):
                 workout = Workout(context: self.context)
-                do {
-                    try self.context.save()
-                } catch {
-                    print(error)
-                }
-            }
-        case (let row, 1):
-            context.performAndWait {
+            case (let row, 1):
                 workout = self.frc.fetchedObjects![row].toWorkout()
-                do {
-                    try self.context.save()
-                } catch {
-                    print(error)
-                }
+                
+            default:
+                fatalError()    
             }
-        default:
-            assertionFailure("shouldn't happen")
+            workout!.date = NSDate()
+            do {
+                try self.context.save()
+            } catch {
+                print("===============ERROR==============")
+                print(error)
+            }
         }
-        workout!.date = NSDate()
+        let wtvc = WorkoutTVC(dataProvider: workout!)
         let dummyNavBarItem = (UIApplication.shared.delegate as! AppDelegate).dummy.tabBarItem!
         dummyNavBarItem.image = #imageLiteral(resourceName: "show")
         dummyNavBarItem.title = "show"
-
-        let wtvc = WorkoutTVC(dataProvider: workout!)
         wtvc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "hide", style: .plain, target: wtvc, action: #selector(wtvc.hideButtonPushed))
         navigationController?.pushViewController(wtvc, animated: true)
     }

@@ -12,10 +12,17 @@ class CDTVCWithTVDS<Type: NSManagedObject, Cell: UITableViewCell> : TVCWithTVDS<
         request.returnsObjectsAsFaults = false
         request.fetchBatchSize = Lets.CDTVCWithTVDSBatchSize
         
+        if let predicate = getPredicates() {
+            request.predicate = predicate
+        }
+        
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self)
     }
     
+    func getPredicates() -> NSPredicate? {
+        return nil
+    }
 
     //DataSourceDelegate
     //Has to be here to be overrideable

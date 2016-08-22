@@ -16,6 +16,7 @@ extension Routine: DataProvider {
             do {
                 try context.save()
             } catch {
+                print("===============ERROR==============")
                 print(error)
             }
         }
@@ -62,6 +63,7 @@ extension RoutineLift: DataProvider {
             do {
                 try self.managedObjectContext?.save()
             } catch {
+                print("===============ERROR==============")
                 print(error)
             }
         }
@@ -74,6 +76,7 @@ extension RoutineLift: DataProvider {
             do {
                 try self.managedObjectContext?.save()
             } catch {
+                print("===============ERROR==============")
                 print(error)
             }
         }
