@@ -12,6 +12,7 @@
 		B30365D91D6194450030705E /* LiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365D81D6194450030705E /* LiftCell.swift */; };
 		B30365E01D61B6A50030705E /* RoutineLiftCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365DF1D61B6A50030705E /* RoutineLiftCell.swift */; };
 		B30365E21D61B6AC0030705E /* RoutineSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30365E11D61B6AC0030705E /* RoutineSetCell.swift */; };
+		B30C906D1D6C485000CE9243 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30C906C1D6C485000CE9243 /* AppCoordinator.swift */; };
 		B31D11341D652F6D00010E9C /* Lets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11331D652F6D00010E9C /* Lets.swift */; };
 		B31D11381D65325F00010E9C /* CDTVCWithTVDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11371D65325F00010E9C /* CDTVCWithTVDS.swift */; };
 		B31D113A1D6533A100010E9C /* TVCWithTVDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11391D6533A100010E9C /* TVCWithTVDS.swift */; };
@@ -77,6 +78,7 @@
 		B30365D81D6194450030705E /* LiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiftCell.swift; sourceTree = "<group>"; };
 		B30365DF1D61B6A50030705E /* RoutineLiftCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineLiftCell.swift; sourceTree = "<group>"; };
 		B30365E11D61B6AC0030705E /* RoutineSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutineSetCell.swift; sourceTree = "<group>"; };
+		B30C906C1D6C485000CE9243 /* AppCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		B31D11331D652F6D00010E9C /* Lets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lets.swift; sourceTree = "<group>"; };
 		B31D11371D65325F00010E9C /* CDTVCWithTVDS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDTVCWithTVDS.swift; sourceTree = "<group>"; };
 		B31D11391D6533A100010E9C /* TVCWithTVDS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TVCWithTVDS.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 		B366C70F1D54983D00484784 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				B30C906C1D6C485000CE9243 /* AppCoordinator.swift */,
 				B366C6E81D5497C200484784 /* Assets.xcassets */,
 				B366C6EA1D5497C200484784 /* LaunchScreen.storyboard */,
 				B366C6ED1D5497C200484784 /* Info.plist */,
@@ -514,6 +517,7 @@
 				B3AEE5621D670CAC0076F100 /* WorkoutAndRoutineTVC.swift in Sources */,
 				B366C7201D5498BB00484784 /* WorkoutCell.swift in Sources */,
 				B3BA3A0B1D606882001C23FB /* SelectWorkoutTVC.swift in Sources */,
+				B30C906D1D6C485000CE9243 /* AppCoordinator.swift in Sources */,
 				B36DE1041D63FC2B00A898B5 /* ManagedObjectType conformances.swift in Sources */,
 				B3791F841D614FDD003DD70F /* Keyboard.swift in Sources */,
 				B366C7191D54989800484784 /* WorkoutsTVC.swift in Sources */,
