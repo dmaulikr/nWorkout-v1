@@ -63,8 +63,7 @@ extension RoutineLift: DataProvider {
             do {
                 try self.managedObjectContext?.save()
             } catch {
-                print("===============ERROR==============")
-                print(error)
+                print(error: error)
             }
         }
         let row = sets?.count ?? 1
@@ -76,8 +75,7 @@ extension RoutineLift: DataProvider {
             do {
                 try self.managedObjectContext?.save()
             } catch {
-                print("===============ERROR==============")
-                print(error)
+                print(error: error)
             }
         }
     }
@@ -85,6 +83,7 @@ extension RoutineLift: DataProvider {
 
 class RoutineTVC: WorkoutAndRoutineTVC<Routine, RoutineLift, RoutineLiftCell> {
     override func viewDidLoad() {
+        super.viewDidLoad()
         navigationItem.title = "Workout"
     }
 

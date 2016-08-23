@@ -4,6 +4,16 @@ import CoreData
 
 class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresentationControllerDelegate {
     
+    init() {
+        let request = Routine.request
+        request.fetchBatchSize = Lets.defaultBatchSize
+        request.returnsObjectsAsFaults = false
+        super.init(request: request)
+    }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
@@ -12,14 +22,22 @@ class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresen
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(newRoutine))
     }
     func newRoutine() {
-        let nrtvc = NewVC(type: Routine.self, placeholder: "Insert new routine name", barButtonItem: navigationItem.rightBarButtonItem!) { object in }
+        let nrtvc = NewVC(type: Routine.self, placeholder: "Insert new routine name", barButtonItem: navigationItem.rightBarButtonItem!) { object in
+            let indexPath = IndexPath(row: self.dataProvider.numberOfItems(inSection: 0) - 1, section: 0)
+            self.tableView.insertRows(at: [indexPath], with: .none)
+        }
+        
         present(nrtvc, animated: true)
     }
+    
+    // UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let rtvc = RoutineTVC(dataProvider: dataSource.selectedObject!)
-        navigationController?.pushViewController(rtvc, animated: true)
+        let workout = dataProvider.object(at: indexPath)
+        let wtvc = RoutineTVC(dataProvider: workout)
+        navigationController?.pushViewController(wtvc, animated: true)
     }
     
+    // TVCWTVDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WRSetCell
         let lift = dataProvider.object(at: cell.indexPath).object(at: indexPath)

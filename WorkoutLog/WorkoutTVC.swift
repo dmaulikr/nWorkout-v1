@@ -9,30 +9,33 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
         }
     }
     
-    override func numberOfSections() -> Int? {
-        let newWorkoutNav = (UIApplication.shared.delegate as! AppDelegate).newWorkoutNav
+    //UITableViewDataSource
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        let newWorkoutNav = (UIApplication.shared.delegate as! AppDelegate).appCoordinator.newWorkoutNav
         if navigationController == newWorkoutNav {
             return 2
         } else {
             return 1
         }
     }
-    override func numberOfRows(inSection section: Int) -> Int? {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return super.numberOfRows(inSection: section)
+            return dataProvider.numberOfItems(inSection: section)
         } else {
             return 1
         }
     }
-    override func cell(forRowAt indexPath: IndexPath) -> UITableViewCell? {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            return super.cell(forRowAt: indexPath)
+            return super.tableView(tableView, cellForRowAt: indexPath)
         } else {
             let cell = WRSetCell()
             cell.textLabel?.text = "Finish Workout"
             return cell
         }
     }
+    
+    // TVWTVCDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SetCell
         if indexPath.section == 1 {
@@ -66,7 +69,7 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
-            let dummyTabBarItem = (UIApplication.shared.delegate as! AppDelegate).dummy.tabBarItem
+            let dummyTabBarItem = (UIApplication.shared.delegate as! AppDelegate).appCoordinator.dummy.tabBarItem
             dummyTabBarItem?.title = "new"
             dummyTabBarItem?.image = #imageLiteral(resourceName: "newWorkout")
             context.perform {
@@ -74,8 +77,7 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
                 do {
                     try self.context.save()
                 } catch {
-                    print("===============ERROR==============")
-                    print(error)
+                    print(error: error)
                 }
             }
             

@@ -1,57 +1,34 @@
 import UIKit
 import CoreData
 
-extension Workout: DataProvider {
-    func object(at indexPath: IndexPath) -> Lift {
-        return lifts!.object(at: indexPath.row) as! Lift
-    }
-    func insert(object: Lift) -> IndexPath {
-        guard let context = managedObjectContext else { assertionFailure("Why doesn't this exist"); return IndexPath() }
-        context.performAndWait {
-            let set = LSet(context: context)
-            set.targetWeight = 225
-            set.targetReps = 5
-            object.addToSets(set)
-            self.addToLifts(object)
-            do {
-                try context.save()
-            } catch {
-                print("===============ERROR==============")
-                print(error)
-            }
-        }
-        return IndexPath(row: lifts!.count - 1, section: 0)
-    }
-    func index(of object: Lift) -> IndexPath {
-        print(object)
-        print(lifts!.index(of: object))
-        return IndexPath(row: lifts!.index(of: object), section: 0)
-    }
-    func numberOfSections() -> Int {
-        return 1
-    }
-    func numberOfItems(inSection section: Int) -> Int {
-        return lifts!.count
-    }
-}
+
 
 class WorkoutsTVC: WorkoutsAndRoutinesTVC<Workout, WorkoutCell> {
     
-    override func getPredicates() -> NSPredicate? {
-        return NSPredicate(format: "complete == true")
+    init() {
+        let request = Workout.request
+        request.fetchBatchSize = Lets.defaultBatchSize
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "complete == true")
+        super.init(request: request)
     }
-
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let wtvc = WorkoutTVC(dataProvider: dataSource.selectedObject!)
+        let workout = dataProvider.object(at: indexPath)
+        let wtvc = WorkoutTVC(dataProvider: workout)
         navigationController?.pushViewController(wtvc, animated: true)
     }
     
-    // DataSourceDelegate
+    // TVCWTVDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WRSetCell
         let lift = dataProvider.object(at: cell.indexPath).object(at: indexPath)
         innerCell.textLabel?.text = lift.name
         return innerCell
     }
-
+    
 }

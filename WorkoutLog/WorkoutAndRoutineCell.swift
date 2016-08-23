@@ -1,9 +1,9 @@
 import UIKit
 import CoreData
 
-class WorkoutAndRoutineCell<Type: NSManagedObject>: TableViewCellWithTableView {
+class WorkoutAndRoutineCell<Type: ManagedObject>: TableViewCellWithTableView {
     var nameLabel: UILabel
-    required init(delegateAndDataSource: AnyTVCWTVDADS<Int>, indexPath: IndexPath) {
+    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource, indexPath: IndexPath) {
         nameLabel = UILabel()
         super.init(delegateAndDataSource: delegateAndDataSource, indexPath: indexPath)
         contentView.addSubview(nameLabel)

@@ -19,7 +19,7 @@ extension RoutineSetCell: ConfigurableCell {
     }
 }
 
-class RoutineSetCell: UITableViewCell, KeyboardDelegate {
+class RoutineSetCell: InnerTableViewCell, KeyboardDelegate {
     var set: RoutineSet! {
         didSet {
             reps = Int(set.reps)
@@ -37,7 +37,6 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate {
         textFields += [weightTextField, repsTextField]
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = nil
         //Configure TextFields
         for textField in textFields {
             textField.borderStyle = .line
@@ -51,15 +50,10 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate {
         stackView.distribution = .fillEqually
         stackView.spacing = 10
         
-        
         contentView.addSubview(stackView)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8.0).isActive = true
-        stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8.0).isActive = true
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8.0).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8.0).isActive = true
-
+        stackView.constrainAnchors(to: contentView, constant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -75,7 +69,11 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate {
         set {
             set.managedObjectContext?.perform {
                 self.set.weight = Int16(newValue)
-                try! self.set.managedObjectContext?.save()
+                do {
+                    try self.set.managedObjectContext?.save()
+                } catch {
+                    print(error: error)
+                }
             }
             weightTextField.text = "\(newValue)"
         }
@@ -88,7 +86,11 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate {
         set {
             set.managedObjectContext?.perform {
                 self.set.reps = Int16(newValue)
-                try! self.set.managedObjectContext?.save()
+                do {
+                    try self.set.managedObjectContext?.save()
+                } catch {
+                    print(error: error)
+                }
             }
             repsTextField.text = "\(newValue)"
         }
@@ -146,6 +148,6 @@ extension RoutineSetCell: UITextFieldDelegate {
         default:
             break
         }
-
+        
     }
 }

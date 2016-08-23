@@ -2,6 +2,10 @@ import Foundation
 
 public typealias OrderedSet = NSOrderedSet
 
+func print(error: Error) {
+    print("================ERROR================")
+    print(error: error)
+}
 
 extension Sequence {
     func findFirstOccurence(block: (Iterator.Element) -> Bool) -> Iterator.Element? {

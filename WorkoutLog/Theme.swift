@@ -2,6 +2,9 @@ import UIKit
 
 struct Theme {
     enum Colors {
+        case outerTableViewBackgroundColor
+        case innerTableViewBackgroundColor
+        
         case tintColor
         case backgroundColor
         case lightBackgroundColor
@@ -12,6 +15,9 @@ struct Theme {
         
         var color: UIColor {
             switch self {
+            case .outerTableViewBackgroundColor: return #colorLiteral(red: 0.9386536593, green: 0.9386536593, blue: 0.9386536593, alpha: 1)
+            case .innerTableViewBackgroundColor: return #colorLiteral(red: 0.9568895725, green: 0.9568895725, blue: 0.9568895725, alpha: 1)
+                
             case .tintColor: return UIColor(red: 0.97, green: 0.9, blue: 0, alpha: 1)
             case .backgroundColor: return #colorLiteral(red: 0.9386536593, green: 0.9386536593, blue: 0.9386536593, alpha: 1)
             case .lightBackgroundColor: return #colorLiteral(red: 0.9568895725, green: 0.9568895725, blue: 0.9568895725, alpha: 1)

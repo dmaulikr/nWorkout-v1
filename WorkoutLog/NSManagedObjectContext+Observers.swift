@@ -6,22 +6,22 @@ public struct ObjectsDidChangeNotification {
         notification = note
     }
     
-    public var insertedObjects: Set<NSManagedObject> {
+    public var insertedObjects: Set<ManagedObject> {
         return objectsForKey(key: NSInsertedObjectsKey)
     }
-    public var updatedObjects: Set<NSManagedObject> {
+    public var updatedObjects: Set<ManagedObject> {
         return objectsForKey(key: NSUpdatedObjectsKey)
     }
     
-    public var deletedObjects: Set<NSManagedObject> {
+    public var deletedObjects: Set<ManagedObject> {
         return objectsForKey(key: NSDeletedObjectsKey)
     }
     
-    public var refreshedObjects: Set<NSManagedObject> {
+    public var refreshedObjects: Set<ManagedObject> {
         return objectsForKey(key: NSRefreshedObjectsKey)
     }
     
-    public var invalidatedObjects: Set<NSManagedObject> {
+    public var invalidatedObjects: Set<ManagedObject> {
         return objectsForKey(key: NSInvalidatedObjectsKey)
     }
     
@@ -38,8 +38,8 @@ public struct ObjectsDidChangeNotification {
     
     private let notification: NSNotification
     
-    private func objectsForKey(key: String) -> Set<NSManagedObject> {
-        return (notification.userInfo?[key] as? Set<NSManagedObject>) ?? Set()
+    private func objectsForKey(key: String) -> Set<ManagedObject> {
+        return (notification.userInfo?[key] as? Set<ManagedObject>) ?? Set()
     }
 }
 

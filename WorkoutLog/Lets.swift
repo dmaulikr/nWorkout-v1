@@ -22,7 +22,7 @@ struct Lets {
     static let buffer: CGFloat = 8.0
     
     static let selectWorkoutBatchSize = 20
-    static let CDTVCWithTVDSBatchSize = 20
+    static let defaultBatchSize = 10
  
     static let blankWorkoutText = "Blank Workout"
     

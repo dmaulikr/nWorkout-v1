@@ -2,7 +2,9 @@ import UIKit
 import CoreData
 
 
-class NewVC<Type: NSManagedObject>: VCWithContext, UIPopoverPresentationControllerDelegate {
+class NewVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationControllerDelegate {
+    
+    let context = CoreData.shared.context
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
@@ -37,8 +39,7 @@ class NewVC<Type: NSManagedObject>: VCWithContext, UIPopoverPresentationControll
             do {
                 try self.context.save()
             } catch {
-                print("===============ERROR==============")
-                print(error)
+                print(error: error)
             }
         }
         presentingViewController?.dismiss(animated: true) {

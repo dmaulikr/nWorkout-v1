@@ -1,5 +1,27 @@
 import UIKit
 
+class InnerTableViewCell: UITableViewCell {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        backgroundColor = nil
+        textLabel?.font = Theme.Fonts.titleFont.font
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension UIView {
+    func constrainAnchors(to view: UIView, constant: CGFloat) {
+        leftAnchor.constraint(equalTo: view.leftAnchor, constant: constant).isActive = true
+        rightAnchor.constraint(equalTo: view.rightAnchor, constant: constant).isActive = true
+        topAnchor.constraint(equalTo: view.topAnchor, constant: constant).isActive = true
+        bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: constant).isActive = true
+    }
+}
+
 
 extension SetCell: ConfigurableCell {
     typealias DataSource = LSet
@@ -22,7 +44,7 @@ extension SetCell: ConfigurableCell {
     }
 }
 
-class SetCell: UITableViewCell, KeyboardDelegate {
+class SetCell: InnerTableViewCell, KeyboardDelegate {
     var set: LSet! {
         didSet {
             targetReps = Int(set.targetReps)
@@ -36,8 +58,6 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         }
     }
     
-    
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         targetWeightTextField = UITextField()
         targetRepsTextField = UITextField()
@@ -45,15 +65,9 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         completedRepsTextField = UITextField()
         textFields += [targetWeightTextField, targetRepsTextField, completedWeightTextField, completedRepsTextField]
         statusButton = SetStatusButton(type: .system)
-
-        
-        
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        textLabel?.font = Theme.Fonts.titleFont.font
-        
-        backgroundColor = nil
         //Configure TextFields
         for textField in textFields {
             textField.borderStyle = .line
@@ -74,10 +88,7 @@ class SetCell: UITableViewCell, KeyboardDelegate {
         contentView.addSubview(stackView)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        stackView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        stackView.constrainAnchors(to: contentView, constant: 0)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell: TableViewCellWithTableView>: TVCWithTVDS<Source, Type, Cell> where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider, Source: DataProvider {
+class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: TableViewCellWithTableView>: TableViewController<Source, Type, Cell> where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider, Source: DataProvider {
     
     func stringForButton() -> String {
         return Lets.newLiftBarButtonText
@@ -21,50 +21,50 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
             do {
                 try self.context.save()
             } catch {
-                print("===============ERROR==============")
-                print(error)
+                print(error: error)
             }
         }
         guard let indexPath = newIndexPath else { return }
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
-    //DataSourceDelegate
-    override func canEditRow(at: IndexPath) -> Bool {
+    // UITableViewDataSource
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
-        if editingStyle == .delete {
-            
-            let alert = UIAlertController(title: "Are you sure?", message: "Do you want to delete this entry?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive) { _ in
-                self.dataSource.dataProvider.managedObjectContext?.performAndWait {
-                    let object = self.dataSource.dataProvider.object(at: indexPath)
-                    self.dataSource.dataProvider.managedObjectContext?.delete(object)
-                    do {
-                        try self.dataSource.dataProvider.managedObjectContext!.save()
-                    } catch let error {
-                        print("===============ERROR==============")
-                        print(error)
-                    }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { fatalError("Editing style == \(editingStyle)") }
+        
+        let alert = UIAlertController(title: "Are you sure?", message: "Do you want to delete this entry?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive) { _ in
+            self.dataProvider.managedObjectContext?.performAndWait {
+                let object = self.dataProvider.object(at: indexPath)
+                self.dataProvider.managedObjectContext?.delete(object)
+                do {
+                    try self.dataProvider.managedObjectContext!.save()
+                } catch let error {
+                    print(error: error)
                 }
-                self.tableView.deleteRows(at: [indexPath], with: .none)
-            })
-            alert.addAction(UIAlertAction(title: "No", style: .cancel){ _ in
-                self.tableView.endEditing(true)
-            })
-            present(alert, animated: true)
-        }
+            }
+            self.tableView.deleteRows(at: [indexPath], with: .none)
+        })
+        alert.addAction(UIAlertAction(title: "No", style: .cancel){ _ in
+            self.tableView.endEditing(true)
+        })
+        present(alert, animated: true)
     }
-    override func cell(forRowAt indexPath: IndexPath) -> UITableViewCell? {
-        let anyDADS = AnyTVCWTVDADS(dads: self)
-        return Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let outerCell = Cell(delegateAndDataSource: self, indexPath: indexPath)
+        let object = dataProvider.object(at: indexPath)
+        outerCell.configureForObject(object: object, at: indexPath)
+        return outerCell
     }
-    override func numberOfSections() -> Int? {
-        return nil
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return dataProvider.numberOfSections()
     }
-    override func numberOfRows(inSection section: Int) -> Int? {
-        return nil
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataProvider.numberOfItems(inSection: section)
     }
     //UITableViewDelegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -102,8 +102,7 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
             do {
                 try self.context.save()
             } catch {
-                print("===============ERROR==============")
-                print(error)
+                print(error: error)
             }
         }
         guard let indexPath = newInnerIndexPath else { return }
@@ -126,7 +125,6 @@ class WorkoutAndRoutineTVC<Source: NSManagedObject, Type: NSManagedObject, Cell:
     func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat {
         return Lets.subTVCellSize
     }
-    
     //Dummy since Swift can't find Subclass implementation without something to override.
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { fatalError() }
     func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { fatalError() }

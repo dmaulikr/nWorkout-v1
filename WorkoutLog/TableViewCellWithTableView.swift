@@ -3,6 +3,7 @@ import UIKit
 //MARK: InnerTableView
 class InnerTableView: UITableView {
     weak var outerCell: TableViewCellWithTableView!
+    
     override func insertRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
         super.insertRows(at: indexPaths, with: animation)
         outerCell.didInsertRows(at: indexPaths)
@@ -11,9 +12,42 @@ class InnerTableView: UITableView {
         super.deleteRows(at: indexPaths, with: animation)
         outerCell.didDeleteRows(at: indexPaths)
     }
+    override init(frame: CGRect, style: UITableViewStyle) {
+        super.init(frame: frame, style: style)
+        
+        tableFooterView = UIView()
+        backgroundColor = Theme.Colors.innerTableViewBackgroundColor.color
+        
+        separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        
+        isScrollEnabled = false
+        layer.borderColor = UIColor.darkGray.cgColor
+        layer.borderWidth = 2.0
+
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }
+
+class OuterTableViewCell: UITableViewCell {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        backgroundColor = Theme.Colors.backgroundColor.color
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+
 //MARK: TableViewCelLWithTableView
-class TableViewCellWithTableView: UITableViewCell {
+class TableViewCellWithTableView: OuterTableViewCell {
     func didInsertRows(at indexPaths: [IndexPath]) {
         updateTableViewHeight()
     }
@@ -35,7 +69,7 @@ class TableViewCellWithTableView: UITableViewCell {
         heightConstraint.constant = height
     }
     var indexPath: IndexPath!
-    var delegate: AnyTVCWTVDADS<Int>?
+    var delegate: TableViewCellWithTableViewDelegateAndDataSource?
     
     var gapBetweenTopAndTableView: CGFloat = 80.0
     let tableView: InnerTableView
@@ -43,26 +77,25 @@ class TableViewCellWithTableView: UITableViewCell {
         return SubTableViewDelegateAndDataSource(cell: self)
     }()
     
-    required init(delegateAndDataSource: AnyTVCWTVDADS<Int>,
-                  indexPath: IndexPath) {
+    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource, indexPath: IndexPath) {
         self.indexPath = indexPath
         self.delegate = delegateAndDataSource
         self.tableView = InnerTableView(frame: CGRect(), style: .plain)
         
         super.init(style: .default, reuseIdentifier: "")
-        backgroundColor = Theme.Colors.backgroundColor.color
-        tableView.backgroundColor = Theme.Colors.lightBackgroundColor.color
-        tableView.outerCell = self
         subTableViewDelegateAndDataSource.delegate = delegateAndDataSource
-        heightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize))
-        heightConstraint.isActive = true
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        tableView.outerCell = self
         tableView.delegate = subTableViewDelegateAndDataSource
         tableView.dataSource = subTableViewDelegateAndDataSource
-        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         contentView.addSubview(tableView)
         
-        customizeTableView()
+        
+        heightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize))
+        heightConstraint.isActive = true
+        
+        constrainTableView()
         tableView.reloadData()
         
         updateTableViewHeight()
@@ -70,18 +103,11 @@ class TableViewCellWithTableView: UITableViewCell {
         tableView.reloadData()
     }
     
-    private func customizeTableView() {
-        tableView.isScrollEnabled = false
-        tableView.layer.borderColor = UIColor.darkGray.cgColor
-        tableView.layer.borderWidth = 2.0
-        
+    private func constrainTableView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8).isActive = true
         tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
         tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
-        //        tableView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: gapBetweenTopAndTableView).isActive = true
-        
-        tableView.tableFooterView = UIView()
     }
     
     var heightConstraint: NSLayoutConstraint!
@@ -93,64 +119,7 @@ class TableViewCellWithTableView: UITableViewCell {
     }
 }
 //MARK: TableViewCellWithTableView Delegate and DataSource
-
-
-class AnyTVCWTVDADS<InnerCell>: TableViewCellWithTableViewDelegateAndDataSource {
-    
-    func thing(innerCell: InnerCell) { }
-    init<DADS: TableViewCellWithTableViewDelegateAndDataSource>(dads: DADS) where DADS.InnerCell == InnerCell {
-        numberOfSections = dads.numberOfSections
-        numberOfRowsInSection = dads.cell
-        cellForRowAt = dads.cell
-        commit = dads.cell
-        canEditRowAt = dads.cell
-        registerInnerCellForSection = dads.cell
-        heightForRowAtInner = dads.cell
-        willSelectRowAtInner = dads.cell
-        didSelectRowAtInner = dads.cell
-    }
-    private let numberOfSections: ((TableViewCellWithTableView) -> Int)
-    func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
-        return numberOfSections(cell)
-    }
-    private let numberOfRowsInSection: ((TableViewCellWithTableView, Int) -> Int)
-    func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        return numberOfRowsInSection(cell,section)
-    }
-    private let cellForRowAt: ((TableViewCellWithTableView, IndexPath) -> UITableViewCell)
-    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return cellForRowAt(cell,indexPath)
-    }
-    private let commit: ((TableViewCellWithTableView, UITableViewCellEditingStyle, IndexPath) -> ())
-    func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        commit(cell,editingSyle,indexPath)
-    }
-    private let canEditRowAt: ((TableViewCellWithTableView, IndexPath) -> Bool)
-    func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool{
-        return canEditRowAt(cell,indexPath)
-    }
-    private let registerInnerCellForSection: ((TableViewCellWithTableView, Int) -> ())
-    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
-        registerInnerCellForSection(cell,section)
-    }
-    private let heightForRowAtInner: ((TableViewCellWithTableView, IndexPath) -> CGFloat)
-    func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat {
-        return heightForRowAtInner(cell,innerIndexPath)
-    }
-    private let willSelectRowAtInner: ((TableViewCellWithTableView, IndexPath) -> IndexPath?)
-    func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? {
-        return willSelectRowAtInner(cell,innerIndexPath)
-    }
-    private let didSelectRowAtInner: ((TableViewCellWithTableView, IndexPath) -> ())
-    func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) {
-        didSelectRowAtInner(cell,innerIndexPath)
-    }
-}
-
-
 protocol TableViewCellWithTableViewDelegateAndDataSource: class {
-    associatedtype InnerCell
-    func thing(innerCell: InnerCell)
     //Required
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
@@ -164,7 +133,6 @@ protocol TableViewCellWithTableViewDelegateAndDataSource: class {
     func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath)
 }
 extension TableViewCellWithTableViewDelegateAndDataSource {
-    func thing(innerCell: InnerCell) { }
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int { return 1 }
     func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { }
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool { return false }
@@ -174,8 +142,6 @@ extension TableViewCellWithTableViewDelegateAndDataSource {
 }
 
 
-
-
 //MARK: SubTableViewDelegateAndDataSource
 class SubTableViewDelegateAndDataSource: NSObject {
     var cell: TableViewCellWithTableView
@@ -183,7 +149,7 @@ class SubTableViewDelegateAndDataSource: NSObject {
         self.cell = cell
     }
     
-    var delegate: AnyTVCWTVDADS<Int>?
+    var delegate: TableViewCellWithTableViewDelegateAndDataSource?
 }
 extension SubTableViewDelegateAndDataSource: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {

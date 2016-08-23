@@ -1,7 +1,9 @@
 import UIKit
 import CoreData
 
-class SelectWorkoutTVC: TVCWithContext {
+class SelectWorkoutTVC: UITableViewController {
+    
+    let context = CoreData.shared.context
     
     var frc: NSFetchedResultsController<Routine>!
     
@@ -95,7 +97,7 @@ extension SelectWorkoutTVC {
             }
         }
         let wtvc = WorkoutTVC(dataProvider: workout!)
-        let dummyNavBarItem = (UIApplication.shared.delegate as! AppDelegate).dummy.tabBarItem!
+        let dummyNavBarItem = (UIApplication.shared.delegate as! AppDelegate).appCoordinator.dummy.tabBarItem!
         dummyNavBarItem.image = #imageLiteral(resourceName: "show")
         dummyNavBarItem.title = "show"
         wtvc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "hide", style: .plain, target: wtvc, action: #selector(wtvc.hideButtonPushed))

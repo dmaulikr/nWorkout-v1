@@ -2,47 +2,47 @@ import UIKit
 import CoreData
 
 
-class WorkoutsAndRoutinesTVC<Type: NSManagedObject, Cell: TableViewCellWithTableView>: CDTVCWithTVDS<Type, Cell> where Cell: ConfigurableCell, Type: ManagedObjectType, Cell.DataSource == Type, Type: DataProvider {
+class WorkoutsAndRoutinesTVC<Type: ManagedObject, Cell: TableViewCellWithTableView>: TableViewController<FetchedResultsDataProvider<Type>, Type, Cell> where Cell: ConfigurableCell, Type: ManagedObjectType, Cell.DataSource == Type, Type: DataProvider {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
     }
     
-    // DataSourceDelegate
-    override func canEditRow(at indexPath: IndexPath) -> Bool {
+    // UITableViewDataSource
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    override func commit(_ editingStyle: UITableViewCellEditingStyle, for indexPath: IndexPath) {
-        if editingStyle == .delete {
-            
-            let alert = UIAlertController(title: "Are you sure?", message: "Do you want to delete this entry?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive) { _ in
-                let object = self.dataSource.dataProvider.object(at: indexPath)
-                object.managedObjectContext!.performAndWait {
-                    object.managedObjectContext!.delete(object)
-                }
-                do {
-                    try object.managedObjectContext?.save()
-                } catch {
-                    print("===============ERROR==============")
-                    print(error)
-                }
-            })
-            alert.addAction(UIAlertAction(title: "No", style: .cancel){ _ in
-                //
-            })
-            present(alert, animated: true)
-        }
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete  else { fatalError("editingStyle == \(editingStyle)") }
+        
+        let alert = UIAlertController(title: "Are you sure?", message: "Do you want to delete this entry?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive) { _ in
+            let object = self.dataProvider.object(at: indexPath)
+            object.managedObjectContext!.performAndWait {
+                object.managedObjectContext!.delete(object)
+            }
+            do {
+                try object.managedObjectContext?.save()
+            } catch {
+                print(error: error)
+            }
+            self.tableView.deleteRows(at: [indexPath], with: .none)
+        })
+        alert.addAction(UIAlertAction(title: "No", style: .cancel){ _ in
+            //
+        })
+        present(alert, animated: true)
+        
+        
     }
-    override func cell(forRowAt indexPath: IndexPath) -> UITableViewCell? {
-        let anyDADS = AnyTVCWTVDADS(dads: self)
-        let outerCell = Cell(delegateAndDataSource: anyDADS, indexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let outerCell = Cell(delegateAndDataSource: self, indexPath: indexPath)
         outerCell.tableView.isUserInteractionEnabled = false
+        let object = dataProvider.object(at: indexPath)
+        outerCell.configureForObject(object: object, at: indexPath)
         return outerCell
     }
-    
-    
     //UITableViewDelegate
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)

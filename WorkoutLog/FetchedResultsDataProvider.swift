@@ -1,26 +1,24 @@
 import Foundation
 import CoreData
 
-class FetchedResultsDataProvider<Object: NSManagedObject>: NSObject, NSFetchedResultsControllerDelegate, DataProvider {
+class FetchedResultsDataProvider<Type: ManagedObject>: NSObject, NSFetchedResultsControllerDelegate, DataProvider {
     
-    
-    init(fetchedResultsController: NSFetchedResultsController<Object>, delegate: DataProviderDelegate) {
+    init(fetchedResultsController: NSFetchedResultsController<Type>, delegate: DataProviderDelegate?) {
         self.fetchedResultsController = fetchedResultsController
         self.delegate = delegate
         super.init()
         fetchedResultsController.delegate = self
         try! fetchedResultsController.performFetch()
-    }
+    }    
     
-    func object(at indexPath: IndexPath) -> Object {
+    // MARK: DataProvider
+    func object(at indexPath: IndexPath) -> Type {
         return fetchedResultsController.object(at: indexPath)
     }
-    
     func numberOfItems(inSection section: Int) -> Int {
         guard let sec = fetchedResultsController.sections?[section] else { return 0 }
         return sec.numberOfObjects
     }
-    
     func numberOfSections() -> Int {
         guard let secs = fetchedResultsController.sections else { return 0 }
         return secs.count
@@ -28,17 +26,14 @@ class FetchedResultsDataProvider<Object: NSManagedObject>: NSObject, NSFetchedRe
     
     
     // MARK: Private
-    
-    private let fetchedResultsController: NSFetchedResultsController<Object>
-    private let delegate: DataProviderDelegate
+    private let fetchedResultsController: NSFetchedResultsController<Type>
+    private let delegate: DataProviderDelegate?
     private var updates: [DataProviderUpdate] = []
     
     // MARK: NSFetchedResultsControllerDelegate
-    
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         updates = []
     }
-
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any,
                     at indexPath: IndexPath?,
@@ -61,8 +56,7 @@ class FetchedResultsDataProvider<Object: NSManagedObject>: NSObject, NSFetchedRe
             updates.append(.delete(indexPath))
         }
     }
-    
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        delegate.dataProviderDidUpdate(updates: updates)
+        delegate?.dataProviderDidUpdate(updates: updates)
     }
 }
