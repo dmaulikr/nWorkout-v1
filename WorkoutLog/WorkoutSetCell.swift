@@ -1,5 +1,9 @@
 import UIKit
 
+protocol SetCellDelegate: class {
+    func cellShouldJumpToNextTextField(_ cell: InnerTableViewCell)
+}
+
 extension WorkoutSetCell: ConfigurableCell {
     typealias DataSource = WorkoutSet
     func configureForObject(object: WorkoutSet, at indexPath: IndexPath) {
@@ -20,6 +24,7 @@ extension WorkoutSetCell: ConfigurableCell {
 }
 
 class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
+    var delegate: SetCellDelegate?
     var set: WorkoutSet! {
         didSet {
             targetReps = Int(set.targetReps)
@@ -171,6 +176,7 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
             currentlyEditing = completedRepsTextField
         case completedRepsTextField:
             currentlyEditing = nil
+            delegate?.cellShouldJumpToNextTextField(self)
             endEditing(true)
         default:
             break

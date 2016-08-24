@@ -51,3 +51,12 @@ extension WorkoutLiftCell {
         NSLayoutConstraint.activate(constraints)
     }
 }
+
+extension WorkoutLiftCell: SetCellDelegate {
+    func cellShouldJumpToNextTextField(_ cell: InnerTableViewCell) {
+        let innerIndexPath = tableView.indexPath(for: cell)!
+        let newInnerIndexPath = IndexPath(row: innerIndexPath.row + 1, section: innerIndexPath.section)
+        guard let newInnerCell = tableView.cellForRow(at: newInnerIndexPath) as? WorkoutSetCell else { return }
+        newInnerCell.targetWeightTextField.becomeFirstResponder()
+    }
+}

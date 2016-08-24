@@ -50,6 +50,7 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
             return tableViewCell
         } else {
             let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "workoutSetCell", for: indexPath) as! WorkoutSetCell
+            innerCell.delegate = cell as! WorkoutLiftCell
             let set = dataProvider.object(at: cell.indexPath).object(at: indexPath)
             innerCell.configureForObject(object: set, at: indexPath)
             return innerCell
@@ -98,3 +99,4 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
         }
     }
 }
+
