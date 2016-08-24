@@ -1,9 +1,5 @@
 import UIKit
 
-//MARK: InnerTableView
-
-
-
 //MARK: TableViewCelLWithTableView
 class TableViewCellWithTableView: OuterTableViewCell {
     func didInsertRows(at indexPaths: [IndexPath]) {
@@ -13,18 +9,16 @@ class TableViewCellWithTableView: OuterTableViewCell {
         updateTableViewHeight()
     }
     func updateTableViewHeight() {
-        
         let numberOfSections = tableView.numberOfSections
         var cellCounts = [Int]()
         for i in 0..<numberOfSections {
             cellCounts.append(tableView.numberOfRows(inSection: i))
         }
-        
         let height = cellCounts.reduce(CGFloat(0)) { $0 + CGFloat($1) * CGFloat(Lets.subTVCellSize) }
         
-        frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: height + CGFloat(Lets.heightBetweenTopOfCellAndTV))
+        self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: height + CGFloat(Lets.heightBetweenTopOfCellAndTV))
+        self.heightConstraint.constant = height
         
-        heightConstraint.constant = height
     }
     var indexPath: IndexPath!
     var delegate: TableViewCellWithTableViewDelegateAndDataSource?
@@ -58,10 +52,9 @@ class TableViewCellWithTableView: OuterTableViewCell {
         constraints.append(heightConstraint)
         
         NSLayoutConstraint.activate(constraints)
-
+        
         tableView.reloadData()
-        updateTableViewHeight()        
-        tableView.reloadData()
+        updateTableViewHeight()
     }
     
     var heightConstraint: NSLayoutConstraint!

@@ -37,20 +37,21 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
     
     // TVWTVCDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WorkoutSetCell
         if indexPath.section == 1 {
-            innerCell.textLabel?.text = Lets.addSetText
-            innerCell.textFields.forEach { $0.isHidden = true }
-            innerCell.statusButton.isHidden = true
+            let tableViewCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            tableViewCell.textLabel?.text = Lets.addSetText
+            return tableViewCell
         } else {
+            let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "workoutSetCell", for: indexPath) as! WorkoutSetCell
             let set = dataProvider.object(at: cell.indexPath).object(at: indexPath)
             innerCell.configureForObject(object: set, at: indexPath)
+            return innerCell
         }
-        return innerCell
     }
     
     override func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
-        cell.tableView.register(WorkoutSetCell.self, forCellReuseIdentifier: "cell")
+        cell.tableView.register(WorkoutSetCell.self, forCellReuseIdentifier: "workoutSetCell")
+        cell.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -63,14 +63,20 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
         return dataProvider.numberOfItems(inSection: section)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("outer CFRA start \(indexPath)")
         let outerCell = Cell(delegateAndDataSource: self, indexPath: indexPath)
         let object = dataProvider.object(at: indexPath)
         outerCell.configureForObject(object: object, at: indexPath)
+        print("outer CFRA end \(indexPath)")
         return outerCell
     }
     // UITableViewDelegate
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
+        print("outer HFRA start \(indexPath)")
+        let height = CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * Lets.subTVCellSize + CGFloat(Lets.heightBetweenTopOfCellAndTV)
+        print("outer HFRA end \(indexPath)")
+        return height
     }
     
     //These are required to enable subclasses to override.
