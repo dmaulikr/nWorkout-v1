@@ -3,6 +3,13 @@ import CoreData
 
 class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, H:mm a"
+        navigationItem.title = dateFormatter.string(from: dataProvider.date! as Date)
+    }
+    
     func hideButtonPushed() {
         navigationController?.presentingViewController?.dismiss(animated: true) {
             
