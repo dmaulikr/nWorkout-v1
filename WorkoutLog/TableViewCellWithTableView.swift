@@ -29,8 +29,10 @@ class TableViewCellWithTableView: OuterTableViewCell {
         return SubTableViewDelegateAndDataSource(cell: self)
     }()
     
-    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource) {
-
+    var indexPath: IndexPath
+    
+    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource, indexPath: IndexPath) {
+        self.indexPath = indexPath
         self.delegate = delegateAndDataSource
         self.tableView = InnerTableView(frame: CGRect(), style: .plain)
         

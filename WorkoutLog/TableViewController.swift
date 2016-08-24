@@ -49,6 +49,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
             if self.dataProvider is ManagedObject {
                 self.tableView.deleteRows(at: [indexPath], with: .none)
             }
+            tableView.reloadData()
         })
         alert.addAction(UIAlertAction(title: "No", style: .cancel){ _ in
             self.tableView.endEditing(true)
@@ -64,7 +65,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("outer CFRA start \(indexPath)")
-        let outerCell = Cell(delegateAndDataSource: self)
+        let outerCell = Cell(delegateAndDataSource: self, indexPath: indexPath)
         let object = dataProvider.object(at: indexPath)
         outerCell.configureForObject(object: object, at: indexPath)
         print("outer CFRA end \(indexPath)")
@@ -83,8 +84,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
     //TVCWTVDataSource
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int { return 1 }
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        let outerIndexPath = tableView.indexPath(for: cell)!
-        let num = dataProvider.object(at: outerIndexPath).numberOfItems(inSection: section)
+        let num = dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
         cell.heightConstraint.constant = CGFloat(num) * CGFloat(Lets.subTVCellSize)
         return num
     }

@@ -26,6 +26,7 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         }
         guard let indexPath = newIndexPath else { return }
         tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.reloadData()
     }
     
     // UITableViewDataSource
@@ -44,8 +45,7 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
     }
     override func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            let outerIndexPath = tableView.indexPath(for: cell)!
-            return dataProvider.object(at: outerIndexPath).numberOfItems(inSection: section)
+            return dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
         } else {
             return 1
         }
@@ -59,11 +59,10 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
     }
     override func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) {
         cell.tableView.deselectRow(at: innerIndexPath, animated: true)
-        let outerIndexPath = self.tableView.indexPath(for: cell)!
         var newInnerIndexPath: IndexPath?
         context.performAndWait {
             let set = Type.Object(context: self.context)
-            let lift = self.dataProvider.object(at: outerIndexPath)
+            let lift = self.dataProvider.object(at: cell.indexPath)
             newInnerIndexPath = lift.insert(object: set)
             do {
                 try self.context.save()
@@ -75,15 +74,14 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         cell.tableView.insertRows(at: [indexPath], with: .automatic)
         tableView.beginUpdates()
         
-        tableView.reloadRows(at: [outerIndexPath], with: .none)
+        tableView.reloadRows(at: [cell.indexPath], with: .none)
         tableView.endUpdates()
     }
     override func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if indexPath.section == 1 { return false } else { return true }
     }
     override func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        let outerIndexPath = tableView.indexPath(for: cell)!
-        let outerObject = dataProvider.object(at: outerIndexPath)
+        let outerObject = dataProvider.object(at: cell.indexPath)
         let toRemove = outerObject.object(at: indexPath)
         outerObject.remove(object: toRemove)
         

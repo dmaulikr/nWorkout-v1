@@ -11,8 +11,7 @@ class WorkoutsAndRoutinesTVC<Type: ManagedObject, Cell: TableViewCellWithTableVi
     
     //TVCWTVDaDS
     override func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        let outerIndexPath = tableView.indexPath(for: cell)!
-        let num = dataProvider.object(at: outerIndexPath).numberOfItems(inSection: section)
+        let num = dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
         cell.heightConstraint.constant = CGFloat(num) * CGFloat(Lets.subTVCellSize)
         return num
     }
