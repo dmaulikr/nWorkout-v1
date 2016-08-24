@@ -5,14 +5,17 @@ import CoreData
 class WorkoutLiftCell: NamedTVCWTV<WorkoutLift> {
     var topLabelStackView: UIStackView!
     var bottomLabelStackView: UIStackView!
-}
-
-extension WorkoutLiftCell: ConfigurableCell {
     
-    func configureForObject(object: WorkoutLift, at indexPath: IndexPath) {
+    override func configureForObject(object: WorkoutLift, at indexPath: IndexPath) {
+        super.configureForObject(object: object, at: indexPath)
         nameLabel.text = object.name
         setupTableLabels()
-    }
+    }    
+}
+
+extension WorkoutLiftCell {
+    
+    
     
     func setupTableLabels() {
         let twLabel = Label(tableHeaderStyleWith: "Weight")

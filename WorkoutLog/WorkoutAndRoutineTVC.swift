@@ -44,7 +44,8 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
     }
     override func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
+            let outerIndexPath = tableView.indexPath(for: cell)!
+            return dataProvider.object(at: outerIndexPath).numberOfItems(inSection: section)
         } else {
             return 1
         }
@@ -58,10 +59,11 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
     }
     override func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) {
         cell.tableView.deselectRow(at: innerIndexPath, animated: true)
+        let outerIndexPath = self.tableView.indexPath(for: cell)!
         var newInnerIndexPath: IndexPath?
         context.performAndWait {
             let set = Type.Object(context: self.context)
-            let lift = self.dataProvider.object(at: cell.indexPath)
+            let lift = self.dataProvider.object(at: outerIndexPath)
             newInnerIndexPath = lift.insert(object: set)
             do {
                 try self.context.save()
@@ -70,15 +72,18 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
             }
         }
         guard let indexPath = newInnerIndexPath else { return }
-        tableView.beginUpdates()
         cell.tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.beginUpdates()
+        
+        tableView.reloadRows(at: [outerIndexPath], with: .none)
         tableView.endUpdates()
     }
     override func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if indexPath.section == 1 { return false } else { return true }
     }
     override func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        let outerObject = dataProvider.object(at: cell.indexPath)
+        let outerIndexPath = tableView.indexPath(for: cell)!
+        let outerObject = dataProvider.object(at: outerIndexPath)
         let toRemove = outerObject.object(at: indexPath)
         outerObject.remove(object: toRemove)
         

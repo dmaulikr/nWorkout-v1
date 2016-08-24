@@ -27,7 +27,8 @@ class WorkoutsTVC: WorkoutsAndRoutinesTVC<Workout, WorkoutCell> {
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("inner CFRA start \(indexPath)")
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InnerTableViewCell
-        let lift = dataProvider.object(at: cell.indexPath).object(at: indexPath)
+        let outerIndexPath = tableView.indexPath(for: cell)!
+        let lift = dataProvider.object(at: outerIndexPath).object(at: indexPath)
         innerCell.textLabel?.text = lift.name! + " x \(lift.sets!.count)"
         print("inner CFRA end \(indexPath)")
         return innerCell

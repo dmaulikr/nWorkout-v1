@@ -1,5 +1,6 @@
 import UIKit
 
+
 //MARK: TableViewCelLWithTableView
 class TableViewCellWithTableView: OuterTableViewCell {
     func didInsertRows(at indexPaths: [IndexPath]) {
@@ -20,7 +21,6 @@ class TableViewCellWithTableView: OuterTableViewCell {
         self.heightConstraint.constant = height
         
     }
-    var indexPath: IndexPath!
     var delegate: TableViewCellWithTableViewDelegateAndDataSource?
     
     var gapBetweenTopAndTableView: CGFloat = 80.0
@@ -29,8 +29,8 @@ class TableViewCellWithTableView: OuterTableViewCell {
         return SubTableViewDelegateAndDataSource(cell: self)
     }()
     
-    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource, indexPath: IndexPath) {
-        self.indexPath = indexPath
+    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource) {
+
         self.delegate = delegateAndDataSource
         self.tableView = InnerTableView(frame: CGRect(), style: .plain)
         

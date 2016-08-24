@@ -5,13 +5,16 @@ import CoreData
 
 class RoutineLiftCell: NamedTVCWTV<RoutineLift> {
     var labelStackView: UIStackView!
-}
-
-extension RoutineLiftCell: ConfigurableCell {
-    func configureForObject(object: RoutineLift, at indexPath: IndexPath) {
+    
+    override func configureForObject(object: RoutineLift, at indexPath: IndexPath) {
+        super.configureForObject(object: object, at: indexPath)
         nameLabel.text = object.name
         setupTableLabels()
     }
+}
+
+extension RoutineLiftCell {
+
     
     func setupTableLabels() {
         let weightLabel = Label(tableHeaderStyleWith: "Weight")

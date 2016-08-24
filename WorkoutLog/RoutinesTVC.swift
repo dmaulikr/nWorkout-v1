@@ -40,7 +40,8 @@ class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresen
     // TVCWTVDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InnerTableViewCell
-        let lift = dataProvider.object(at: cell.indexPath).object(at: indexPath)
+        let outerIndexPath = tableView.indexPath(for: cell)!
+        let lift = dataProvider.object(at: outerIndexPath).object(at: indexPath)
         innerCell.textLabel?.text = lift.name! + " x \(lift.sets!.count)"
         return innerCell
     }

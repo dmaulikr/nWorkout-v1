@@ -1,7 +1,8 @@
 import UIKit
 
-class WorkoutCell: NamedTVCWTV<Workout>, ConfigurableCell {
-    func configureForObject(object: Workout, at indexPath: IndexPath) {
+class WorkoutCell: NamedTVCWTV<Workout> {
+    override func configureForObject(object: Workout, at indexPath: IndexPath) {
+        super.configureForObject(object: object, at: indexPath)
         let formatter = DateFormatter()
         formatter.dateFormat = Lets.dateString
         formatter.timeZone = TimeZone(abbreviation: Lets.timeZoneAbbreviation)

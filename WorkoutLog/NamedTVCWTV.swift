@@ -3,11 +3,11 @@ import CoreData
 
 class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView {
     var nameLabel: UILabel
-    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource, indexPath: IndexPath) {
+    required init(delegateAndDataSource: TableViewCellWithTableViewDelegateAndDataSource) {
         
         nameLabel = Label(cellNameLabelStyleWith: "")
         
-        super.init(delegateAndDataSource: delegateAndDataSource, indexPath: indexPath)
+        super.init(delegateAndDataSource: delegateAndDataSource)
         
         contentView.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -23,5 +23,11 @@ class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    func configureForObject(object: Type, at indexPath: IndexPath) {
+
+    }
 }
 
+extension NamedTVCWTV: ConfigurableCell {
+    
+}
