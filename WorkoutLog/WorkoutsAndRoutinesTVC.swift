@@ -3,6 +3,10 @@ import CoreData
 
 
 class WorkoutsAndRoutinesTVC<Type: ManagedObject, Cell: TableViewCellWithTableView>: TableViewController<FetchedResultsDataProvider<Type>, Type, Cell> where Cell: ConfigurableCell, Type: ManagedObjectType, Cell.DataSource == Type, Type: DataProvider {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
     
     // UITableViewDataSource
     

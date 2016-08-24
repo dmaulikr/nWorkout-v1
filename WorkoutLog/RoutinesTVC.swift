@@ -23,8 +23,7 @@ class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresen
     }
     func newRoutine() {
         let nrtvc = NewVC(type: Routine.self, placeholder: "Insert new routine name", barButtonItem: navigationItem.rightBarButtonItem!) { object in
-            let indexPath = IndexPath(row: self.dataProvider.numberOfItems(inSection: 0) - 1, section: 0)
-            self.tableView.insertRows(at: [indexPath], with: .none)
+                
         }
         
         present(nrtvc, animated: true)
