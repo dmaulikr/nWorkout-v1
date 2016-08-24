@@ -1,14 +1,14 @@
 import Foundation
 import CoreData
 
-@objc(LSet)
-public class LSet: ManagedObject {
+@objc(WorkoutSet)
+public class WorkoutSet: ManagedObject {
 
 }
 
-extension LSet: ManagedObjectType {
+extension WorkoutSet: ManagedObjectType {
     public static var entityName: String {
-        return "LSet"
+        return "WorkoutSet"
     }
     
     var setStatus: SetStatus {

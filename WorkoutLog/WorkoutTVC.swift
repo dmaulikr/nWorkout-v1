@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
+class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
     
     func hideButtonPushed() {
         navigationController?.presentingViewController?.dismiss(animated: true) {
@@ -29,7 +29,7 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
         if indexPath.section == 0 {
             return super.tableView(tableView, cellForRowAt: indexPath)
         } else {
-            let cell = WRSetCell()
+            let cell = InnerTableViewCell()
             cell.textLabel?.text = "Finish Workout"
             return cell
         }
@@ -37,7 +37,7 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
     
     // TVWTVCDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SetCell
+        let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! WorkoutSetCell
         if indexPath.section == 1 {
             innerCell.textLabel?.text = Lets.addSetText
             innerCell.textFields.forEach { $0.isHidden = true }
@@ -50,7 +50,7 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,Lift,LiftCell> {
     }
     
     override func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
-        cell.tableView.register(SetCell.self, forCellReuseIdentifier: "cell")
+        cell.tableView.register(WorkoutSetCell.self, forCellReuseIdentifier: "cell")
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

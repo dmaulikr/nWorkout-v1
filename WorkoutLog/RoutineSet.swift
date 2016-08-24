@@ -11,8 +11,8 @@ extension RoutineSet: ManagedObjectType {
         return "RoutineSet"
     }
     
-    func toSet() -> LSet {
-        let lSet = LSet(context: managedObjectContext!)
+    func toSet() -> WorkoutSet {
+        let lSet = WorkoutSet(context: managedObjectContext!)
         lSet.targetWeight = weight
         lSet.targetReps = reps
         return lSet

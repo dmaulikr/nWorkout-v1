@@ -56,21 +56,14 @@ class NewVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationControl
         
         okayButton.setTitle("Okay", for: UIControlState())
         okayButton.addTarget(self, action: #selector(okayPressed), for: .touchUpInside)
-        
-        
-        let frame = view.frame
-        
-        let newFrame = CGRect(x: 0, y: 0, width: frame.width / 2.0, height: nameTextField.frame.height)
-        nameTextField.frame = newFrame
-        
-        let stackView = UIStackView(arrangedSubviews: [nameTextField, okayButton])
-        stackView.axis = .vertical
-        stackView.spacing = 15
-        stackView.distribution = .fillEqually
-        
+        okayButton.tintColor = Theme.Colors.foreground.color
+        okayButton.layer.borderWidth = 1
+        okayButton.layer.borderColor = Theme.Colors.foreground.color.cgColor
+
+        let stackView = StackView(arrangedSubviews: [nameTextField,okayButton], axis: .vertical, spacing: 8, distribution: .fillEqually)
         
         view.addSubview(stackView)
-        stackView.frame = CGRect(x: 0, y: 0, width: 250, height: 300)
+        stackView.frame = CGRect(x: 0, y: 0, width: 250, height: 250)
         
         //view.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false

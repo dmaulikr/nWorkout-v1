@@ -14,28 +14,28 @@ extension Workout {
 extension Workout {
 
     @objc(insertObject:inLiftsAtIndex:)
-    @NSManaged public func insertIntoLifts(_ value: Lift, at idx: Int)
+    @NSManaged public func insertIntoLifts(_ value: WorkoutLift, at idx: Int)
 
     @objc(removeObjectFromLiftsAtIndex:)
     @NSManaged public func removeFromLifts(at idx: Int)
 
     @objc(insertLifts:atIndexes:)
-    @NSManaged public func insertIntoLifts(_ values: [Lift], at indexes: NSIndexSet)
+    @NSManaged public func insertIntoLifts(_ values: [WorkoutLift], at indexes: NSIndexSet)
 
     @objc(removeLiftsAtIndexes:)
     @NSManaged public func removeFromLifts(at indexes: NSIndexSet)
 
     @objc(replaceObjectInLiftsAtIndex:withObject:)
-    @NSManaged public func replaceLifts(at idx: Int, with value: Lift)
+    @NSManaged public func replaceLifts(at idx: Int, with value: WorkoutLift)
 
     @objc(replaceLiftsAtIndexes:withLifts:)
-    @NSManaged public func replaceLifts(at indexes: NSIndexSet, with values: [Lift])
+    @NSManaged public func replaceLifts(at indexes: NSIndexSet, with values: [WorkoutLift])
 
     @objc(addLiftsObject:)
-    @NSManaged public func addToLifts(_ value: Lift)
+    @NSManaged public func addToLifts(_ value: WorkoutLift)
 
     @objc(removeLiftsObject:)
-    @NSManaged public func removeFromLifts(_ value: Lift)
+    @NSManaged public func removeFromLifts(_ value: WorkoutLift)
 
     @objc(addLifts:)
     @NSManaged public func addToLifts(_ values: NSOrderedSet)

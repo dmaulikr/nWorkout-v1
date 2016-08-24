@@ -31,14 +31,18 @@ struct Theme {
         case boldTitleFont
         case titleFont
         case subTitleFont
+        
         case tableHeaderFont
+        case cellNameLabelFont
         
         var font: UIFont {
             switch self {
             case .boldTitleFont: return UIFont(name: "Copperplate-Bold", size: 17)!
             case .titleFont: return UIFont(name: "Copperplate", size: 16)!
             case .subTitleFont: return UIFont(name: "Copperplate", size: 13)!
+                
             case .tableHeaderFont: return UIFont(name: "Copperplate", size: 10)!
+            case .cellNameLabelFont: return UIFont(name: "Copperplate", size: 16)!
             }
         }
     }

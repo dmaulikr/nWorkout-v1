@@ -48,7 +48,7 @@ class RoutineSetCell: InnerTableViewCell, KeyboardDelegate {
         let stackView = UIStackView(arrangedSubviews: textFields)
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-        stackView.spacing = 10
+        stackView.spacing = 0
         
         contentView.addSubview(stackView)
         

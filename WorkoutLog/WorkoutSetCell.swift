@@ -1,31 +1,8 @@
 import UIKit
 
-class InnerTableViewCell: UITableViewCell {
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        backgroundColor = nil
-        textLabel?.font = Theme.Fonts.titleFont.font
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension UIView {
-    func constrainAnchors(to view: UIView, constant: CGFloat) {
-        leftAnchor.constraint(equalTo: view.leftAnchor, constant: constant).isActive = true
-        rightAnchor.constraint(equalTo: view.rightAnchor, constant: constant).isActive = true
-        topAnchor.constraint(equalTo: view.topAnchor, constant: constant).isActive = true
-        bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: constant).isActive = true
-    }
-}
-
-
-extension SetCell: ConfigurableCell {
-    typealias DataSource = LSet
-    func configureForObject(object: LSet, at indexPath: IndexPath) {
+extension WorkoutSetCell: ConfigurableCell {
+    typealias DataSource = WorkoutSet
+    func configureForObject(object: WorkoutSet, at indexPath: IndexPath) {
         if indexPath.section == 1 {
             textLabel?.text = Lets.addSetText
             textFields.forEach { $0.isHidden = true }
@@ -44,8 +21,8 @@ extension SetCell: ConfigurableCell {
     }
 }
 
-class SetCell: InnerTableViewCell, KeyboardDelegate {
-    var set: LSet! {
+class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
+    var set: WorkoutSet! {
         didSet {
             targetReps = Int(set.targetReps)
             targetWeight = Int(set.targetWeight)
@@ -245,7 +222,7 @@ class SetStatusButton: UIButton {
 }
 
 
-extension SetCell: UITextFieldDelegate {
+extension WorkoutSetCell: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currentlyEditing = textField

@@ -1,6 +1,6 @@
 import UIKit
 
-class WorkoutCell: WorkoutAndRoutineCell<Workout>, ConfigurableCell {
+class WorkoutCell: NamedTVCWTV<Workout>, ConfigurableCell {
     func configureForObject(object: Workout, at indexPath: IndexPath) {
         let formatter = DateFormatter()
         formatter.dateFormat = Lets.dateString

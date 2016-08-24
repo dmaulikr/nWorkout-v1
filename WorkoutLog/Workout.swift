@@ -16,13 +16,13 @@ extension Workout: ManagedObjectType {
 }
 
 extension Workout: DataProvider {
-    func object(at indexPath: IndexPath) -> Lift {
-        return lifts!.object(at: indexPath.row) as! Lift
+    func object(at indexPath: IndexPath) -> WorkoutLift {
+        return lifts!.object(at: indexPath.row) as! WorkoutLift
     }
-    func insert(object: Lift) -> IndexPath {
+    func insert(object: WorkoutLift) -> IndexPath {
         guard let context = managedObjectContext else { assertionFailure("Why doesn't this exist"); return IndexPath() }
         context.performAndWait {
-            let set = LSet(context: context)
+            let set = WorkoutSet(context: context)
             set.targetWeight = 225
             set.targetReps = 5
             object.addToSets(set)
@@ -36,7 +36,7 @@ extension Workout: DataProvider {
         }
         return IndexPath(row: lifts!.count - 1, section: 0)
     }
-    func index(of object: Lift) -> IndexPath {
+    func index(of object: WorkoutLift) -> IndexPath {
         print(object)
         print(lifts!.index(of: object))
         return IndexPath(row: lifts!.index(of: object), section: 0)
