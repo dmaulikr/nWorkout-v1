@@ -99,6 +99,12 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
     
     func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) { fatalError() }
     func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return nil }
+    
+    func cell(_ cell: TableViewCellWithTableView, didTap button: UIButton) {
+        let object = dataProvider.object(at: cell.indexPath)
+        let noteVC = NoteVC(object: object, placeholder: "", button: button, callback: nil)
+        present(noteVC, animated: true, completion: nil)
+    }
 }
 
 extension TableViewController: TableViewCellWithTableViewDelegateAndDataSource {}

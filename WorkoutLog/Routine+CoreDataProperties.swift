@@ -5,6 +5,7 @@ extension Routine {
 
     @NSManaged public var name: String?
     @NSManaged public var lifts: NSOrderedSet?
+    @NSManaged public var note: String?
 
 }
 

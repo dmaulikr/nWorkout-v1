@@ -18,6 +18,7 @@ extension RoutineLift {
     @NSManaged public var name: String?
     @NSManaged public var routine: Routine?
     @NSManaged public var sets: NSOrderedSet?
+    @NSManaged public var note: String?
 
 }
 
