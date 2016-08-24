@@ -2,6 +2,11 @@ import UIKit
 import CoreData
 
 class StatisticsTVC: UITableViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        try! frc?.performFetch()
+        tableView.reloadData()
+    }
 
     let context = CoreData.shared.context
     
@@ -16,6 +21,7 @@ class StatisticsTVC: UITableViewController {
         let request = WorkoutLift.request
         request.fetchBatchSize = 10
         request.returnsObjectsAsFaults = false
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true), NSSortDescriptor(key: "workout.date", ascending: true)]
         frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: "name", cacheName: nil)
         do {
             try frc?.performFetch()
@@ -41,6 +47,9 @@ class StatisticsTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let lifts = frc?.sections?[indexPath.row].objects as! [WorkoutLift]
+        for lift in lifts {
+            print(lift.name)
+        }
         let olsvc = OneLiftStatisticsVC()
         olsvc.lifts = lifts
         navigationController?.pushViewController(olsvc, animated: true)
@@ -50,16 +59,20 @@ class StatisticsTVC: UITableViewController {
 class OneLiftStatisticsVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        dateFormatter.dateFormat = "MMM d, H:mm a"
     }
+    let dateFormatter = DateFormatter()
     var lifts: [WorkoutLift]!
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return lifts.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         let sets = lifts[indexPath.row].sets?.array as! [WorkoutSet]
         cell.textLabel?.text = sets.map { "\($0.completedWeight) x \($0.completedReps)" }.joined(separator: ", ")
+        cell.detailTextLabel?.text = dateFormatter.string(from: lifts[indexPath.row].date)
         return cell
     }
     

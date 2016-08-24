@@ -20,9 +20,9 @@
 		B31D113A1D6533A100010E9C /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31D11391D6533A100010E9C /* TableViewController.swift */; };
 		B321420D1D644D000093A21E /* NewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B321420C1D644D000093A21E /* NewVC.swift */; };
 		B339D7AA1D65829F0026287C /* TableViewCellWithTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B339D7A91D65829F0026287C /* TableViewCellWithTableView.swift */; };
-		B35691561D6CF56300F3D796 /* Lift.swift in Sources */ = {isa = PBXBuildFile; fileRef = B356914A1D6CF56300F3D796 /* Lift.swift */; };
+		B35691561D6CF56300F3D796 /* WorkoutLift.swift in Sources */ = {isa = PBXBuildFile; fileRef = B356914A1D6CF56300F3D796 /* WorkoutLift.swift */; };
 		B35691571D6CF56300F3D796 /* WorkoutLift+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B356914B1D6CF56300F3D796 /* WorkoutLift+CoreDataProperties.swift */; };
-		B35691581D6CF56300F3D796 /* LSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B356914C1D6CF56300F3D796 /* LSet.swift */; };
+		B35691581D6CF56300F3D796 /* WorkoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B356914C1D6CF56300F3D796 /* WorkoutSet.swift */; };
 		B35691591D6CF56300F3D796 /* WorkoutSet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B356914D1D6CF56300F3D796 /* WorkoutSet+CoreDataProperties.swift */; };
 		B356915A1D6CF56300F3D796 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B356914E1D6CF56300F3D796 /* Routine.swift */; };
 		B356915B1D6CF56300F3D796 /* Routine+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B356914F1D6CF56300F3D796 /* Routine+CoreDataProperties.swift */; };
@@ -98,9 +98,9 @@
 		B31D11391D6533A100010E9C /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		B321420C1D644D000093A21E /* NewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewVC.swift; sourceTree = "<group>"; };
 		B339D7A91D65829F0026287C /* TableViewCellWithTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCellWithTableView.swift; sourceTree = "<group>"; };
-		B356914A1D6CF56300F3D796 /* Lift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lift.swift; path = WorkoutLog/Lift.swift; sourceTree = "<group>"; };
+		B356914A1D6CF56300F3D796 /* WorkoutLift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkoutLift.swift; path = WorkoutLog/WorkoutLift.swift; sourceTree = "<group>"; };
 		B356914B1D6CF56300F3D796 /* WorkoutLift+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "WorkoutLift+CoreDataProperties.swift"; path = "WorkoutLog/WorkoutLift+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		B356914C1D6CF56300F3D796 /* LSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LSet.swift; path = WorkoutLog/LSet.swift; sourceTree = "<group>"; };
+		B356914C1D6CF56300F3D796 /* WorkoutSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkoutSet.swift; path = WorkoutLog/WorkoutSet.swift; sourceTree = "<group>"; };
 		B356914D1D6CF56300F3D796 /* WorkoutSet+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "WorkoutSet+CoreDataProperties.swift"; path = "WorkoutLog/WorkoutSet+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		B356914E1D6CF56300F3D796 /* Routine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Routine.swift; path = WorkoutLog/Routine.swift; sourceTree = "<group>"; };
 		B356914F1D6CF56300F3D796 /* Routine+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Routine+CoreDataProperties.swift"; path = "WorkoutLog/Routine+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -231,8 +231,8 @@
 				B366C7331D54994600484784 /* ManagedObjectType.swift */,
 				B35691641D6CF70300F3D796 /* ManagedObject.swift */,
 				B35691541D6CF56300F3D796 /* Workout.swift */,
-				B356914A1D6CF56300F3D796 /* Lift.swift */,
-				B356914C1D6CF56300F3D796 /* LSet.swift */,
+				B356914A1D6CF56300F3D796 /* WorkoutLift.swift */,
+				B356914C1D6CF56300F3D796 /* WorkoutSet.swift */,
 				B356914E1D6CF56300F3D796 /* Routine.swift */,
 				B35691521D6CF56300F3D796 /* RoutineLift.swift */,
 				B35691501D6CF56300F3D796 /* RoutineSet.swift */,
@@ -571,7 +571,7 @@
 				B339D7AA1D65829F0026287C /* TableViewCellWithTableView.swift in Sources */,
 				B356915B1D6CF56300F3D796 /* Routine+CoreDataProperties.swift in Sources */,
 				B30365D31D617A3F0030705E /* RoutineCell.swift in Sources */,
-				B35691561D6CF56300F3D796 /* Lift.swift in Sources */,
+				B35691561D6CF56300F3D796 /* WorkoutLift.swift in Sources */,
 				B356915F1D6CF56300F3D796 /* RoutineLift+CoreDataProperties.swift in Sources */,
 				B366C7351D54994600484784 /* ManagedObjectObserver.swift in Sources */,
 				B3AEE5601D6707C10076F100 /* WorkoutsAndRoutinesTVC.swift in Sources */,
@@ -602,7 +602,7 @@
 				B35691651D6CF70300F3D796 /* ManagedObject.swift in Sources */,
 				B366C73A1D54995E00484784 /* Utilities.swift in Sources */,
 				B35691601D6CF56300F3D796 /* Workout.swift in Sources */,
-				B35691581D6CF56300F3D796 /* LSet.swift in Sources */,
+				B35691581D6CF56300F3D796 /* WorkoutSet.swift in Sources */,
 				B366C7371D54994600484784 /* NSManagedObjectContext+Observers.swift in Sources */,
 				B366C7421D54996800484784 /* FetchedResultsDataProvider.swift in Sources */,
 				B35691681D6CF95700F3D796 /* CoreData.swift in Sources */,

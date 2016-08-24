@@ -3,7 +3,9 @@ import CoreData
 
 @objc(WorkoutLift)
 public class WorkoutLift: ManagedObject {
-
+    var date: Date {
+        return workout!.date as! Date
+    }
 }
 
 extension WorkoutLift: ManagedObjectType {
