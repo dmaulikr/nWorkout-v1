@@ -22,10 +22,12 @@ extension RoutineLiftCell: ConfigurableCell {
         
         contentView.addSubview(labelStackView)
         labelStackView.translatesAutoresizingMaskIntoConstraints = false
-        labelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer).isActive = true
-        labelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Lets.buffer).isActive = true
-        labelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2).isActive = true
-        labelStackView.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+        var constraints = [NSLayoutConstraint]()
+        constraints.append(labelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer))
+        constraints.append(labelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Lets.buffer))
+        constraints.append(labelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2))
+        constraints.append(labelStackView.bottomAnchor.constraint(equalTo: tableView.topAnchor))
+        NSLayoutConstraint.activate(constraints)
     }
 }
 

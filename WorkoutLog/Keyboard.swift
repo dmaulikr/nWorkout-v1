@@ -97,15 +97,16 @@ class Keyboard: UIView {
         addSubview(hideButton)
         hideButton.addTarget(self, action: #selector(hideTapped(_:)), for: .touchUpInside)
         
+        var constraints = [NSLayoutConstraint]()
+        constraints.append(hideButton.leftAnchor.constraint(equalTo: leftAnchor))
+        constraints.append(hideButton.rightAnchor.constraint(equalTo: rightAnchor))
+        constraints.append(hideButton.bottomAnchor.constraint(equalTo: masterStackView.topAnchor))
+        constraints.append(hideButton.topAnchor.constraint(equalTo: topAnchor))
         
-        hideButton.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        hideButton.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        hideButton.bottomAnchor.constraint(equalTo: masterStackView.topAnchor).isActive = true
-        hideButton.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        
-        masterStackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        masterStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        masterStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        constraints.append(masterStackView.leftAnchor.constraint(equalTo: leftAnchor))
+        constraints.append(masterStackView.rightAnchor.constraint(equalTo: rightAnchor))
+        constraints.append(masterStackView.bottomAnchor.constraint(equalTo: bottomAnchor))
+        NSLayoutConstraint.activate(constraints)
     }
     
     func initializeSubviews() {

@@ -49,7 +49,6 @@
 		B366C7201D5498BB00484784 /* WorkoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C71F1D5498BB00484784 /* WorkoutCell.swift */; };
 		B366C7261D5498C500484784 /* WorkoutSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7231D5498C500484784 /* WorkoutSetCell.swift */; };
 		B366C7281D5498CF00484784 /* RoutinesTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7271D5498CF00484784 /* RoutinesTVC.swift */; };
-		B366C72C1D5498DD00484784 /* processUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C72A1D5498DD00484784 /* processUpdates.swift */; };
 		B366C7351D54994600484784 /* ManagedObjectObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7321D54994600484784 /* ManagedObjectObserver.swift */; };
 		B366C7361D54994600484784 /* ManagedObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7331D54994600484784 /* ManagedObjectType.swift */; };
 		B366C7371D54994600484784 /* NSManagedObjectContext+Observers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B366C7341D54994600484784 /* NSManagedObjectContext+Observers.swift */; };
@@ -134,7 +133,6 @@
 		B366C71F1D5498BB00484784 /* WorkoutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutCell.swift; sourceTree = "<group>"; };
 		B366C7231D5498C500484784 /* WorkoutSetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutSetCell.swift; sourceTree = "<group>"; };
 		B366C7271D5498CF00484784 /* RoutinesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutinesTVC.swift; sourceTree = "<group>"; };
-		B366C72A1D5498DD00484784 /* processUpdates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = processUpdates.swift; sourceTree = "<group>"; };
 		B366C7321D54994600484784 /* ManagedObjectObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectObserver.swift; sourceTree = "<group>"; };
 		B366C7331D54994600484784 /* ManagedObjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ManagedObjectType.swift; path = WorkoutLog/ManagedObjectType.swift; sourceTree = "<group>"; };
 		B366C7341D54994600484784 /* NSManagedObjectContext+Observers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Observers.swift"; sourceTree = "<group>"; };
@@ -193,7 +191,6 @@
 			children = (
 				B30365D21D617A3F0030705E /* RoutineCell.swift */,
 				B30365DF1D61B6A50030705E /* RoutineLiftCell.swift */,
-				B30092131D6D21850014B1C6 /* StackView.swift */,
 				B30365E11D61B6AC0030705E /* RoutineSetCell.swift */,
 			);
 			name = Routine;
@@ -346,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				B30092171D6D29A80014B1C6 /* UIView+Extensions.swift */,
+				B30092131D6D21850014B1C6 /* StackView.swift */,
 				B30092151D6D257A0014B1C6 /* Label.swift */,
 				B35691711D6D14F900F3D796 /* TableViewCell */,
 				B35691721D6D150000F3D796 /* TableView */,
@@ -409,7 +407,6 @@
 				B366C73C1D54996800484784 /* DataProviderDelegate.swift */,
 				B366C73D1D54996800484784 /* DataProviderUpdate.swift */,
 				B366C73E1D54996800484784 /* FetchedResultsDataProvider.swift */,
-				B366C72A1D5498DD00484784 /* processUpdates.swift */,
 			);
 			name = DataProvider;
 			sourceTree = "<group>";
@@ -620,7 +617,6 @@
 				B3AEE5641D6710E10076F100 /* NamedTVCWTV.swift in Sources */,
 				B30092161D6D257A0014B1C6 /* Label.swift in Sources */,
 				B3BA3A0D1D606DC1001C23FB /* StatisticsTVC.swift in Sources */,
-				B366C72C1D5498DD00484784 /* processUpdates.swift in Sources */,
 				B366C71A1D54989800484784 /* WorkoutTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

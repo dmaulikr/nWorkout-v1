@@ -2,10 +2,6 @@ import UIKit
 import CoreData
 
 class RoutineTVC: WorkoutAndRoutineTVC<Routine, RoutineLift, RoutineLiftCell> {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationItem.title = "Workout"
-    }
 
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! RoutineSetCell

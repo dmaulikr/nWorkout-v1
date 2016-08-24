@@ -14,7 +14,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
     init(request: NSFetchRequest<Type>) {
         super.init(style: .plain)
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: nil) as! Source
+        dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self) as! Source
         tableView = OuterTableView(frame: tableView.frame, style: .plain)
     }
     
@@ -25,7 +25,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
     var dataProvider: Source!
     
     // UITableViewDataSource
@@ -46,14 +46,16 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
                     print(error: error)
                 }
             }
-            self.tableView.deleteRows(at: [indexPath], with: .none)
+            if self.dataProvider is ManagedObject {
+                self.tableView.deleteRows(at: [indexPath], with: .none)
+            }
         })
         alert.addAction(UIAlertAction(title: "No", style: .cancel){ _ in
             self.tableView.endEditing(true)
         })
         present(alert, animated: true)
     }
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return dataProvider.numberOfSections()
     }
@@ -71,38 +73,47 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
         return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * CGFloat(Lets.subTVCellSize) + CGFloat(Lets.heightBetweenTopOfCellAndTV)
     }
     
-    //TVCWTVDaDS
-    func numberOfSections(in cell: TableViewCellWithTableView) -> Int {
-        return 1
-    }
+    //These are required to enable subclasses to override.
+    //TVCWTVDataSource
+    func numberOfSections(in cell: TableViewCellWithTableView) -> Int { return 1 }
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
         let num = dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
         cell.heightConstraint.constant = CGFloat(num) * CGFloat(Lets.subTVCellSize)
         return num
     }
-    
-    func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) {
-        fatalError()
-    }
-    func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        fatalError()
-    }
-    func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat { return Lets.subTVCellSize }
-    func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return nil }
-    
-    //Dummy since Swift can't find Subclass implementation without something to override.
-    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { fatalError() }
     func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { cell.tableView.register(InnerTableViewCell.self, forCellReuseIdentifier: "cell") }
+    func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { fatalError() }
+    
+    func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool { return false }
+    func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { fatalError() }
+    
+    //TVCWTVDelegate
+    func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat { return Lets.subTVCellSize }
+    
+    func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) { fatalError() }
+    func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return nil }
 }
 
 extension TableViewController: TableViewCellWithTableViewDelegateAndDataSource {}
 
 extension TableViewController: DataProviderDelegate {
-    typealias Object = Workout
     func dataProviderDidUpdate(updates: [DataProviderUpdate]?) {
-//        dataSource.processUpdates(updates: updates)
+        guard let updates = updates else { return tableView.reloadData() }
+        tableView.beginUpdates()
+        for update in updates {
+            switch update {
+            case .insert(let indexPath):
+                tableView.insertRows(at: [indexPath], with: .fade)
+            case .update(let indexPath, let object):
+                guard let cell = tableView.cellForRow(at: indexPath) as? Cell else { break }
+                cell.configureForObject(object: object as! Type, at: indexPath)
+            case .move(let indexPath, let newIndexPath):
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                tableView.insertRows(at: [newIndexPath], with: .fade)
+            case .delete(let indexPath):
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
+        }
+        tableView.endUpdates()
     }
 }

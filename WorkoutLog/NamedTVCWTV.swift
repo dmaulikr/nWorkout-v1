@@ -11,10 +11,13 @@ class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView {
         
         contentView.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Lets.buffer).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: Lets.buffer).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: Lets.liftCellNameLabelHeight).isActive = true
+        
+        var constraints = [NSLayoutConstraint]()
+        constraints.append(nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer))
+        constraints.append(nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Lets.buffer))
+        constraints.append(nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: Lets.buffer))
+        constraints.append(nameLabel.heightAnchor.constraint(equalToConstant: Lets.liftCellNameLabelHeight))
+        NSLayoutConstraint.activate(constraints)
     }
     
     required init?(coder aDecoder: NSCoder) {

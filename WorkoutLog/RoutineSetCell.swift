@@ -53,7 +53,8 @@ class RoutineSetCell: InnerTableViewCell, KeyboardDelegate {
         contentView.addSubview(stackView)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.constrainAnchors(to: contentView, constant: 0)
+        let constraints = stackView.constrainAnchors(to: contentView, constant: 0)
+        NSLayoutConstraint.activate(constraints)
     }
     
     required init?(coder aDecoder: NSCoder) {

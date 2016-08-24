@@ -49,23 +49,19 @@ class TableViewCellWithTableView: OuterTableViewCell {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         contentView.addSubview(tableView)
         
-        
-        heightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize))
-        heightConstraint.isActive = true
-        
-        constrainTableView()
-        tableView.reloadData()
-        
-        updateTableViewHeight()
-        
-        tableView.reloadData()
-    }
-    
-    private func constrainTableView() {
+        var constraints = [NSLayoutConstraint]()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8).isActive = true
-        tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8).isActive = true
+        constraints.append(tableView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8))
+        constraints.append(tableView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8))
+        constraints.append(tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8))
+        heightConstraint = tableView.heightAnchor.constraint(equalToConstant: CGFloat(Lets.subTVCellSize))
+        constraints.append(heightConstraint)
+        
+        NSLayoutConstraint.activate(constraints)
+
+        tableView.reloadData()
+        updateTableViewHeight()        
+        tableView.reloadData()
     }
     
     var heightConstraint: NSLayoutConstraint!

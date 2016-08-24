@@ -28,18 +28,23 @@ extension WorkoutLiftCell: ConfigurableCell {
         let topLabels = [targetLabel,completedLabel]
         topLabelStackView = StackView(arrangedSubviews: topLabels, axis: .horizontal, spacing: 0, distribution: .fillEqually)
         
+        var constraints = [NSLayoutConstraint]()
+        
         contentView.addSubview(bottomLabelStackView)
         bottomLabelStackView.translatesAutoresizingMaskIntoConstraints = false
-        bottomLabelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer).isActive = true
-        bottomLabelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Lets.buffer).isActive = true
-        bottomLabelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2).isActive = true
-        bottomLabelStackView.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+        
+        constraints.append(bottomLabelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer))
+        constraints.append(bottomLabelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Lets.buffer))
+        constraints.append(bottomLabelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2))
+        constraints.append(bottomLabelStackView.bottomAnchor.constraint(equalTo: tableView.topAnchor))
         
         contentView.addSubview(topLabelStackView)
         topLabelStackView.translatesAutoresizingMaskIntoConstraints = false
-        topLabelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer).isActive = true
-        topLabelStackView.widthAnchor.constraint(equalTo: bottomLabelStackView.widthAnchor, multiplier: 0.8).isActive = true
-        topLabelStackView.bottomAnchor.constraint(equalTo: bottomLabelStackView.topAnchor).isActive = true
-        topLabelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2).isActive = true
+        constraints.append(topLabelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer))
+        constraints.append(topLabelStackView.widthAnchor.constraint(equalTo: bottomLabelStackView.widthAnchor, multiplier: 0.8))
+        constraints.append(topLabelStackView.bottomAnchor.constraint(equalTo: bottomLabelStackView.topAnchor))
+        constraints.append(topLabelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2))
+        
+        NSLayoutConstraint.activate(constraints)
     }
 }

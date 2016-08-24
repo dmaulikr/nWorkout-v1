@@ -11,8 +11,6 @@ extension WorkoutSetCell: ConfigurableCell {
             textLabel?.text = ""
             textFields.forEach {
                 $0.isHidden = false
-                $0.layer.borderWidth = 1.0
-                $0.layer.borderColor = UIColor.darkGray.cgColor
             }
             statusButton.isHidden = false
             
@@ -65,7 +63,8 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
         contentView.addSubview(stackView)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.constrainAnchors(to: contentView, constant: 0)
+        let constraints = stackView.constrainAnchors(to: contentView, constant: 0)
+        NSLayoutConstraint.activate(constraints)
     }
     
     required init?(coder aDecoder: NSCoder) {

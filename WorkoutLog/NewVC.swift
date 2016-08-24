@@ -67,9 +67,10 @@ class NewVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationControl
         
         //view.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        var constraints = [NSLayoutConstraint]()
+        constraints.append(stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor))
+        constraints.append(stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor))
+        NSLayoutConstraint.activate(constraints)
         
     }
 }
