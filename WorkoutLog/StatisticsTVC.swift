@@ -7,16 +7,31 @@ class StatisticsTVC: UITableViewController {
         try! frc?.performFetch()
         tableView.reloadData()
     }
-
+    
     let context = CoreData.shared.context
+    
+    init() {
+        super.init(style: .plain)
+        
+        let sepIn = tableView.separatorInset
+        let layMar = tableView.layoutMargins
+        print("=====================================")
+        print(sepIn, layMar)
+        
+        tableView = OuterTableView(frame: tableView.frame, style: .grouped)
+        tableView.separatorInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 20)
+        tableView.register(UITableViewCell.self , forCellReuseIdentifier: "cell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView = OuterTableView(frame: CGRect(), style: .grouped)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self , forCellReuseIdentifier: "cell")
         
         let request = WorkoutLift.request
         request.fetchBatchSize = 10
@@ -35,6 +50,10 @@ class StatisticsTVC: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Performed Lifts"
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return frc?.sections?.count ?? 0
     }
@@ -42,6 +61,7 @@ class StatisticsTVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let lifts = frc?.sections?[indexPath.row]
         cell.textLabel?.text = (lifts?.name)! + " x \((lifts?.numberOfObjects)!)"
+        cell.backgroundColor = Theme.Colors.backgroundColor.color
         return cell
     }
     
@@ -59,7 +79,7 @@ class StatisticsTVC: UITableViewController {
 class OneLiftStatisticsVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.allowsSelection = false
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         dateFormatter.dateFormat = "MMM d, H:mm a"
     }
@@ -70,6 +90,7 @@ class OneLiftStatisticsVC: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
+        cell.backgroundColor = Theme.Colors.backgroundColor.color
         let sets = lifts[indexPath.row].sets?.array as! [WorkoutSet]
         cell.textLabel?.text = sets.map { "\($0.completedWeight) x \($0.completedReps)" }.joined(separator: ", ")
         cell.detailTextLabel?.text = dateFormatter.string(from: lifts[indexPath.row].date)

@@ -10,13 +10,6 @@ class Label: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    
-    
-    
-    
-    
-    
     convenience init(text: String, textAlignment: NSTextAlignment, numberOfLines: Int, font: UIFont, borderColor: CGColor? = nil, borderWidth: CGFloat = 0) {
         self.init(frame: CGRect())
         self.text = text

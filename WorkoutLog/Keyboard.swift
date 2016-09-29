@@ -19,13 +19,17 @@ class Keyboard: UIView {
     weak var delegate: KeyboardDelegate?
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        initializeSubviews()
+        fatalError()
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
         createStacks()
         bindActions()
+        backgroundColor = Theme.Colors.foreground.color
+        let buttons = [zeroButton,buttonOne,buttonTwo,buttonThree,buttonFour,buttonFive,buttonSix,buttonSeven,buttonEight,buttonNine,thirdSideButton,topSideButton,secondSideButton,decimalButton,backspaceButton,nextButton]
+        for button in buttons {
+            button.titleLabel?.tintColor = Theme.Colors.tintColor.color
+        }
     }
     
     init() {
@@ -49,6 +53,7 @@ class Keyboard: UIView {
     let zeroButton = UIButton()
     let backspaceButton = UIButton()
     let nextButton = UIButton()
+    let hideButton = UIButton()
     
     func bindActions() {
         let numberButtons = [zeroButton,buttonOne,buttonTwo,buttonThree,buttonFour,buttonFive,buttonSix,buttonSeven,buttonEight,buttonNine,decimalButton]
@@ -60,14 +65,11 @@ class Keyboard: UIView {
             button.addTarget(self, action: #selector(keyTapped(_:)), for: .touchUpInside)
         }
         
-        backspaceButton.setImage(#imageLiteral(resourceName: "backspace"), for: UIControlState())
+        backspaceButton.setTitle("←", for: .normal)
         backspaceButton.addTarget(self, action: #selector(backspaceTapped(_:)), for: .touchUpInside)
-        
         
         nextButton.setTitle("Next", for: UIControlState())
         nextButton.addTarget(self, action: #selector(nextTapped(_:)), for: .touchUpInside)
-        
-        
     }
     
     func createStacks() {
@@ -90,7 +92,6 @@ class Keyboard: UIView {
         masterStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(masterStackView)
         
-        let hideButton = UIButton()
         hideButton.setTitle("Hide", for: UIControlState())
         
         hideButton.translatesAutoresizingMaskIntoConstraints = false
@@ -109,14 +110,6 @@ class Keyboard: UIView {
         NSLayoutConstraint.activate(constraints)
     }
     
-    func initializeSubviews() {
-        let xibFileName = "Keyboard"
-        let nib = Bundle.main.loadNibNamed(xibFileName, owner: self, options: nil)
-        
-        let view = nib![0] as! UIView
-        self.addSubview(view)
-        view.frame = self.bounds
-    }
     @IBAction func keyTapped(_ sender: UIButton) {
         delegate?.keyWasTapped(character: sender.titleLabel!.text!)
     }

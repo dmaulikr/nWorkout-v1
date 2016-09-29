@@ -13,84 +13,50 @@ class AppCoordinator: Coordinator {
         tabBarController = UITabBarController()
         super.init()
         setupTBC()
-        setupAppearances()
+        Theme.setupAppearances()
     }
     
     func setupTBC() {
-        let workoutsNav = UINavigationController()
-        workoutsNav.delegate = self
         let workoutsTVC = WorkoutsTVC()
-        workoutsNav.pushViewController(workoutsTVC, animated: false)
-        workoutsNav.tabBarItem.title = "Workouts"
+        let workoutsNav = UINavigationController(rootViewController: workoutsTVC)
+        workoutsNav.delegate = self
         workoutsNav.tabBarItem.image = UIImage(named: "workout")
+        workoutsNav.tabBarItem.title = "Workouts"
         workoutsTVC.navigationItem.title = "Workouts"
         
-        let routineNav = UINavigationController()
-        routineNav.delegate = self
         let routinesTVC = RoutinesTVC()
-        routineNav.pushViewController(routinesTVC, animated: false)
-        routineNav.tabBarItem.title = "Routines"
+        let routineNav = UINavigationController(rootViewController: routinesTVC)
+        routineNav.delegate = self
         routineNav.tabBarItem.image = UIImage(named: "routine")
+        routineNav.tabBarItem.title = "Routines"
         routinesTVC.navigationItem.title = "Routines"
         
-        let newWorkoutNav = UINavigationController()
-        self.newWorkoutNav = newWorkoutNav
         let selectWorkoutTVC = SelectWorkoutTVC(style: .grouped)
-        newWorkoutNav.pushViewController(selectWorkoutTVC, animated: false)
+        newWorkoutNav = UINavigationController(rootViewController: selectWorkoutTVC)
         newWorkoutNav.delegate = self
         selectWorkoutTVC.navigationItem.title = "New Workout"
         
-        let dummy = UIViewController()
-        self.dummy = dummy
+        dummy = UIViewController()
         dummy.tabBarItem.title = "New"
         dummy.tabBarItem.image = UIImage(named: "newWorkout")
         
-        let statisticsNav = UINavigationController()
-        statisticsNav.delegate = self
         let statisticsTVC = StatisticsTVC()
-        statisticsNav.pushViewController(statisticsTVC, animated: false)
+        let statisticsNav = UINavigationController(rootViewController: statisticsTVC)
+        statisticsNav.delegate = self
+        statisticsNav.tabBarItem.image = #imageLiteral(resourceName: "statistics")
         statisticsNav.tabBarItem.title = "Statistics"
         statisticsTVC.navigationItem.title = "Statistics"
-        statisticsNav.tabBarItem.image = #imageLiteral(resourceName: "statistics")
         
-        let settingsNav = UINavigationController()
-        settingsNav.delegate = self
-        let settingsTVC = UIViewController()
-        settingsNav.pushViewController(settingsTVC, animated: false)
-        settingsNav.tabBarItem.title = "Settings"
-        settingsNav.tabBarItem.image = #imageLiteral(resourceName: "settings")
-        settingsTVC.navigationItem.title = "Settings"
+//        let settingsTVC = UIViewController()
+//        let settingsNav = UINavigationController(rootViewController: settingsTVC)
+//        settingsNav.delegate = self
+//        settingsNav.tabBarItem.image = #imageLiteral(resourceName: "settings")
+//        settingsNav.tabBarItem.title = "Settings"
+//        settingsTVC.navigationItem.title = "Settings"
         
-        let vcs = [workoutsNav, routineNav, dummy, statisticsNav, settingsNav]
+        let vcs = [workoutsNav, routineNav, dummy!, statisticsNav]
         tabBarController.viewControllers = vcs
         tabBarController.delegate = self
-    }
-    
-    func setupAppearances() {
-        let navBarAppearance = UINavigationBar.appearance()
-        navBarAppearance.titleTextAttributes = [
-            NSFontAttributeName: Theme.Fonts.boldTitleFont.font,
-            NSForegroundColorAttributeName: Theme.Colors.tintColor.color
-        ]
-        navBarAppearance.barStyle = UIBarStyle.black
-        navBarAppearance.barTintColor = Theme.Colors.foreground.color
-        
-        let tabBarAppearance = UITabBar.appearance()
-        tabBarAppearance.barStyle = UIBarStyle.black
-        tabBarAppearance.barTintColor = Theme.Colors.foreground.color
-        
-        let barButtonItemAppearance = UIBarButtonItem.appearance()
-        let attr = [ NSFontAttributeName: Theme.Fonts.titleFont.font ]
-        barButtonItemAppearance.setTitleTextAttributes(attr, for: UIControlState())
-        
-        let tableViewAppearance = UITableView.appearance()
-        tableViewAppearance.backgroundColor = Theme.Colors.backgroundColor.color
-        
-        let cellAppearance = UITableViewCell.appearance()
-        cellAppearance.backgroundColor = UIColor.clear
-        
-        let labelAppearance = UILabel.appearance()
-        labelAppearance.font = Theme.Fonts.titleFont.font
     }
 }
 

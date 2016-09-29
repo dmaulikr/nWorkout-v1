@@ -1,29 +1,21 @@
 import UIKit
 import CoreData
 
-class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: TableViewCellWithTableView>: UITableViewController where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Source.Object: ManagedObject, Source.Object: DataProvider {
-    
-    var context = CoreData.shared.context
+class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: TableViewCellWithTableView>: UITableViewController, HasContext where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Source.Object: ManagedObject, Source.Object: DataProvider {
     
     init(dataProvider: Source) {
         super.init(style: .plain)
         self.dataProvider = dataProvider
         tableView = OuterTableView(frame: tableView.frame, style: .plain)
     }
-    
     init(request: NSFetchRequest<Type>) {
         super.init(style: .plain)
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self) as! Source
         tableView = OuterTableView(frame: tableView.frame, style: .plain)
     }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
     }
     
     var dataProvider: Source!
@@ -51,7 +43,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
             }
             tableView.reloadData()
         })
-        alert.addAction(UIAlertAction(title: "No", style: .cancel){ _ in
+        alert.addAction(UIAlertAction(title: "No", style: .cancel) { _ in
             self.tableView.endEditing(true)
         })
         present(alert, animated: true)
@@ -64,20 +56,15 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
         return dataProvider.numberOfItems(inSection: section)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("outer CFRA start \(indexPath)")
         let outerCell = Cell(delegateAndDataSource: self, indexPath: indexPath)
         let object = dataProvider.object(at: indexPath)
         outerCell.configureForObject(object: object, at: indexPath)
-        print("outer CFRA end \(indexPath)")
         return outerCell
     }
     // UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("outer HFRA start \(indexPath)")
-        let height = CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * Lets.subTVCellSize + CGFloat(Lets.heightBetweenTopOfCellAndTV)
-        print("outer HFRA end \(indexPath)")
-        return height
+        return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * Lets.subTVCellSize + CGFloat(Lets.heightBetweenTopOfCellAndTV)
     }
     
     //These are required to enable subclasses to override.

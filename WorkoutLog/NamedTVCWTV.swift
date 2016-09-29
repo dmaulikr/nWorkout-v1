@@ -15,6 +15,7 @@ class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView {
         noteButton.contentEdgeInsets = UIEdgeInsets(top: 6, left: 6, bottom: 6, right: 6)
         noteButton.layer.borderWidth = 1
         noteButton.layer.borderColor = UIColor.darkGray.cgColor
+        noteButton.layer.cornerRadius = 5
                 
         super.init(delegateAndDataSource: delegateAndDataSource, indexPath: indexPath)
         

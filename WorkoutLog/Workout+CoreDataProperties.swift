@@ -4,7 +4,7 @@ import CoreData
 extension Workout {
 
     @NSManaged public var complete: Bool
-    @NSManaged public var date: NSDate?
+    @NSManaged public var date: Date?
     @NSManaged public var note: String?
     @NSManaged public var lifts: NSOrderedSet?
 

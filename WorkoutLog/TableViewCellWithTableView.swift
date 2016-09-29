@@ -15,13 +15,22 @@ class TableViewCellWithTableView: OuterTableViewCell {
         for i in 0..<numberOfSections {
             cellCounts.append(tableView.numberOfRows(inSection: i))
         }
-        let height = cellCounts.reduce(CGFloat(0)) { $0 + CGFloat($1) * CGFloat(Lets.subTVCellSize) }
+        let height = cellCounts.reduce(CGFloat(0)) { $0 + CGFloat($1) * CGFloat(Lets.subTVCellSize) } + (innerTableTableHeaderView?.frame.height ?? 0)
         
         self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: height + CGFloat(Lets.heightBetweenTopOfCellAndTV))
         self.heightConstraint.constant = height
         
     }
     var delegate: TableViewCellWithTableViewDelegateAndDataSource?
+    
+    var innerTableTableHeaderView: UIView? {
+        get {
+            return tableView.tableHeaderView
+        }
+        set {
+            tableView.tableHeaderView = newValue
+        }
+    }
     
     var gapBetweenTopAndTableView: CGFloat = 80.0
     let tableView: InnerTableView
@@ -54,8 +63,9 @@ class TableViewCellWithTableView: OuterTableViewCell {
         constraints.append(heightConstraint)
         
         NSLayoutConstraint.activate(constraints)
-        
+
         tableView.reloadData()
+        
         updateTableViewHeight()
     }
     
@@ -82,7 +92,9 @@ protocol TableViewCellWithTableViewDelegateAndDataSource: class {
     func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath)
     
     func cell(_ cell: TableViewCellWithTableView, didTap button: UIButton)
+
 }
+
 
 
 //MARK: SubTableViewDelegateAndDataSource

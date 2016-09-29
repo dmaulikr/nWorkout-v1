@@ -13,6 +13,7 @@ extension ManagedObjectType {
     public static var request: NSFetchRequest<Self> {
         let request = NSFetchRequest<Self>(entityName: entityName)
         request.sortDescriptors = defaultSortDescriptors
+        request.predicate = defaultPredicate
         return request
     }
     

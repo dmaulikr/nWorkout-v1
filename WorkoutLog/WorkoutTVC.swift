@@ -42,6 +42,7 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
         }
     }
     
+   
     // TVWTVCDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 1 {
@@ -59,7 +60,7 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
     
     override func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
         cell.tableView.register(WorkoutSetCell.self, forCellReuseIdentifier: "workoutSetCell")
-        cell.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        cell.tableView.register(InnerTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

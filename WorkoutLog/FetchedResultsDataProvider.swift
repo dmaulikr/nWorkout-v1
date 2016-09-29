@@ -22,8 +22,7 @@ class FetchedResultsDataProvider<Type: ManagedObject>: NSObject, NSFetchedResult
     func numberOfSections() -> Int {
         guard let secs = fetchedResultsController.sections else { return 0 }
         return secs.count
-    }
-    
+    }    
     
     // MARK: Private
     private let fetchedResultsController: NSFetchedResultsController<Type>

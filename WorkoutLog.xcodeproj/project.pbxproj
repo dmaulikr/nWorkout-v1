@@ -142,7 +142,7 @@
 		B366C73D1D54996800484784 /* DataProviderUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProviderUpdate.swift; sourceTree = "<group>"; };
 		B366C73E1D54996800484784 /* FetchedResultsDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsDataProvider.swift; sourceTree = "<group>"; };
 		B3791F831D614FDD003DD70F /* Keyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keyboard.swift; sourceTree = "<group>"; };
-		B387F6EF1D691283004EC05F /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		B387F6EF1D691283004EC05F /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = WorkoutLog/Theme.swift; sourceTree = "<group>"; };
 		B3AEE55F1D6707C10076F100 /* WorkoutsAndRoutinesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutsAndRoutinesTVC.swift; sourceTree = "<group>"; };
 		B3AEE5611D670CAC0076F100 /* WorkoutAndRoutineTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutAndRoutineTVC.swift; sourceTree = "<group>"; };
 		B3AEE5631D6710E10076F100 /* NamedTVCWTV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NamedTVCWTV.swift; sourceTree = "<group>"; };
@@ -256,6 +256,7 @@
 		B35691661D6CF94600F3D796 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				B387F6EF1D691283004EC05F /* Theme.swift */,
 				B30C906C1D6C485000CE9243 /* AppCoordinator.swift */,
 				B35691671D6CF95700F3D796 /* CoreData.swift */,
 			);
@@ -348,7 +349,6 @@
 				B35691711D6D14F900F3D796 /* TableViewCell */,
 				B35691721D6D150000F3D796 /* TableView */,
 				B3791F831D614FDD003DD70F /* Keyboard.swift */,
-				B387F6EF1D691283004EC05F /* Theme.swift */,
 			);
 			name = View;
 			path = WorkoutLog;
@@ -369,8 +369,8 @@
 			isa = PBXGroup;
 			children = (
 				B366C7121D54987B00484784 /* ConfigurableCell.swift */,
-				B3AEE5631D6710E10076F100 /* NamedTVCWTV.swift */,
 				B339D7A91D65829F0026287C /* TableViewCellWithTableView.swift */,
+				B3AEE5631D6710E10076F100 /* NamedTVCWTV.swift */,
 				B30365DD1D61B6860030705E /* Workout */,
 				B30365DE1D61B6920030705E /* Routine */,
 			);
@@ -764,7 +764,7 @@
 				DEVELOPMENT_TEAM = 72MNHNDUNH;
 				INFOPLIST_FILE = WorkoutLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.lanza.WorkoutLog;
+				PRODUCT_BUNDLE_IDENTIFIER = io.lanza.nWorkout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -777,7 +777,7 @@
 				DEVELOPMENT_TEAM = 72MNHNDUNH;
 				INFOPLIST_FILE = WorkoutLog/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = io.lanza.WorkoutLog;
+				PRODUCT_BUNDLE_IDENTIFIER = io.lanza.nWorkout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

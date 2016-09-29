@@ -4,7 +4,7 @@ import CoreData
 @objc(WorkoutLift)
 public class WorkoutLift: ManagedObject {
     var date: Date {
-        return workout!.date as! Date
+        return workout!.date! 
     }
 }
 

@@ -88,7 +88,7 @@ extension SelectWorkoutTVC {
             default:
                 fatalError()    
             }
-            workout!.date = NSDate()
+            workout!.date = Date()
             do {
                 try self.context.save()
             } catch {

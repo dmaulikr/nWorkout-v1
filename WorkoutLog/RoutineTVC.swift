@@ -23,7 +23,7 @@ class RoutineTVC: WorkoutAndRoutineTVC<Routine, RoutineLift, RoutineLiftCell> {
     }
     override func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) {
         cell.tableView.register(RoutineSetCell.self, forCellReuseIdentifier: "routineSetCell")
-        cell.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        cell.tableView.register(InnerTableViewCell.self, forCellReuseIdentifier: "cell")
     }
     
 }
