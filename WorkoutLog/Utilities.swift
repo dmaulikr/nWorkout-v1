@@ -4,7 +4,7 @@ public typealias OrderedSet = NSOrderedSet
 
 func print(error: Error) {
     print("================ERROR================")
-    print(error: error)
+    print(error)
 }
 
 extension Sequence {
