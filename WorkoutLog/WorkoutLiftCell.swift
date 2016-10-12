@@ -10,13 +10,11 @@ class WorkoutLiftCell: NamedTVCWTV<WorkoutLift> {
         super.configureForObject(object: object, at: indexPath)
         nameLabel.text = object.name
         setupTableLabels()
-    }    
+    }
+    weak var liftCellDelegate: LiftCellDelegate!
 }
 
 extension WorkoutLiftCell {
-    
-    
-    
     func setupTableLabels() {
         let twLabel = Label(tableHeaderStyleWith: "Weight")
         let trLabel = Label(tableHeaderStyleWith: "Reps")
@@ -33,17 +31,17 @@ extension WorkoutLiftCell {
         
         var constraints = [NSLayoutConstraint]()
         
-        contentView.addSubview(bottomLabelStackView)
+        topContentView.addSubview(bottomLabelStackView)
         bottomLabelStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        constraints.append(bottomLabelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer))
-        constraints.append(bottomLabelStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Lets.buffer))
+        constraints.append(bottomLabelStackView.leftAnchor.constraint(equalTo:topContentView.leftAnchor))
+        constraints.append(bottomLabelStackView.rightAnchor.constraint(equalTo: topContentView.rightAnchor))
         constraints.append(bottomLabelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2))
-        constraints.append(bottomLabelStackView.bottomAnchor.constraint(equalTo: tableView.topAnchor))
+        constraints.append(bottomLabelStackView.bottomAnchor.constraint(equalTo: topContentView.bottomAnchor))
         
-        contentView.addSubview(topLabelStackView)
+        topContentView.addSubview(topLabelStackView)
         topLabelStackView.translatesAutoresizingMaskIntoConstraints = false
-        constraints.append(topLabelStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: Lets.buffer))
+        constraints.append(topLabelStackView.leftAnchor.constraint(equalTo: topContentView.leftAnchor))
         constraints.append(topLabelStackView.widthAnchor.constraint(equalTo: bottomLabelStackView.widthAnchor, multiplier: 0.8))
         constraints.append(topLabelStackView.bottomAnchor.constraint(equalTo: bottomLabelStackView.topAnchor))
         constraints.append(topLabelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2))
@@ -54,9 +52,13 @@ extension WorkoutLiftCell {
 
 extension WorkoutLiftCell: SetCellDelegate {
     func cellShouldJumpToNextTextField(_ cell: InnerTableViewCell) {
-        let innerIndexPath = tableView.indexPath(for: cell)!
-        let newInnerIndexPath = IndexPath(row: innerIndexPath.row + 1, section: innerIndexPath.section)
-        guard let newInnerCell = tableView.cellForRow(at: newInnerIndexPath) as? WorkoutSetCell else { return }
+        let theInnerIndexPath = innerIndexPath(forInner: cell)!
+        let newInnerIndexPath = IndexPath(row: theInnerIndexPath.row + 1, section: theInnerIndexPath.section)
+        let newInnerCell = innerCellForRow(atInner: newInnerIndexPath) as? WorkoutSetCell ?? liftCellDelegate.cellShouldJumpToNewSet(for: self, atInner: newInnerIndexPath) as! WorkoutSetCell
         newInnerCell.targetWeightTextField.becomeFirstResponder()
     }
+}
+
+protocol LiftCellDelegate: class {
+    func cellShouldJumpToNewSet(for cell: TableViewCellWithTableView, atInner innerIndexPath: IndexPath) -> InnerTableViewCell
 }

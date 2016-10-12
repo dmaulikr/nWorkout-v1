@@ -1,16 +1,9 @@
 import UIKit
 
+
 class InnerTableView: UITableView {
     weak var outerCell: TableViewCellWithTableView!
     
-    override func insertRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
-        super.insertRows(at: indexPaths, with: animation)
-        outerCell.didInsertRows(at: indexPaths)
-    }
-    override func deleteRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
-        super.deleteRows(at: indexPaths, with: animation)
-        outerCell.didDeleteRows(at: indexPaths)
-    }
     override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
         
@@ -30,4 +23,5 @@ class InnerTableView: UITableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+
 }

@@ -19,6 +19,17 @@ extension Workout: DataProvider {
     func object(at indexPath: IndexPath) -> WorkoutLift {
         return lifts!.object(at: indexPath.row) as! WorkoutLift
     }
+    func remove(object: WorkoutLift) {
+        guard let context = managedObjectContext else { fatalError() }
+        context.performAndWait {
+            self.removeFromLifts(object)
+            do {
+                try context.save()
+            } catch {
+                print(error: error)
+            }
+        }
+    }
     func insert(object: WorkoutLift) -> IndexPath {
         guard let context = managedObjectContext else { assertionFailure("Why doesn't this exist"); return IndexPath() }
         context.performAndWait {
@@ -46,5 +57,18 @@ extension Workout: DataProvider {
     }
     func numberOfItems(inSection section: Int) -> Int {
         return lifts!.count
+    }
+    func moveObject(at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard let context = managedObjectContext else { fatalError() }
+        context.performAndWait {
+            let lift = self.object(at: sourceIndexPath)
+            self.remove(object: lift)
+            self.insertIntoLifts(lift, at: destinationIndexPath.row)
+            do {
+                try context.save()
+            } catch {
+                print(error: error)
+            }
+        }
     }
 }

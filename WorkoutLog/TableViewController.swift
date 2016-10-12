@@ -1,18 +1,30 @@
 import UIKit
 import CoreData
 
-class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: TableViewCellWithTableView>: UITableViewController, HasContext where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Source.Object: ManagedObject, Source.Object: DataProvider {
+class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: TableViewCellWithTableView>: UITableViewController, HasContext, TableViewCellWithTableViewDataSource, TableViewCellWithTableViewDelegate, DataProviderDelegate where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Source.Object: ManagedObject, Source.Object: DataProvider {
     
+    override func loadView() {
+        view = OuterTableView()
+        print(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 140
+        
+        navigationItem.rightBarButtonItem = editButtonItem
+    }
     init(dataProvider: Source) {
         super.init(style: .plain)
         self.dataProvider = dataProvider
-        tableView = OuterTableView(frame: tableView.frame, style: .plain)
     }
     init(request: NSFetchRequest<Type>) {
         super.init(style: .plain)
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self) as! Source
-        tableView = OuterTableView(frame: tableView.frame, style: .plain)
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -41,7 +53,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
             if self.dataProvider is ManagedObject {
                 self.tableView.deleteRows(at: [indexPath], with: .none)
             }
-            tableView.reloadData()
+//            tableView.reloadData()
         })
         alert.addAction(UIAlertAction(title: "No", style: .cancel) { _ in
             self.tableView.endEditing(true)
@@ -56,47 +68,58 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
         return dataProvider.numberOfItems(inSection: section)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let outerCell = Cell(delegateAndDataSource: self, indexPath: indexPath)
+        let outerCell = Cell(reuseIdentifier: "cell")
+        outerCell.outerIndexPath = indexPath
+        outerCell.dataSource = self
+        outerCell.delegate = self
+        
         let object = dataProvider.object(at: indexPath)
         outerCell.configureForObject(object: object, at: indexPath)
+        
         return outerCell
     }
     // UITableViewDelegate
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(dataProvider.object(at: indexPath).numberOfItems(inSection: 0)) * Lets.subTVCellSize + CGFloat(Lets.heightBetweenTopOfCellAndTV)
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? { return indexPath }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { }
+    func setOuterIndexPaths() {
+        for cell in tableView.visibleCells {
+            if let tvcwtv = cell as? TableViewCellWithTableView {
+                tvcwtv.outerIndexPath = tableView.indexPath(for: cell)
+            }
+        }
     }
     
     //These are required to enable subclasses to override.
     //TVCWTVDataSource
     func numberOfSections(in cell: TableViewCellWithTableView) -> Int { return 1 }
     func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        let num = dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
-        cell.heightConstraint.constant = CGFloat(num) * CGFloat(Lets.subTVCellSize)
-        return num
+        return dataProvider.object(at: cell.outerIndexPath).numberOfItems(inSection: section)
     }
-    func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { cell.tableView.register(InnerTableViewCell.self, forCellReuseIdentifier: "cell") }
+    func reuseIdentifierForInnerTableView(for cell: TableViewCellWithTableView) -> [String] {
+        return ["cell"]
+    }
+    func cellClassForInnerTableView(for cell: TableViewCellWithTableView) -> [AnyClass] {
+        return [InnerTableViewCell.self]
+    }
+    func heightForInnerCell(for cell: TableViewCellWithTableView) -> CGFloat {
+        return Lets.subTVCellSize
+    }
     func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { fatalError() }
     
     func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool { return false }
     func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) { fatalError() }
     
     //TVCWTVDelegate
-    func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat { return Lets.subTVCellSize }
-    
     func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) { fatalError() }
     func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return nil }
     
     func cell(_ cell: TableViewCellWithTableView, didTap button: UIButton) {
-        let object = dataProvider.object(at: cell.indexPath)
+        let object = dataProvider.object(at: cell.outerIndexPath)
         let noteVC = NoteVC(object: object, placeholder: "", button: button, callback: nil)
         present(noteVC, animated: true, completion: nil)
     }
-}
-
-extension TableViewController: TableViewCellWithTableViewDelegateAndDataSource {}
-
-extension TableViewController: DataProviderDelegate {
+    
     func dataProviderDidUpdate(updates: [DataProviderUpdate]?) {
         guard let updates = updates else { return tableView.reloadData() }
         tableView.beginUpdates()
@@ -117,3 +140,19 @@ extension TableViewController: DataProviderDelegate {
         tableView.endUpdates()
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

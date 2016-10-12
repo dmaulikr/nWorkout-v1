@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "DD47BFF563614461E515FFA3F59515BE56977408",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "4AE76E6D9FA4FAB5815CDF0A3745BE56C2F0B866" : 9223372036854775807,
+    "DD47BFF563614461E515FFA3F59515BE56977408" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D4931D4C-7087-4058-9B1F-2097FF8571B5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "4AE76E6D9FA4FAB5815CDF0A3745BE56C2F0B866" : "TableViewCellWithTableView\/",
+    "DD47BFF563614461E515FFA3F59515BE56977408" : "WorkoutLog\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "WorkoutLog",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "WorkoutLog.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/nathanlanza\/TableViewCellWithTableView.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4AE76E6D9FA4FAB5815CDF0A3745BE56C2F0B866"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/nathanlanza\/workoutlog",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DD47BFF563614461E515FFA3F59515BE56977408"
+    }
+  ]
+}

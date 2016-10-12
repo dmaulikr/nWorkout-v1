@@ -2,7 +2,6 @@ import UIKit
 import CoreData
 
 
-
 class WorkoutsTVC: WorkoutsAndRoutinesTVC<Workout, WorkoutCell> {
     
     init() {
@@ -25,11 +24,10 @@ class WorkoutsTVC: WorkoutsAndRoutinesTVC<Workout, WorkoutCell> {
     
     // TVCWTVDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("inner CFRA start \(indexPath)")
-        let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InnerTableViewCell
-        let lift = dataProvider.object(at: cell.indexPath).object(at: indexPath)
+        let innerCell = cell.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InnerTableViewCell
+        let lift = dataProvider.object(at: cell.outerIndexPath).object(at: indexPath)
         innerCell.textLabel?.text = lift.name! + " x \(lift.sets!.count)"
-        print("inner CFRA end \(indexPath)")
+        innerCell.isUserInteractionEnabled = false
         return innerCell
     }
     

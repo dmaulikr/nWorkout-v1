@@ -3,25 +3,26 @@ import CoreData
 
 
 class WorkoutsAndRoutinesTVC<Type: ManagedObject, Cell: TableViewCellWithTableView>: TableViewController<FetchedResultsDataProvider<Type>, Type, Cell> where Cell: ConfigurableCell, Type: ManagedObjectType, Cell.DataSource == Type, Type: DataProvider {
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.reloadData()
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath) as! TableViewCellWithTableView
+        cell.innerTableFooterView?.isUserInteractionEnabled = false
+        
+        return cell
     }
-    
-    // UITableViewDataSource
-    
-    //UITableViewDelegate
-
     
     //TVCWTVDaDS
+    override func numberOfSections(in cell: TableViewCellWithTableView) -> Int { return 1 }
     override func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        let num = dataProvider.object(at: cell.indexPath).numberOfItems(inSection: section)
-        cell.heightConstraint.constant = CGFloat(num) * CGFloat(Lets.subTVCellSize)
-        return num
+        return dataProvider.object(at: cell.outerIndexPath).numberOfItems(inSection: section)
     }
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { fatalError() }
-    override func cell(_ cell: TableViewCellWithTableView, heightForRowAtInner innerIndexPath: IndexPath) -> CGFloat { return Lets.subTVCellSize }
+    override func cellClassForInnerTableView(for cell: TableViewCellWithTableView) -> [AnyClass] {
+        return super.cellClassForInnerTableView(for: cell)
+    }
+    override func reuseIdentifierForInnerTableView(for cell: TableViewCellWithTableView) -> [String] {
+        return super.reuseIdentifierForInnerTableView(for: cell)
+    }
     override func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return nil }
-    override func cell(_ cell: TableViewCellWithTableView, registerInnerCellForSection section: Int) { cell.tableView.register(InnerTableViewCell.self, forCellReuseIdentifier: "cell") }
 }
 

@@ -53,15 +53,15 @@ class NoteVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationContro
         okayButton.setTitle("Okay", for: UIControlState())
         okayButton.addTarget(self, action: #selector(okayPressed), for: .touchUpInside)
         okayButton.tintColor = Theme.Colors.foreground.color
-        okayButton.layer.borderWidth = 1
+        okayButton.layer.borderWidth = 2
         okayButton.layer.borderColor = Theme.Colors.foreground.color.cgColor
-        okayButton.layer.cornerRadius = 5
+        okayButton.layer.cornerRadius = 9
         okayButton.frame = CGRect(x: 0, y: 250, width: 100, height: 40)
 
         
         noteTextView.layer.borderColor = Theme.Colors.foreground.color.cgColor
-        noteTextView.layer.borderWidth = 1
-        noteTextView.layer.cornerRadius = 5
+        noteTextView.layer.borderWidth = 2
+        noteTextView.layer.cornerRadius = 9
         
         view.addSubview(noteTextView)
         view.addSubview(okayButton)
@@ -71,12 +71,12 @@ class NoteVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationContro
         
         var constraints = [NSLayoutConstraint]()
         
-        constraints.append(noteTextView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8))
-        constraints.append(noteTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8))
-        constraints.append(noteTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8))
+        constraints.append(noteTextView.topAnchor.constraint(equalTo: view.topAnchor, constant: 2))
+        constraints.append(noteTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 2))
+        constraints.append(noteTextView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -2))
         constraints.append(okayButton.centerXAnchor.constraint(equalTo: view.centerXAnchor))
         constraints.append(okayButton.topAnchor.constraint(equalTo: noteTextView.bottomAnchor, constant: 8))
-        constraints.append(okayButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8))
+        constraints.append(okayButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -2))
         constraints.append(okayButton.widthAnchor.constraint(equalTo: noteTextView.widthAnchor))
         
         NSLayoutConstraint.activate(constraints)

@@ -1,7 +1,6 @@
 import UIKit
 import CoreData
 
-
 class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresentationControllerDelegate {
     
     init() {
@@ -19,15 +18,16 @@ class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresen
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(newRoutine))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "New", style: .plain, target: self, action: #selector(newRoutine))
+        navigationItem.rightBarButtonItem = editButtonItem
     }
     func newRoutine() {
-        let nrtvc = NewVC(type: Routine.self, placeholder: "Insert new routine name", barButtonItem: navigationItem.rightBarButtonItem!) { object in
-                
+        let nrtvc = NewVC(type: Routine.self, placeholder: "Insert new routine name", barButtonItem: navigationItem.leftBarButtonItem!) { object in
+            
         }
-        
         present(nrtvc, animated: true)
     }
+
     
     // UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -38,9 +38,10 @@ class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresen
     
     // TVCWTVDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let innerCell = cell.tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InnerTableViewCell
-        let lift = dataProvider.object(at: cell.indexPath).object(at: indexPath)
+        let innerCell = cell.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InnerTableViewCell
+        let lift = dataProvider.object(at: cell.outerIndexPath).object(at: indexPath)
         innerCell.textLabel?.text = lift.name! + " x \(lift.sets!.count)"
+        innerCell.isUserInteractionEnabled = false
         return innerCell
     }
 }

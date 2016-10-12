@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11224.2" systemVersion="16A304a" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16B2338c" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Routine" representedClassName="Routine" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="lifts" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="RoutineLift" inverseName="routine" inverseEntity="RoutineLift" syncable="YES"/>
     </entity>
     <entity name="RoutineLift" representedClassName="RoutineLift" syncable="YES">
@@ -40,7 +41,7 @@
         <relationship name="lift" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutLift" inverseName="sets" inverseEntity="WorkoutLift" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Routine" positionX="-54" positionY="63" width="128" height="90"/>
+        <element name="Routine" positionX="-54" positionY="63" width="128" height="105"/>
         <element name="RoutineLift" positionX="-54" positionY="63" width="128" height="105"/>
         <element name="RoutineSet" positionX="-45" positionY="72" width="128" height="105"/>
         <element name="Workout" positionX="-63" positionY="-18" width="128" height="105"/>

@@ -20,7 +20,7 @@ class Label: UILabel {
         self.layer.borderWidth = borderWidth
     }
 
-    convenience init(tableHeaderStyleWith string: String, borderColor: CGColor? = UIColor.darkGray.cgColor, borderWidth: CGFloat = 1) {
+    convenience init(tableHeaderStyleWith string: String, borderColor: CGColor? = UIColor.lightGray.cgColor, borderWidth: CGFloat = 1) {
         self.init(text: string, textAlignment: .center, numberOfLines: 0, font: Theme.Fonts.tableHeaderFont.font, borderColor: borderColor, borderWidth: borderWidth)
     }
     convenience init(cellNameLabelStyleWith string: String) {

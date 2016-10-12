@@ -8,6 +8,9 @@ class InnerTableViewCell: UITableViewCell {
         textLabel?.textAlignment = .center
         textLabel?.layer.borderColor = UIColor.white.cgColor
         textLabel?.layer.cornerRadius = 5
+        
+        layer.borderColor = UIColor.lightGray.cgColor
+        layer.borderWidth = 1
     }
     
     required init?(coder aDecoder: NSCoder) {
