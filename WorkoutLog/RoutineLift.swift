@@ -41,8 +41,6 @@ extension RoutineLift: DataProvider {
     func insert(object: RoutineSet) -> IndexPath {
         managedObjectContext?.performAndWait {
             self.addToSets(object)
-            object.reps = 6
-            object.weight = 225
             do {
                 try self.managedObjectContext?.save()
             } catch {

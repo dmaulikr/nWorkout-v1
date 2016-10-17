@@ -1,11 +1,15 @@
 import UIKit
 import CoreData
 
-class SelectWorkoutTVC: UITableViewController {
-    
-    let context = CoreData.shared.context
+class SelectWorkoutTVC: UITableViewController, HasContext {
     
     var frc: NSFetchedResultsController<Routine>!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        try! frc.performFetch()
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +51,8 @@ extension SelectWorkoutTVC {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         cell.backgroundColor = Theme.Colors.lightBackgroundColor.color
-        cell.textLabel?.font = Theme.Fonts.titleFont.font
-        cell.detailTextLabel?.font = Theme.Fonts.subTitleFont.font
+        cell.textLabel?.font = Theme.Fonts.title
+        cell.detailTextLabel?.font = Theme.Fonts.subtitle
         if indexPath.section == 0 {
             cell.textLabel?.text = Lets.blankWorkoutText
             cell.detailTextLabel?.text = "Start a workout with no preset lifts."

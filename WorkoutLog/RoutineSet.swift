@@ -6,6 +6,18 @@ public class RoutineSet: ManagedObject {
 
 }
 
+extension RoutineSet: SetType {
+    var settableWeight: Int {
+        set { weight = Int16(newValue) }
+        get { return Int(weight) }
+    }
+    var settableReps: Int {
+        set { reps = Int16(newValue) }
+        get { return Int(reps) }
+    }
+
+}
+
 extension RoutineSet: ManagedObjectType {
     public static var entityName: String {
         return "RoutineSet"

@@ -55,6 +55,8 @@ extension WorkoutLiftCell: SetCellDelegate {
         let theInnerIndexPath = innerIndexPath(forInner: cell)!
         let newInnerIndexPath = IndexPath(row: theInnerIndexPath.row + 1, section: theInnerIndexPath.section)
         let newInnerCell = innerCellForRow(atInner: newInnerIndexPath) as? WorkoutSetCell ?? liftCellDelegate.cellShouldJumpToNewSet(for: self, atInner: newInnerIndexPath) as! WorkoutSetCell
+        newInnerCell.completedWeightTextField.placeholder = "0"
+        newInnerCell.completedRepsTextField.placeholder = "0"
         newInnerCell.targetWeightTextField.becomeFirstResponder()
     }
 }

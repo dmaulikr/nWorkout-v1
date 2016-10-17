@@ -1,11 +1,3 @@
-//
-//  RoutineLift+CoreDataProperties.swift
-//  WorkoutLog
-//
-//  Created by Nathan Lanza on 8/23/16.
-//  Copyright © 2016 Nathan Lanza. All rights reserved.
-//
-
 import Foundation
 import CoreData
 

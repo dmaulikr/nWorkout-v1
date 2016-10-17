@@ -13,13 +13,7 @@ class StatisticsTVC: UITableViewController {
     init() {
         super.init(style: .plain)
         
-        let sepIn = tableView.separatorInset
-        let layMar = tableView.layoutMargins
-        print("=====================================")
-        print(sepIn, layMar)
-        
         tableView = OuterTableView(frame: tableView.frame, style: .grouped)
-        tableView.separatorInset = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 20)
         tableView.register(UITableViewCell.self , forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
@@ -67,9 +61,6 @@ class StatisticsTVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let lifts = frc?.sections?[indexPath.row].objects as! [WorkoutLift]
-        for lift in lifts {
-            print(lift.name)
-        }
         let olsvc = OneLiftStatisticsVC()
         olsvc.lifts = lifts
         navigationController?.pushViewController(olsvc, animated: true)

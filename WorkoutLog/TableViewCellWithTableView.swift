@@ -58,11 +58,14 @@ open class TableViewCellWithTableView: UITableViewCell {
         
         constraints.append(topContentViewHeightConstraint)
         constraints.append(innerTableHeightConstraint)
-        setHeightConstraint()
+        constraints.forEach { constraint in
+            constraint.priority = 999
+        }
+        setHeightConstraint(false)
         NSLayoutConstraint.activate(constraints)
     }
     
-    func setHeightConstraint() {
+    func setHeightConstraint(_ animated: Bool) {
         guard let dataSource = dataSource else { return }
         
         let headerHeight = innerTableView.tableHeaderView?.frame.height ?? 0
@@ -76,9 +79,18 @@ open class TableViewCellWithTableView: UITableViewCell {
         
         //        innerTableView.beginUpdates()
         innerTableHeightConstraint.constant = totalHeightForCells
-        UIView.animate(withDuration: 0.3) {
+        
+        let frameResizing: () -> () = {
             let frame = self.innerTableView.frame
             self.innerTableView.frame = CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: totalHeightForCells)
+        }
+        
+        if animated {
+            UIView.animate(withDuration: 0.3) {
+                frameResizing()
+            }
+        } else {
+            frameResizing()
         }
         innerTableView.endUpdates()
     }
@@ -92,11 +104,11 @@ open class TableViewCellWithTableView: UITableViewCell {
 extension TableViewCellWithTableView {
     public func deleteRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
         innerTableView.deleteRows(at: indexPaths, with: animation)
-        setHeightConstraint()
+        setHeightConstraint(true)
     }
     public func insertRows(at indexPaths: [IndexPath], with animation: UITableViewRowAnimation) {
         innerTableView.insertRows(at: indexPaths, with: animation)
-        setHeightConstraint()
+        setHeightConstraint(true)
     }
     public var innerTableHeaderView: UIView? {
         get {
@@ -104,7 +116,7 @@ extension TableViewCellWithTableView {
         }
         set {
             innerTableView.tableHeaderView = newValue
-            setHeightConstraint()
+            setHeightConstraint(false)
         }
     }
     public var innerTableFooterView: UIView? {
@@ -113,7 +125,7 @@ extension TableViewCellWithTableView {
         }
         set {
             innerTableView.tableFooterView = newValue
-            setHeightConstraint()
+            setHeightConstraint(false)
         }
     }
     public func register(_ cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
@@ -133,9 +145,6 @@ extension TableViewCellWithTableView {
         return innerTableView.cellForRow(at: innerIndexPath)
     }
     
-    public func heightsShouldChange() {
-        setHeightConstraint()
-    }
     var innerTableViewIsUserInteractionEnabled: Bool {
         get { return innerTableView.isUserInteractionEnabled }
         set { innerTableView.isUserInteractionEnabled = newValue }
@@ -180,6 +189,7 @@ extension SubTableViewDelegateAndDataSource: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let dataSource = dataSource else { fatalError("Requires a data source.") }
+        guard outerCell.outerIndexPath != nil else { return 0 }
         let cellClasses = dataSource.cellClassForInnerTableView(for: outerCell)
         let identifiers = dataSource.reuseIdentifierForInnerTableView(for: outerCell)
         for (cellClass,identifier) in zip(cellClasses, identifiers) {

@@ -8,7 +8,7 @@ struct Lets {
     static let liftCellNameLabelHeight: CGFloat = 25
     static let liftCellTableHeaderHeight: CGFloat = 23
     static let innerTableHeaderViewHeight: CGFloat = 23 + 25 + 16
-    static let subTVCellSize: CGFloat = 25
+    static let subTVCellSize: CGFloat = 30
     
     
     static let newWorkoutBarButtonText = "New Workout"
@@ -23,6 +23,7 @@ struct Lets {
     static let buffer: CGFloat = 8.0
     
     static let selectWorkoutBatchSize = 20
+    static let selectLiftTypeBatchSize = 20
     static let defaultBatchSize = 10
  
     static let blankWorkoutText = "Blank Workout"
@@ -34,6 +35,8 @@ struct Lets {
     static let df: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = Lets.dateString
+        let locale = Locale(identifier: "en_US_POSIX")
+        formatter.locale = locale
         formatter.timeZone = TimeZone(abbreviation: Lets.timeZoneAbbreviation)
         return formatter
     }()

@@ -22,6 +22,7 @@ class RoutineTVC: WorkoutAndRoutineTVC<Routine, RoutineLift, RoutineLiftCell> {
             return tableViewCell
         } else {
             let innerCell = cell.dequeueReusableCell(withIdentifier: "routineSetCell", for: indexPath) as! RoutineSetCell
+            innerCell.delegate = cell as! RoutineLiftCell
             let set = dataProvider.object(at: cell.outerIndexPath).object(at: indexPath)
             innerCell.configureForObject(object: set, at: indexPath)
             return innerCell

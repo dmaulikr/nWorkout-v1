@@ -1,15 +1,41 @@
 import UIKit
 import CoreData
+import CoreGraphics
 
-class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: TableViewCellWithTableView>: TableViewController<Source, Type, Cell> where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider, Source: DataProvider {
-    
+class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: TableViewCellWithTableView>: TableViewController<Source, Type, Cell> where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider, Source: DataProvider, Source.Object.Object: SetType {
+    override func viewWillAppear(_ animated: Bool) {
+        //
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.rightBarButtonItem = editButtonItem
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    var defaultInsets: UIEdgeInsets!
+    func keyboardWillShow(_ notification: Notification) {
+        if let userInfo = notification.userInfo {
+            defaultInsets = tableView.contentInset
+            let value = userInfo[UIKeyboardFrameEndUserInfoKey] as AnyObject
+            let cgRectValue = value.cgRectValue!
+            let keyboardHeight = cgRectValue.height
+            tableView.contentInset = UIEdgeInsets(top: defaultInsets.top, left: defaultInsets.left, bottom: keyboardHeight, right: defaultInsets.right)
+        }
+    }
+    func keyboardWillHide(_ notification: Notification) {
+        UIView.animate(withDuration: 0.2) {
+            self.tableView.contentInset = self.defaultInsets
+        }
+        print(self.tableView.contentInset)
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     func addButtonTapped() {
-        let nlvc = NewVC(type: Type.self, placeholder: Lets.newLiftPlaceholderText, barButtonItem: navigationItem.rightBarButtonItem!, callback: insertNewObject)
-        present(nlvc, animated: true)
+        let sltvc = SelectLiftTypeTVC(callback: insertNewObject)
+        let nav = UINavigationController(rootViewController: sltvc)
+        present(nav, animated: true)
     }
     func insertNewObject(object: Type) {
         var newIndexPath: IndexPath?
@@ -101,9 +127,14 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
     func addNewSet(for cell: TableViewCellWithTableView, atInner innerIndexPath: IndexPath) -> InnerTableViewCell {
         cell.deselectRow(at: innerIndexPath, animated: true)
         var newInnerIndexPath: IndexPath?
+        
+        let lift = dataProvider.object(at: cell.outerIndexPath)
+        let setCount = lift.numberOfItems(inSection: 0)
+        let lastSet = setCount > 0 ? Optional.some(lift.object(at: IndexPath(row: setCount - 1, section: 0))) : nil
+        
         context.performAndWait {
-            let set = Type.Object(context: self.context)
-            let lift = self.dataProvider.object(at: cell.outerIndexPath)
+            var set = Type.Object(context: self.context)
+            set.configure(weight: lastSet?.settableWeight ?? 0, reps: lastSet?.settableReps ?? 0)
             newInnerIndexPath = lift.insert(object: set)
             do {
                 try self.context.save()
@@ -113,9 +144,8 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         }
         guard let indexPath = newInnerIndexPath else { fatalError() }
         cell.insertRows(at: [indexPath], with: .automatic)
-        tableView.beginUpdates()
         
-        //        tableView.reloadRows(at: [cell.outerIndexPath], with: .none)
+        tableView.beginUpdates()
         tableView.endUpdates()
         return cell.innerCellForRow(atInner: indexPath) as! InnerTableViewCell
     }
@@ -148,6 +178,11 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
 
 extension WorkoutAndRoutineTVC: LiftCellDelegate {
     func cellShouldJumpToNewSet(for cell: TableViewCellWithTableView, atInner innerIndexPath: IndexPath) -> InnerTableViewCell {
-        return addNewSet(for: cell, atInner: innerIndexPath)
+        let newSetCell = addNewSet(for: cell, atInner: innerIndexPath) as! SetCell
+        newSetCell.textFields.forEach {
+            $0.placeholder = $0.text
+            $0.text = nil
+        }
+        return newSetCell as! InnerTableViewCell
     }
 }

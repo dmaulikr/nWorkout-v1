@@ -4,7 +4,7 @@ struct Theme {
     static func setupAppearances() {
         let navBarAppearance = UINavigationBar.appearance()
         navBarAppearance.titleTextAttributes = [
-            NSFontAttributeName: Fonts.boldTitleFont.font,
+            NSFontAttributeName: Fonts.boldTitle,
             NSForegroundColorAttributeName: Colors.tintColor.color
         ]
         navBarAppearance.barStyle = .black
@@ -15,7 +15,7 @@ struct Theme {
         tabBarAppearance.barTintColor = Colors.foreground.color
         
         let barButtonItemAppearance = UIBarButtonItem.appearance()
-        let attr = [ NSFontAttributeName: Fonts.titleFont.font ]
+        let attr = [ NSFontAttributeName: Fonts.title ]
         barButtonItemAppearance.setTitleTextAttributes(attr, for: UIControlState())
         
         let tableViewAppearance = UITableView.appearance()
@@ -23,14 +23,14 @@ struct Theme {
         
         let innerCellAppearance = InnerTableViewCell.appearance()
         innerCellAppearance.backgroundColor = nil
-        innerCellAppearance.textLabel?.font = Fonts.titleFont.font
+        innerCellAppearance.textLabel?.font = Fonts.title
         
         let outerCellAppearance = OuterTableViewCell.appearance()
         outerCellAppearance.backgroundColor = Colors.backgroundColor.color
         
         
         let labelAppearance = UILabel.appearance()
-        labelAppearance.font = Fonts.titleFont.font
+        labelAppearance.font = Fonts.title
     }
     
     enum Colors {
@@ -59,23 +59,12 @@ struct Theme {
             }
         }
     }
-    enum Fonts {
-        case boldTitleFont
-        case titleFont
-        case subTitleFont
+    struct Fonts {
+        static let boldTitle = UIFont.boldSystemFont(ofSize: 17)
+        static let title = UIFont.boldSystemFont(ofSize: 16)
+        static let subtitle = UIFont.boldSystemFont(ofSize: 13)
         
-        case tableHeaderFont
-        case cellNameLabelFont
-        
-        var font: UIFont {
-            switch self {
-            case .boldTitleFont: return UIFont(name: "Copperplate-Bold", size: 17)!
-            case .titleFont: return UIFont(name: "Copperplate", size: 16)!
-            case .subTitleFont: return UIFont(name: "Copperplate", size: 13)!
-                
-            case .tableHeaderFont: return UIFont(name: "Copperplate", size: 10)!
-            case .cellNameLabelFont: return UIFont(name: "Copperplate", size: 16)!
-            }
-        }
+        static let tableHeader = UIFont.boldSystemFont(ofSize: 10)
+        static let cellNameLabel = UIFont.boldSystemFont(ofSize: 16)
     }
 }

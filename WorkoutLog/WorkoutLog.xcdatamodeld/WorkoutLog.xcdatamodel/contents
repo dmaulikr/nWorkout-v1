@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16B2338c" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="LiftType" representedClassName="LiftType" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Routine" representedClassName="Routine" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
@@ -41,6 +44,7 @@
         <relationship name="lift" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutLift" inverseName="sets" inverseEntity="WorkoutLift" syncable="YES"/>
     </entity>
     <elements>
+        <element name="LiftType" positionX="-45" positionY="72" width="128" height="60"/>
         <element name="Routine" positionX="-54" positionY="63" width="128" height="105"/>
         <element name="RoutineLift" positionX="-54" positionY="63" width="128" height="105"/>
         <element name="RoutineSet" positionX="-45" positionY="72" width="128" height="105"/>

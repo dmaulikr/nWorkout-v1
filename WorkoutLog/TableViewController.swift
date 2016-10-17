@@ -5,7 +5,6 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
     
     override func loadView() {
         view = OuterTableView()
-        print(tableView)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -13,7 +12,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 140
+        tableView.estimatedRowHeight = 10000
         
         navigationItem.rightBarButtonItem = editButtonItem
     }
@@ -41,6 +40,8 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
         
         let alert = UIAlertController(title: "Are you sure?", message: "Do you want to delete this entry?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.destructive) { _ in
+            let cell = self.tableView.cellForRow(at: indexPath) as! TableViewCellWithTableView
+            cell.outerIndexPath = nil
             let object = self.dataProvider.object(at: indexPath)
             object.managedObjectContext?.performAndWait {
                 object.managedObjectContext?.delete(object)

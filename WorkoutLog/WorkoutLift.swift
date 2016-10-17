@@ -18,8 +18,6 @@ extension WorkoutLift: DataProvider {
     
     func object(at indexPath: IndexPath) -> WorkoutSet {
         guard let sets = sets else { fatalError() }
-        let lset = sets.object(at: indexPath.row)
-        print(lset)
         return sets.object(at: indexPath.row) as! WorkoutSet
     }
     func numberOfItems(inSection section: Int) -> Int {
@@ -36,8 +34,6 @@ extension WorkoutLift: DataProvider {
     func insert(object: WorkoutSet) -> IndexPath {
         managedObjectContext?.performAndWait {
             self.addToSets(object)
-            object.targetReps = 6
-            object.targetWeight = 225
             do {
                 try self.managedObjectContext?.save()
             } catch {

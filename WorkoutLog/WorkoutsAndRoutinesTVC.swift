@@ -14,7 +14,8 @@ class WorkoutsAndRoutinesTVC<Type: ManagedObject, Cell: TableViewCellWithTableVi
     //TVCWTVDaDS
     override func numberOfSections(in cell: TableViewCellWithTableView) -> Int { return 1 }
     override func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        return dataProvider.object(at: cell.outerIndexPath).numberOfItems(inSection: section)
+        guard let outerIndexPath = cell.outerIndexPath else { return 0 }
+        return dataProvider.object(at: outerIndexPath).numberOfItems(inSection: section)
     }
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { fatalError() }
     override func cellClassForInnerTableView(for cell: TableViewCellWithTableView) -> [AnyClass] {

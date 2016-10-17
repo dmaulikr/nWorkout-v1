@@ -48,8 +48,6 @@ extension Workout: DataProvider {
         return IndexPath(row: lifts!.count - 1, section: 0)
     }
     func index(of object: WorkoutLift) -> IndexPath {
-        print(object)
-        print(lifts!.index(of: object))
         return IndexPath(row: lifts!.index(of: object), section: 0)
     }
     func numberOfSections() -> Int {

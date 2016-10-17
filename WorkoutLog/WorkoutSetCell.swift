@@ -4,7 +4,11 @@ protocol SetCellDelegate: class {
     func cellShouldJumpToNextTextField(_ cell: InnerTableViewCell)
 }
 
-extension WorkoutSetCell: ConfigurableCell {
+protocol SetCell {
+    var textFields: [UITextField] { get }
+}
+
+extension WorkoutSetCell: ConfigurableCell, SetCell {
     typealias DataSource = WorkoutSet
     func configureForObject(object: WorkoutSet, at indexPath: IndexPath) {
         if indexPath.section == 1 {
@@ -15,12 +19,15 @@ extension WorkoutSetCell: ConfigurableCell {
             textLabel?.text = ""
             textFields.forEach {
                 $0.isHidden = false
+                $0.placeholder = "0"
             }
             statusButton.isHidden = false
             
             set = object
         }
     }
+    
+    
 }
 
 class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
@@ -32,9 +39,6 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
             completedReps = Int(set.completedReps)
             completedWeight = Int(set.completedWeight)
             statusButton.status = set.setStatus
-            
-            keyboardView.delegate = self
-            textFields.forEach { $0.inputView = keyboardView }
         }
     }
     
@@ -53,7 +57,11 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
             textField.borderStyle = .line
             textField.textAlignment = .center
             textField.delegate = self
+            textField.inputView = keyboardView
+            textField.placeholder = "0"
         }
+        
+        keyboardView.delegate = self
         
         //Configure Button
         let views: [UIView] = textFields + [statusButton]
@@ -87,7 +95,9 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
                 self.set.targetWeight = Int16(newValue)
                 try! self.set.managedObjectContext?.save()
             }
-            targetWeightTextField.text = "\(newValue)"
+            if newValue > 0 {
+                targetWeightTextField.text = "\(newValue)"
+            }
         }
     }
     var targetRepsTextField: UITextField
@@ -100,7 +110,9 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
                 self.set.targetReps = Int16(newValue)
                 try! self.set.managedObjectContext?.save()
             }
-            targetRepsTextField.text = "\(newValue)"
+            if newValue > 0 {
+                targetRepsTextField.text = "\(newValue)"
+            }
         }
     }
     
@@ -114,7 +126,9 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
                 self.set.completedWeight = Int16(newValue)
                 try! self.set.managedObjectContext?.save()
             }
-            completedWeightTextField.text = "\(newValue)"
+            if newValue > 0 {
+                completedWeightTextField.text = "\(newValue)"
+            }
         }
     }
     var completedRepsTextField: UITextField
@@ -127,7 +141,9 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
                 self.set.completedReps = Int16(newValue)
                 try! self.set.managedObjectContext?.save()
             }
-            completedRepsTextField.text = "\(newValue)"
+            if newValue > 0 {
+                completedRepsTextField.text = "\(newValue)"
+            }
         }
     }
     
@@ -154,19 +170,72 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
         }
     }
     
-    var keyboardView: Keyboard = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: Double((UIApplication.shared.windows.first?.rootViewController?.view.frame.size.height)!) * Lets.keyboardToViewRatio))
+    let keyboardView = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: Double((UIApplication.shared.windows.first?.rootViewController?.view.frame.size.height)!) * Lets.keyboardToViewRatio))
     var currentlyEditing: UITextField?
+}
+
+extension WorkoutSetCell {
     
     func keyWasTapped(character: String) {
         currentlyEditing?.text = currentlyEditing!.text! + character
+        textFieldDidChange(textField: currentlyEditing!)
     }
     func backspaceWasTapped() {
         currentlyEditing?.deleteBackward()
+        textFieldDidChange(textField: currentlyEditing!)
     }
+    func textFieldDidChange(textField: UITextField) {
+        let value = Int(textField.text!) ?? 0
+        switch textField {
+        case self.targetWeightTextField:
+            self.targetWeight = value
+        case self.targetRepsTextField:
+            self.targetReps = value
+        case self.completedWeightTextField:
+            self.completedWeight = value
+        case self.completedRepsTextField:
+            self.completedReps = value
+        default: fatalError()
+        }
+    }
+    
     func hideWasTapped() {
-        endEditing(true)
+        _ = endEditing(true)
+    }
+    
+    override func endEditing(_ force: Bool) -> Bool {
+        replaceValueWithPlaceholder()
+        textFields.forEach { textField in
+            if (textField.text == nil || textField.text == ""), let ph = textField.placeholder, let phValue = Int(ph), phValue > 0 {
+                switch textField {
+                case targetWeightTextField: targetWeight = phValue
+                case targetRepsTextField: targetReps = phValue
+                case completedWeightTextField: completedWeight = phValue
+                case completedRepsTextField: completedReps = phValue
+                default: fatalError()
+                }
+            }
+        }
+        return super.endEditing(force)
+    }
+    func replaceValueWithPlaceholder() {
+        if currentlyEditing?.text == nil || currentlyEditing!.text == "", let ph = currentlyEditing?.placeholder, let value = Int(ph) {
+            switch currentlyEditing! {
+            case targetWeightTextField:
+                targetWeight = value
+            case targetRepsTextField:
+                targetReps = value
+            case completedWeightTextField:
+                completedWeight = value
+            case completedRepsTextField:
+                completedReps = value
+            default: fatalError()
+            }
+        }
     }
     func nextWasTapped() {
+        replaceValueWithPlaceholder()
+        
         switch currentlyEditing! {
         case targetWeightTextField:
             currentlyEditing = targetRepsTextField
@@ -177,7 +246,6 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
         case completedRepsTextField:
             currentlyEditing = nil
             delegate?.cellShouldJumpToNextTextField(self)
-            endEditing(true)
         default:
             break
         }
@@ -203,7 +271,7 @@ enum SetStatus: String {
 
 class SetStatusButton: UIButton {
     let attributes = [
-        NSFontAttributeName : Theme.Fonts.titleFont.font,
+        NSFontAttributeName : Theme.Fonts.title,
         NSForegroundColorAttributeName : UIColor.black
     ]
     override init(frame: CGRect) {
@@ -231,9 +299,9 @@ extension WorkoutSetCell: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currentlyEditing = textField
-        if textField.text! == "0" {
-            textField.text = ""
-        }
+        guard let text = textField.text, let value = Int(text), value > 0 else { return }
+        textField.placeholder = text
+        textField.text = nil
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         if currentlyEditing === textField {
@@ -255,6 +323,8 @@ extension WorkoutSetCell: UITextFieldDelegate {
         }
         if self.completedWeight == self.targetWeight && self.completedReps == self.targetReps {
             self.statusButton.status = .done
+        } else if completedWeight == 0 || completedReps == 0 {
+            return
         } else if completedWeightTextField == textField || completedRepsTextField == textField {
             self.statusButton.status = .fail
         }
