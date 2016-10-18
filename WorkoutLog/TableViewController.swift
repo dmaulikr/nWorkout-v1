@@ -115,9 +115,14 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
     func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) { fatalError() }
     func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return nil }
     
-    func cell(_ cell: TableViewCellWithTableView, didTap button: UIButton) {
-        let object = dataProvider.object(at: cell.outerIndexPath)
-        let noteVC = NoteVC(object: object, placeholder: "", button: button, callback: nil)
+    func cell(_ cell: TableViewCellWithTableView, didTap button: UIButton, for object: ManagedObject?, or indexPath: IndexPath?) {
+        var noteVC: NoteVC<ManagedObject>
+        if let object = object {
+            noteVC = NoteVC(object: object, placeholder: "", button: button, callback: nil)
+        } else {
+            let object = dataProvider.object(at: cell.outerIndexPath)
+            noteVC = NoteVC(object: object, placeholder: "", button: button, callback: nil)
+        }
         present(noteVC, animated: true, completion: nil)
     }
     

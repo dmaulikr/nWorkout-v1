@@ -11,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UINavigationControllerDel
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.tintColor = Theme.Colors.tintColor.color
+        window?.tintColor = Theme.Colors.tint
         window?.rootViewController = appCoordinator.tabBarController
         window?.makeKeyAndVisible()
         

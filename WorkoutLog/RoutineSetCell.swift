@@ -18,6 +18,7 @@ extension RoutineSetCell: ConfigurableCell {
             
             set = object
         }
+        selectionStyle = .none
     }
 }
 

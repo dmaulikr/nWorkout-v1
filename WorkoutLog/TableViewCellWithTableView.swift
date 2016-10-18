@@ -171,7 +171,7 @@ extension TableViewCellWithTableView {
 @objc public protocol TableViewCellWithTableViewDelegate {
     @objc optional func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath?
     @objc optional func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath)
-    @objc optional func cell(_ cell: TableViewCellWithTableView, didTap button: UIButton)
+    @objc optional func cell(_ cell: TableViewCellWithTableView, didTap button: UIButton, for object: ManagedObject?, or indexPath: IndexPath?)
 }
 
 
@@ -210,7 +210,7 @@ extension SubTableViewDelegateAndDataSource: UITableViewDataSource {
 }
 extension SubTableViewDelegateAndDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        return (delegate?.cell?(outerCell, willSelectRowAtInner: indexPath) ?? indexPath)
+        return delegate?.cell?(outerCell, willSelectRowAtInner: indexPath)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.cell?(outerCell, didSelectRowAtInner: indexPath)

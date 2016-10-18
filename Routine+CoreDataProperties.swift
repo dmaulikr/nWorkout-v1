@@ -1,12 +1,16 @@
-import Foundation
 import CoreData
+
 
 extension Routine {
 
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Routine> {
+        return NSFetchRequest<Routine>(entityName: "Routine");
+    }
+
     @NSManaged public var name: String?
-    @NSManaged public var lifts: NSOrderedSet?
     @NSManaged public var note: String?
-    @NSManaged public var order: Int16
+    @NSManaged public var order: NSNumber?
+    @NSManaged public var lifts: NSOrderedSet?
 
 }
 

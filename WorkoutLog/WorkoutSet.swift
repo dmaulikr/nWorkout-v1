@@ -29,7 +29,6 @@ extension WorkoutSet: ManagedObjectType {
             case 1: return .incomplete
             case 2: return .done
             case 3: return .fail
-            case 4: return .skip
             default: return .incomplete
             }
         }
@@ -38,7 +37,6 @@ extension WorkoutSet: ManagedObjectType {
             case .incomplete: status = 1
             case .done: status = 2
             case .fail: status = 3
-            case .skip: status = 4
             }
         }
     }

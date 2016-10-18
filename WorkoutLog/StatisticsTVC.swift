@@ -55,7 +55,7 @@ class StatisticsTVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let lifts = frc?.sections?[indexPath.row]
         cell.textLabel?.text = (lifts?.name)! + " x \((lifts?.numberOfObjects)!)"
-        cell.backgroundColor = Theme.Colors.backgroundColor.color
+        cell.backgroundColor = Theme.Colors.background
         return cell
     }
     
@@ -81,7 +81,7 @@ class OneLiftStatisticsVC: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        cell.backgroundColor = Theme.Colors.backgroundColor.color
+        cell.backgroundColor = Theme.Colors.background
         let sets = lifts[indexPath.row].sets?.array as! [WorkoutSet]
         cell.textLabel?.text = sets.map { "\($0.completedWeight) x \($0.completedReps)" }.joined(separator: ", ")
         cell.detailTextLabel?.text = dateFormatter.string(from: lifts[indexPath.row].date)

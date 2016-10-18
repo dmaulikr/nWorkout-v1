@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="16B2338c" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11538.1" systemVersion="16B2338c" minimumToolsVersion="Xcode 7.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="LiftType" representedClassName="LiftType" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="routineLifts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RoutineLift" inverseName="liftType" inverseEntity="RoutineLift" syncable="YES"/>
+        <relationship name="workoutLifts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutLift" inverseName="liftType" inverseEntity="WorkoutLift" syncable="YES"/>
     </entity>
     <entity name="Routine" representedClassName="Routine" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -12,6 +14,7 @@
     <entity name="RoutineLift" representedClassName="RoutineLift" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="liftType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LiftType" inverseName="routineLifts" inverseEntity="LiftType" syncable="YES"/>
         <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="lifts" inverseEntity="Routine" syncable="YES"/>
         <relationship name="sets" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="RoutineSet" inverseName="lift" inverseEntity="RoutineSet" syncable="YES"/>
     </entity>
@@ -24,6 +27,7 @@
     <entity name="Workout" representedClassName="Workout" syncable="YES">
         <attribute name="complete" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="finishDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="lifts" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="WorkoutLift" inverseName="workout" inverseEntity="WorkoutLift" syncable="YES"/>
     </entity>
@@ -31,6 +35,7 @@
         <attribute name="expanded" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" defaultValueString="Squat" syncable="YES"/>
         <attribute name="note" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="liftType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LiftType" inverseName="workoutLifts" inverseEntity="LiftType" syncable="YES"/>
         <relationship name="sets" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="WorkoutSet" inverseName="lift" inverseEntity="WorkoutSet" syncable="YES"/>
         <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="lifts" inverseEntity="Workout" syncable="YES"/>
     </entity>
@@ -44,12 +49,12 @@
         <relationship name="lift" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutLift" inverseName="sets" inverseEntity="WorkoutLift" syncable="YES"/>
     </entity>
     <elements>
-        <element name="LiftType" positionX="-45" positionY="72" width="128" height="60"/>
+        <element name="LiftType" positionX="-45" positionY="72" width="128" height="90"/>
         <element name="Routine" positionX="-54" positionY="63" width="128" height="105"/>
-        <element name="RoutineLift" positionX="-54" positionY="63" width="128" height="105"/>
+        <element name="RoutineLift" positionX="-54" positionY="63" width="128" height="120"/>
         <element name="RoutineSet" positionX="-45" positionY="72" width="128" height="105"/>
-        <element name="Workout" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="WorkoutLift" positionX="-45" positionY="27" width="128" height="120"/>
+        <element name="Workout" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="WorkoutLift" positionX="-45" positionY="27" width="128" height="135"/>
         <element name="WorkoutSet" positionX="-36" positionY="36" width="128" height="150"/>
     </elements>
 </model>

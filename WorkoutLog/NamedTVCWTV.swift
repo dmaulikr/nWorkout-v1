@@ -4,10 +4,16 @@ import CoreData
 class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView {
     
     var nameLabel: UILabel!
+    var nameTextField: UITextField!
+    var nameStackView: UIStackView!
     var noteButton: UIButton!
     
+    func setName(_ name: String) {
+        nameLabel.text = name
+    }
+    
     func noteButtonTapped(button: UIButton) {
-        delegate?.cell?(self, didTap: button)
+        delegate?.cell?(self, didTap: button, for: nil, or: nil)
     }
 
     func configureForObject(object: Type, at indexPath: IndexPath) {
@@ -15,10 +21,15 @@ class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView {
         setTopContentView()
     }
     
-    override var topContentViewHeight: CGFloat{ return Lets.innerTableHeaderViewHeight }
-    func setTopContentView() {
-        nameLabel = Label(cellNameLabelStyleWith: "")
+    func setNameStackView() {
+        nameLabel = UILabel(cellNameLabelStyleWith: "")
         nameLabel.numberOfLines = 0
+        nameStackView = StackView(arrangedSubviews: [nameLabel], axis: .horizontal, spacing: 0, distribution: .fill)
+    }
+    
+    override var topContentViewHeight: CGFloat { return Lets.innerTableHeaderViewHeight }
+    func setTopContentView() {
+        setNameStackView()
         noteButton = UIButton(type: .roundedRect)
         noteButton.setTitle("note", for: UIControlState())
         noteButton.setTitleColor(.darkGray, for: UIControlState())
@@ -30,19 +41,19 @@ class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView {
         topContentView.frame = CGRect(x: 0, y: 0, width: 0, height: topContentViewHeight)
         topContentViewHeightConstraint.constant = Lets.innerTableHeaderViewHeight
         noteButton.addTarget(self, action: #selector(noteButtonTapped(button:)), for: .touchUpInside)
-        
-        topContentView.addSubview(nameLabel)
+
+        topContentView.addSubview(nameStackView)
         topContentView.addSubview(noteButton)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameStackView.translatesAutoresizingMaskIntoConstraints = false
         noteButton.translatesAutoresizingMaskIntoConstraints = false
         
         var constraints = [NSLayoutConstraint]()
-        constraints.append(nameLabel.leftAnchor.constraint(equalTo: topContentView.leftAnchor))
-        constraints.append(nameLabel.topAnchor.constraint(equalTo: topContentView.topAnchor))
-        constraints.append(nameLabel.rightAnchor.constraint(equalTo: noteButton.leftAnchor))
+        constraints.append(nameStackView.leftAnchor.constraint(equalTo: topContentView.leftAnchor))
+        constraints.append(nameStackView.topAnchor.constraint(equalTo: topContentView.topAnchor))
+        constraints.append(nameStackView.rightAnchor.constraint(equalTo: noteButton.leftAnchor))
         constraints.append(noteButton.rightAnchor.constraint(equalTo: topContentView.rightAnchor))
         noteButton.setContentHuggingPriority(.abs(999), for: .horizontal)
-        nameLabel.setContentHuggingPriority(.abs(998), for: .horizontal)
+        nameStackView.setContentHuggingPriority(.abs(998), for: .horizontal)
         constraints.append(noteButton.topAnchor.constraint(equalTo: topContentView.topAnchor))
         NSLayoutConstraint.activate(constraints)
     }

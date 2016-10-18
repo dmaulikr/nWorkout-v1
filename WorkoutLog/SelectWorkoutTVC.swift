@@ -50,7 +50,7 @@ extension SelectWorkoutTVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        cell.backgroundColor = Theme.Colors.lightBackgroundColor.color
+        cell.backgroundColor = Theme.Colors.lightBackground
         cell.textLabel?.font = Theme.Fonts.title
         cell.detailTextLabel?.font = Theme.Fonts.subtitle
         if indexPath.section == 0 {

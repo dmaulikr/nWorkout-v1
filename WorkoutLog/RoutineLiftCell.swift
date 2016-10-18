@@ -8,6 +8,7 @@ class RoutineLiftCell: NamedTVCWTV<RoutineLift> {
         super.configureForObject(object: object, at: indexPath)
         nameLabel.text = object.name
         setupTableLabels()
+        selectionStyle = .none
     }
     weak var liftCellDelegate: LiftCellDelegate!
 }
@@ -16,8 +17,8 @@ extension RoutineLiftCell {
 
     
     func setupTableLabels() {
-        let weightLabel = Label(tableHeaderStyleWith: "Weight")
-        let repsLabel = Label(tableHeaderStyleWith: "Reps")
+        let weightLabel = UILabel(tableHeaderStyleWith: "Weight")
+        let repsLabel = UILabel(tableHeaderStyleWith: "Reps")
         let labels = [weightLabel,repsLabel]
         
         labelStackView = StackView(arrangedSubviews: labels, axis: .horizontal, spacing: 0, distribution: .fillEqually)
@@ -34,6 +35,10 @@ extension RoutineLiftCell {
 }
 
 extension RoutineLiftCell: SetCellDelegate {
+    func setCell(_ setCell: SetCell, didTap button: UIButton, for object: ManagedObject) {
+        delegate?.cell?(self, didTap: button, for: object, or: nil)
+    }
+
     func cellShouldJumpToNextTextField(_ cell: InnerTableViewCell) {
         let theInnerIndexPath = innerIndexPath(forInner: cell)!
         let newInnerIndexPath = IndexPath(row: theInnerIndexPath.row + 1, section: theInnerIndexPath.section)

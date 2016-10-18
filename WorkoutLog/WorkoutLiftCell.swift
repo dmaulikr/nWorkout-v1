@@ -10,22 +10,23 @@ class WorkoutLiftCell: NamedTVCWTV<WorkoutLift> {
         super.configureForObject(object: object, at: indexPath)
         nameLabel.text = object.name
         setupTableLabels()
+        selectionStyle = .none
     }
     weak var liftCellDelegate: LiftCellDelegate!
 }
 
 extension WorkoutLiftCell {
     func setupTableLabels() {
-        let twLabel = Label(tableHeaderStyleWith: "Weight")
-        let trLabel = Label(tableHeaderStyleWith: "Reps")
-        let cwLabel = Label(tableHeaderStyleWith: "Weight")
-        let crLabel = Label(tableHeaderStyleWith: "Reps")
-        let statusLabel = Label(tableHeaderStyleWith: "Status")
+        let twLabel = UILabel(tableHeaderStyleWith: "Weight")
+        let trLabel = UILabel(tableHeaderStyleWith: "Reps")
+        let cwLabel = UILabel(tableHeaderStyleWith: "Weight")
+        let crLabel = UILabel(tableHeaderStyleWith: "Reps")
+        let statusLabel = UILabel(tableHeaderStyleWith: "Status")
         let bottomLabels = [twLabel,trLabel,cwLabel,crLabel, statusLabel]
         bottomLabelStackView = StackView(arrangedSubviews: bottomLabels, axis: .horizontal, spacing: 0, distribution: .fillEqually)
         
-        let targetLabel = Label(tableHeaderStyleWith: "Target", borderColor: nil, borderWidth: 0)
-        let completedLabel = Label(tableHeaderStyleWith: "Completed", borderColor: nil, borderWidth: 0)
+        let targetLabel = UILabel(tableHeaderStyleWith: "Target", borderColor: nil, borderWidth: 0)
+        let completedLabel = UILabel(tableHeaderStyleWith: "Completed", borderColor: nil, borderWidth: 0)
         let topLabels = [targetLabel,completedLabel]
         topLabelStackView = StackView(arrangedSubviews: topLabels, axis: .horizontal, spacing: 0, distribution: .fillEqually)
         
@@ -58,6 +59,10 @@ extension WorkoutLiftCell: SetCellDelegate {
         newInnerCell.completedWeightTextField.placeholder = "0"
         newInnerCell.completedRepsTextField.placeholder = "0"
         newInnerCell.targetWeightTextField.becomeFirstResponder()
+     }
+    
+    func setCell(_ setCell: SetCell, didTap button: UIButton, for object: ManagedObject) {
+        delegate?.cell?(self, didTap: button, for: object, or: nil)
     }
 }
 

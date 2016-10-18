@@ -1,14 +1,6 @@
 import UIKit
 
-class Label: UILabel {
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+extension UILabel {
     
     convenience init(text: String, textAlignment: NSTextAlignment, numberOfLines: Int, font: UIFont, borderColor: CGColor? = nil, borderWidth: CGFloat = 0) {
         self.init(frame: CGRect())

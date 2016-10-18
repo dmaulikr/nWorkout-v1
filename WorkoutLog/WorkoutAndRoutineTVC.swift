@@ -11,23 +11,50 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         navigationItem.rightBarButtonItem = editButtonItem
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(_: )), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     var defaultInsets: UIEdgeInsets!
+    var keyboardHeight: CGFloat!
     func keyboardWillShow(_ notification: Notification) {
         if let userInfo = notification.userInfo {
             defaultInsets = tableView.contentInset
             let value = userInfo[UIKeyboardFrameEndUserInfoKey] as AnyObject
-            let cgRectValue = value.cgRectValue!
-            let keyboardHeight = cgRectValue.height
-            tableView.contentInset = UIEdgeInsets(top: defaultInsets.top, left: defaultInsets.left, bottom: keyboardHeight, right: defaultInsets.right)
+            let size = value.cgRectValue?.size ?? view.frame.height * CGFloat(Lets.keyboardToViewRatio)
+            keyboardHeight = size.height
+
+            
+            let insets = UIEdgeInsets(top: defaultInsets.top, left: defaultInsets.left, bottom: keyboardHeight, right: defaultInsets.right)
+            tableView.contentInset = insets
+            tableView.scrollIndicatorInsets = insets
         }
     }
+    func keyboardDidShow(_ notification: Notification) {
+        scrollToTextField()
+    }
+    
+    func scrollToTextField() {
+        print(#function)
+
+        if let firstResponder = UIResponder.currentFirstResponder() as? UIView {
+            let frFrame = firstResponder.frame
+            let corrected = UIApplication.shared.keyWindow!.convert(frFrame, from: firstResponder.superview)
+            let yRelativeToKeyboard = (view.frame.height - keyboardHeight) - (corrected.origin.y + corrected.height)
+            print(yRelativeToKeyboard)
+            if yRelativeToKeyboard < 0 {
+                print("what")
+                let frInViewsFrame = view.convert(frFrame, from: firstResponder.superview)
+                let scrollPoint = CGPoint(x: 0, y: frInViewsFrame.origin.y - keyboardHeight - tableView.contentInset.top - frInViewsFrame.height - UIApplication.shared.statusBarFrame.height)
+                tableView.setContentOffset(scrollPoint, animated: true)
+            }
+        }
+    }
+    
     func keyboardWillHide(_ notification: Notification) {
         UIView.animate(withDuration: 0.2) {
-            self.tableView.contentInset = self.defaultInsets
+            guard let defaultInsets = self.defaultInsets else { return }
+            self.tableView.contentInset = defaultInsets
         }
-        print(self.tableView.contentInset)
     }
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -61,7 +88,7 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
             return dataProvider.numberOfItems(inSection: section)
         } else {
             let newWorkoutNav = (UIApplication.shared.delegate as! AppDelegate).appCoordinator.newWorkoutNav
-            return navigationController == newWorkoutNav ? 2 : 1
+            return navigationController == newWorkoutNav ? 3 : 1
         }
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,6 +99,7 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
             switch indexPath.row {
             case 0: cell.textLabel?.text = "Add Lift"
             case 1: cell.textLabel?.text = "Finish Workout"
+            case 2: cell.textLabel?.text = "Cancel Workout"
             default: fatalError()
             }
             return cell
@@ -149,7 +177,9 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         tableView.endUpdates()
         return cell.innerCellForRow(atInner: indexPath) as! InnerTableViewCell
     }
+    
     override func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) {
+        guard innerIndexPath.section == 1 else { return }
         _ = addNewSet(for: cell, atInner: innerIndexPath)
     }
     override func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool {

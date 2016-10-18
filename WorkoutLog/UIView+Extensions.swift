@@ -10,3 +10,15 @@ extension UIView {
         return constraints
     }
 }
+
+extension UIView {
+    func setBorder(color: UIColor, radius: CGFloat, width: CGFloat) {
+        layer.borderColor = color.cgColor
+        layer.cornerRadius = radius
+        layer.borderWidth = width
+    }
+    
+    func setStandardBorder() {
+        setBorder(color: .darkGray, radius: 0, width: 1)
+    }
+}

@@ -1,10 +1,15 @@
-import Foundation
 import CoreData
+
 
 extension Workout {
 
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Workout> {
+        return NSFetchRequest<Workout>(entityName: "Workout");
+    }
+
     @NSManaged public var complete: Bool
     @NSManaged public var date: Date?
+    @NSManaged public var finishDate: Date?
     @NSManaged public var note: String?
     @NSManaged public var lifts: NSOrderedSet?
 

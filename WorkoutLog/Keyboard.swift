@@ -25,10 +25,10 @@ class Keyboard: UIView {
         super.init(frame: frame)
         createStacks()
         bindActions()
-        backgroundColor = Theme.Colors.foreground.color
+        backgroundColor = Theme.Colors.foreground
         let buttons = [zeroButton,buttonOne,buttonTwo,buttonThree,buttonFour,buttonFive,buttonSix,buttonSeven,buttonEight,buttonNine,thirdSideButton,topSideButton,secondSideButton,decimalButton,backspaceButton,nextButton]
         for button in buttons {
-            button.titleLabel?.tintColor = Theme.Colors.tintColor.color
+            button.titleLabel?.tintColor = Theme.Colors.tint
         }
     }
     

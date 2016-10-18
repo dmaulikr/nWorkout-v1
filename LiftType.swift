@@ -2,7 +2,6 @@ import CoreData
 
 @objc(LiftType)
 public class LiftType: ManagedObject {
-    @NSManaged public var name: String
 }
 
 extension LiftType: ManagedObjectType {

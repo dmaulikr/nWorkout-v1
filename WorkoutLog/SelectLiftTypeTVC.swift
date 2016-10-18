@@ -103,7 +103,6 @@ class SelectLiftTypeTVC<Type: ManagedObject>: UITableViewController, HasContext,
                     print(error: error)
                 }
             }
-            print(frc.fetchedObjects!.count)
         }
     }
     
