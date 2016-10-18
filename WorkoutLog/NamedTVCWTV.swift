@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView {
+class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView, ConfigurableCell {
     
     var nameLabel: UILabel!
     var nameTextField: UITextField!
@@ -57,8 +57,4 @@ class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView {
         constraints.append(noteButton.topAnchor.constraint(equalTo: topContentView.topAnchor))
         NSLayoutConstraint.activate(constraints)
     }
-}
-
-extension NamedTVCWTV: ConfigurableCell {
-    
 }

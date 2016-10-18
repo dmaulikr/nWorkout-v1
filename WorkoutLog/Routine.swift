@@ -22,6 +22,18 @@ extension Routine: ManagedObjectType {
 }
 
 extension Routine: DataProvider {
+    func remove(object: RoutineLift) {
+        guard let context = managedObjectContext else { fatalError() }
+        context.performAndWait {
+            self.removeFromLifts(object)
+            object.managedObjectContext?.delete(object)
+            do {
+                try context.save()
+            } catch {
+                print(error: error)
+            }
+        }
+    }
     func object(at indexPath: IndexPath) -> RoutineLift {
         return lifts!.object(at: indexPath.row) as! RoutineLift
     }

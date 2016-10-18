@@ -4,7 +4,6 @@ import CoreGraphics
 
 class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: TableViewCellWithTableView>: TableViewController<Source, Type, Cell> where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider, Source: DataProvider, Source.Object.Object: SetType {
     override func viewWillAppear(_ animated: Bool) {
-        //
     }
     override func viewDidLoad() {
         super.viewDidLoad()

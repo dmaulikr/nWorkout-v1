@@ -58,6 +58,11 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
                 let alert = UIAlertController(title: "Cancel Workout?", message: "Are you sure you want to cancel this workout?", preferredStyle: .alert)
                 let no = UIAlertAction(title: "Continue Workout", style: .cancel, handler: nil)
                 let cancelWorkout = UIAlertAction(title: "Cancel Workout", style: .destructive) { _ in
+                    let context = self.dataProvider.managedObjectContext!
+                    context.perform {
+                        context.delete(self.dataProvider)
+                        try! context.save()
+                    }
                     self.closeActiveWorkout()
                 }
                 alert.addAction(no)

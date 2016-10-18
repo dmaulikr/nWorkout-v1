@@ -37,4 +37,3 @@ class RoutineTVC: WorkoutAndRoutineTVC<Routine, RoutineLift, RoutineLiftCell> {
 
 }
 
-

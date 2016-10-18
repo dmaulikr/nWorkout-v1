@@ -13,6 +13,7 @@ struct Theme {
         let tabBarAppearance = UITabBar.appearance()
         tabBarAppearance.barStyle = .black
         tabBarAppearance.barTintColor = Colors.foreground
+        tabBarAppearance.unselectedItemTintColor = .white
         
         let barButtonItemAppearance = UIBarButtonItem.appearance()
         let attr = [ NSFontAttributeName: Fonts.title ]
@@ -37,11 +38,11 @@ struct Theme {
         static var outerTableViewBackground = #colorLiteral(red: 0.9386536593, green: 0.9386536593, blue: 0.9386536593, alpha: 1)
         static var innerTableViewBackground = #colorLiteral(red: 0.9386536593, green: 0.9386536593, blue: 0.9386536593, alpha: 1)
         
-        static var tint = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
+        static var tint = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
         static var background = #colorLiteral(red: 0.9386536593, green: 0.9386536593, blue: 0.9386536593, alpha: 1)
         static var lightBackground = #colorLiteral(red: 0.9568895725, green: 0.9568895725, blue: 0.9568895725, alpha: 1)
-        static var sectionHeader = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
-        static var foreground = #colorLiteral(red: 0.06409893135, green: 0.06409893135, blue: 0.06409893135, alpha: 1)
+        static var sectionHeader = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        static var foreground = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         static var lightText = UIColor(red: 0.64, green: 0.65, blue: 0.8, alpha: 1)
     }
     struct Fonts {

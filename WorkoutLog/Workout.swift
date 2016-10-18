@@ -23,6 +23,7 @@ extension Workout: DataProvider {
         guard let context = managedObjectContext else { fatalError() }
         context.performAndWait {
             self.removeFromLifts(object)
+            object.managedObjectContext?.delete(object)
             do {
                 try context.save()
             } catch {

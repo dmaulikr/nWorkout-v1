@@ -27,3 +27,4 @@ class WorkoutsAndRoutinesTVC<Type: ManagedObject, Cell: TableViewCellWithTableVi
     override func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? { return nil }
 }
 
+

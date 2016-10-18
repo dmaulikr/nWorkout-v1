@@ -1,4 +1,5 @@
 import UIKit
+import CoreData
 
 class Coordinator: NSObject {
     var context = CoreData.shared.context
@@ -14,8 +15,27 @@ class AppCoordinator: Coordinator {
         super.init()
         setupTBC()
         Theme.setupAppearances()
+        fetchIncompletes()
     }
     
+    func fetchIncompletes() {
+        let request = Workout.request
+        request.fetchBatchSize = Lets.defaultBatchSize
+        request.returnsObjectsAsFaults = false
+        request.predicate = NSPredicate(format: "complete == false")
+        let incompletes = try! CoreData.shared.context.fetch(request)
+        print(incompletes)
+        
+        if let first = incompletes.first {
+            let wtvc = WorkoutTVC(dataProvider: first)
+            let dummyNavBarItem = dummy.tabBarItem!
+            dummyNavBarItem.image = #imageLiteral(resourceName: "show")
+            dummyNavBarItem.title = "show"
+            wtvc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "hide", style: .plain, target: wtvc, action: #selector(wtvc.hideButtonPushed))
+            newWorkoutNav.pushViewController(wtvc, animated: false)
+            tabBarController.present(newWorkoutNav, animated: true, completion: nil)            
+        }
+    }
     func setupTBC() {
         let workoutsTVC = WorkoutsTVC()
         let workoutsNav = UINavigationController(rootViewController: workoutsTVC)
@@ -57,6 +77,11 @@ class AppCoordinator: Coordinator {
         let vcs = [workoutsNav, routineNav, dummy!, statisticsNav]
         tabBarController.viewControllers = vcs
         tabBarController.delegate = self
+        
+        let itemWidth = tabBarController.tabBar.frame.width / CGFloat(tabBarController.tabBar.items!.count)
+        let backgroundView = UIView(frame: CGRect(x: itemWidth * 2, y: 0, width: itemWidth, height: tabBarController.tabBar.frame.height))
+        backgroundView.backgroundColor = Theme.Colors.tint
+        tabBarController.tabBar.insertSubview(backgroundView, at: 0)
     }
 }
 
@@ -64,7 +89,7 @@ extension AppCoordinator: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController == dummy {
             tabBarController.present(newWorkoutNav, animated: true) {
-                
+            
             }
             return false
         } else {

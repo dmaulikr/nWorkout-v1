@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresentationControllerDelegate {
+class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresentationControllerDelegate, RoutineCellDelegate {
     
     init() {
         let request = Routine.request
@@ -31,7 +31,14 @@ class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresen
         }
         present(nrtvc, animated: true)
     }
-
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        if let routineCell = cell as? RoutineCell {
+            routineCell.routineCellDelegate = self
+        }
+        return cell
+    }
     
     // UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -48,4 +55,20 @@ class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresen
         innerCell.isUserInteractionEnabled = false
         return innerCell
     }
+    
+    func routineCell(_ routineCell: RoutineCell, nameChangedTo name: String) {
+        let object = dataProvider.object(at: routineCell.outerIndexPath)
+        object.managedObjectContext?.perform {
+            object.name = name
+            try! object.managedObjectContext?.save()
+        }
+    }
+    func userInputEmptyName() {
+        let alert = UIAlertController(title: "Name Missing", message: "Routines require a valid name.", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "Okay", style: .default, handler: nil)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
+
+    
 }

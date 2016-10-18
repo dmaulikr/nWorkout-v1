@@ -32,3 +32,4 @@ class WorkoutsTVC: WorkoutsAndRoutinesTVC<Workout, WorkoutCell> {
     }
     
 }
+

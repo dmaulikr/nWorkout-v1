@@ -1,6 +1,7 @@
 import UIKit
 import CoreData
 
+
 class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: TableViewCellWithTableView>: UITableViewController, HasContext, TableViewCellWithTableViewDataSource, TableViewCellWithTableViewDelegate, DataProviderDelegate where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Source.Object: ManagedObject, Source.Object: DataProvider {
     
     override func loadView() {

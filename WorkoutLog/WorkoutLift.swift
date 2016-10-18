@@ -46,6 +46,7 @@ extension WorkoutLift: DataProvider {
     func remove(object: WorkoutSet) {
         managedObjectContext?.performAndWait {
             self.removeFromSets(object)
+            object.managedObjectContext?.delete(object)
             do {
                 try self.managedObjectContext?.save()
             } catch {
