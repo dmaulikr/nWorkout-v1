@@ -3,7 +3,7 @@ import CoreData
 
 
 
-class NewVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationControllerDelegate {
+class NewVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationControllerDelegate, UITextFieldDelegate {
     
     let context = CoreData.shared.context
     
@@ -53,6 +53,8 @@ class NewVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationControl
         
         nameTextField.placeholder = "Insert name here..."
         nameTextField.borderStyle = .roundedRect
+        nameTextField.returnKeyType = .done
+        nameTextField.delegate = self
         
         okayButton.setTitle("Okay", for: UIControlState())
         okayButton.addTarget(self, action: #selector(okayPressed), for: .touchUpInside)
@@ -73,5 +75,18 @@ class NewVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationControl
         constraints.append(stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor))
         NSLayoutConstraint.activate(constraints)
         
+        nameTextField.becomeFirstResponder()
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.text == "" {
+            let alert = UIAlertController(title: "Name missing...", message: "Please insert a name.", preferredStyle: .alert)
+            let okay = UIAlertAction(title: "Okay", style: .default, handler: nil)
+            alert.addAction(okay)
+            present(alert, animated: true, completion: nil)
+            return false
+        } else {
+            okayPressed()
+            return true
+        }
     }
 }

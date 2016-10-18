@@ -84,5 +84,7 @@ class NoteVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationContro
         constraints.append(okayButton.widthAnchor.constraint(equalTo: noteTextView.widthAnchor))
         
         NSLayoutConstraint.activate(constraints)
+        
+        noteTextView.becomeFirstResponder()
     }
 }
