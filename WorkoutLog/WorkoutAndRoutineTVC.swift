@@ -19,9 +19,8 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
     func keyboardWillShow(_ notification: Notification) {
         if let userInfo = notification.userInfo {
             defaultInsets = tableView.contentInset
-            let value = userInfo[UIKeyboardFrameEndUserInfoKey] as AnyObject
-            let size = value.cgRectValue?.size ?? view.frame.height * CGFloat(Lets.keyboardToViewRatio)
-            keyboardHeight = size.height
+            let value = (userInfo[UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue
+            keyboardHeight = value?.height ?? view.frame.height * CGFloat(Lets.keyboardToViewRatio)
 
             
             let insets = UIEdgeInsets(top: defaultInsets.top, left: defaultInsets.left, bottom: keyboardHeight, right: defaultInsets.right)

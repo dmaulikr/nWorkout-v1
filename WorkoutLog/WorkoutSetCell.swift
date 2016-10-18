@@ -335,9 +335,9 @@ extension WorkoutSetCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currentlyEditing = textField
         if textField === completedWeightTextField {
+            textField.text = nil
             textField.placeholder = String(targetWeight)
-        }
-        if let text = textField.text, let value = Int(text), value > 0 {
+        } else if let text = textField.text {
             textField.placeholder = text
             textField.text = nil
         }
