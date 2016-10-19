@@ -1,21 +1,19 @@
 import UIKit
 import CoreData
 
-class StatisticsTVC: UITableViewController {
+class StatisticsTVC: UITableViewController, HasContext {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         try! frc?.performFetch()
         tableView.reloadData()
     }
     
-    let context = CoreData.shared.context
-    
     init() {
         super.init(style: .plain)
     }
     override func loadView() {
         tableView = UITableView.outerTableView(style: .grouped)
-        view = tableVeiew
+        view = tableView
     }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -46,7 +44,6 @@ class StatisticsTVC: UITableViewController {
         return "Performed Lifts"
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let num = frc?.sections?.count
         return frc?.sections?.count ?? 0
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

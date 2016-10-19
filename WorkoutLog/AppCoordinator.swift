@@ -74,7 +74,7 @@ class AppCoordinator: Coordinator {
         settingsNav.tabBarItem.title = "Settings"
         settingsTVC.navigationItem.title = "Settings"
         
-        let vcs = [workoutsNav, routineNav, dummy!, statisticsNav]
+        let vcs = [workoutsNav, routineNav, dummy!, statisticsNav, settingsNav]
         tabBarController.viewControllers = vcs
         tabBarController.delegate = self
         

@@ -2,7 +2,9 @@ import Foundation
 import CoreGraphics
 
 struct Lets {
-    static let dateString = "EEEE - MM/d/yyyy - h:mm a"
+    static let workoutDateFormat = "EEEE - MM/d/yyyy - h:mm a"
+    static let workoutStartTimeFormat = "h:mm a"
+    static let workoutDurationTimeFormat = "h:mm"
     static let timeZoneAbbreviation = "EST"
     
     static let liftCellNameLabelHeight: CGFloat = 25
@@ -32,13 +34,26 @@ struct Lets {
     
     static let newLiftPlaceholderText = "Lift name..."
     
-    static let df: DateFormatter = {
+    static let workoutDateDF: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = Lets.dateString
+        formatter.dateFormat = Lets.workoutDateFormat
         let locale = Locale(identifier: "en_US_POSIX")
         formatter.locale = locale
         formatter.timeZone = TimeZone(abbreviation: Lets.timeZoneAbbreviation)
         return formatter
+    }()
+    static let workoutStartTimeDF: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = Lets.workoutStartTimeFormat
+        let locale = Locale(identifier: "en_US_POSIX")
+        f.locale = locale
+        f.timeZone = TimeZone(abbreviation: Lets.timeZoneAbbreviation)
+        return f
+    }()
+    static let workoutDurationDF: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = Lets.workoutDurationTimeFormat
+        return f
     }()
 }
 
