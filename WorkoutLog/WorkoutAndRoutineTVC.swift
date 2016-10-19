@@ -93,7 +93,7 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         if indexPath.section == 0 {
             return super.tableView(tableView, cellForRowAt: indexPath)
         } else {
-            let cell = InnerTableViewCell()
+            let cell = UITableViewCell()
             switch indexPath.row {
             case 0: cell.textLabel?.text = "Add Lift"
             case 1: cell.textLabel?.text = "Finish Workout"
@@ -150,7 +150,7 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
             return nil
         }
     }
-    func addNewSet(for cell: TableViewCellWithTableView, atInner innerIndexPath: IndexPath) -> InnerTableViewCell {
+    func addNewSet(for cell: TableViewCellWithTableView, atInner innerIndexPath: IndexPath) -> UITableViewCell {
         cell.deselectRow(at: innerIndexPath, animated: true)
         var newInnerIndexPath: IndexPath?
         
@@ -173,7 +173,7 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         
         tableView.beginUpdates()
         tableView.endUpdates()
-        return cell.innerCellForRow(atInner: indexPath) as! InnerTableViewCell
+        return cell.innerCellForRow(atInner: indexPath)!
     }
     
     override func cell(_ cell: TableViewCellWithTableView, didSelectRowAtInner innerIndexPath: IndexPath) {
@@ -205,12 +205,12 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
 }
 
 extension WorkoutAndRoutineTVC: LiftCellDelegate {
-    func cellShouldJumpToNewSet(for cell: TableViewCellWithTableView, atInner innerIndexPath: IndexPath) -> InnerTableViewCell {
+    func cellShouldJumpToNewSet(for cell: TableViewCellWithTableView, atInner innerIndexPath: IndexPath) -> UITableViewCell {
         let newSetCell = addNewSet(for: cell, atInner: innerIndexPath) as! SetCell
         newSetCell.textFields.forEach {
             $0.placeholder = $0.text
             $0.text = nil
         }
-        return newSetCell as! InnerTableViewCell
+        return newSetCell as! UITableViewCell
     }
 }

@@ -14,8 +14,12 @@ extension WorkoutSet: SetType {
 }
 
 @objc(WorkoutSet)
-public class WorkoutSet: ManagedObject {
-
+public class WorkoutSet: nSet {
+    enum Status: String {
+        case incomplete = " "
+        case done = "Done"
+        case fail = "Fail"
+    }
 }
 
 extension WorkoutSet: ManagedObjectType {
@@ -23,7 +27,7 @@ extension WorkoutSet: ManagedObjectType {
         return "WorkoutSet"
     }
     
-    var setStatus: SetStatus {
+    var setStatus: Status {
         get {
             switch status {
             case 1: return .incomplete

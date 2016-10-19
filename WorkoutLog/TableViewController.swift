@@ -5,7 +5,7 @@ import CoreData
 class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: TableViewCellWithTableView>: UITableViewController, HasContext, TableViewCellWithTableViewDataSource, TableViewCellWithTableViewDelegate, DataProviderDelegate where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Source.Object: ManagedObject, Source.Object: DataProvider {
     
     override func loadView() {
-        view = OuterTableView()
+        view = UITableView.outerTableView()
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -102,7 +102,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
         return ["cell"]
     }
     func cellClassForInnerTableView(for cell: TableViewCellWithTableView) -> [AnyClass] {
-        return [InnerTableViewCell.self]
+        return [UITableViewCell.self]
     }
     func heightForInnerCell(for cell: TableViewCellWithTableView) -> CGFloat {
         return Lets.subTVCellSize

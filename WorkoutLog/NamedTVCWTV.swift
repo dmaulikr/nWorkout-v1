@@ -24,7 +24,7 @@ class NamedTVCWTV<Type: ManagedObject>: TableViewCellWithTableView, Configurable
     func setNameStackView() {
         nameLabel = UILabel(cellNameLabelStyleWith: "")
         nameLabel.numberOfLines = 0
-        nameStackView = StackView(arrangedSubviews: [nameLabel], axis: .horizontal, spacing: 0, distribution: .fill)
+        nameStackView = UIStackView(arrangedSubviews: [nameLabel], axis: .horizontal, spacing: 0, distribution: .fill)
     }
     
     override var topContentViewHeight: CGFloat { return Lets.innerTableHeaderViewHeight }

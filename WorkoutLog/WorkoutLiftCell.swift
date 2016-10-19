@@ -2,6 +2,8 @@ import UIKit
 import CoreData
 
 
+
+
 class WorkoutLiftCell: NamedTVCWTV<WorkoutLift> {
     var topLabelStackView: UIStackView!
     var bottomLabelStackView: UIStackView!
@@ -23,12 +25,12 @@ extension WorkoutLiftCell {
         let crLabel = UILabel(tableHeaderStyleWith: "Reps")
         let statusLabel = UILabel(tableHeaderStyleWith: "Status")
         let bottomLabels = [twLabel,trLabel,cwLabel,crLabel, statusLabel]
-        bottomLabelStackView = StackView(arrangedSubviews: bottomLabels, axis: .horizontal, spacing: 0, distribution: .fillEqually)
+        bottomLabelStackView = UIStackView(arrangedSubviews: bottomLabels, axis: .horizontal, spacing: 0, distribution: .fillEqually)
         
         let targetLabel = UILabel(tableHeaderStyleWith: "Target", borderColor: nil, borderWidth: 0)
         let completedLabel = UILabel(tableHeaderStyleWith: "Completed", borderColor: nil, borderWidth: 0)
         let topLabels = [targetLabel,completedLabel]
-        topLabelStackView = StackView(arrangedSubviews: topLabels, axis: .horizontal, spacing: 0, distribution: .fillEqually)
+        topLabelStackView = UIStackView(arrangedSubviews: topLabels, axis: .horizontal, spacing: 0, distribution: .fillEqually)
         
         var constraints = [NSLayoutConstraint]()
         
@@ -52,7 +54,7 @@ extension WorkoutLiftCell {
 }
 
 extension WorkoutLiftCell: SetCellDelegate {
-    func cellShouldJumpToNextTextField(_ cell: InnerTableViewCell) {
+    func cellShouldJumpToNextTextField(_ cell: UITableViewCell) {
         let theInnerIndexPath = innerIndexPath(forInner: cell)!
         let newInnerIndexPath = IndexPath(row: theInnerIndexPath.row + 1, section: theInnerIndexPath.section)
         let newInnerCell = innerCellForRow(atInner: newInnerIndexPath) as? WorkoutSetCell ?? liftCellDelegate.cellShouldJumpToNewSet(for: self, atInner: newInnerIndexPath) as! WorkoutSetCell
@@ -66,6 +68,3 @@ extension WorkoutLiftCell: SetCellDelegate {
     }
 }
 
-protocol LiftCellDelegate: class {
-    func cellShouldJumpToNewSet(for cell: TableViewCellWithTableView, atInner innerIndexPath: IndexPath) -> InnerTableViewCell
-}

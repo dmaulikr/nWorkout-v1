@@ -95,7 +95,7 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
         return ["workoutSetCell", "cell"]
     }
     override func cellClassForInnerTableView(for cell: TableViewCellWithTableView) -> [AnyClass] {
-        return [WorkoutSetCell.self, InnerTableViewCell.self]
+        return [WorkoutSetCell.self, UITableViewCell.self]
     }
     
 }

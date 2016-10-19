@@ -12,20 +12,21 @@ class StatisticsTVC: UITableViewController {
     
     init() {
         super.init(style: .plain)
-        
-        tableView = OuterTableView(frame: tableView.frame, style: .grouped)
-        tableView.register(UITableViewCell.self , forCellReuseIdentifier: "cell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        
     }
-    
+    override func loadView() {
+        tableView = UITableView.outerTableView(style: .grouped)
+        view = tableVeiew
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.register(UITableViewCell.self , forCellReuseIdentifier: "cell")
+        tableView.delegate = self
+        tableView.dataSource = self
         
         let request = WorkoutLift.request
         request.fetchBatchSize = 10
@@ -41,14 +42,11 @@ class StatisticsTVC: UITableViewController {
     
     var frc: NSFetchedResultsController<WorkoutLift>?
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Performed Lifts"
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let num = frc?.sections?.count
         return frc?.sections?.count ?? 0
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -65,27 +63,4 @@ class StatisticsTVC: UITableViewController {
         olsvc.lifts = lifts
         navigationController?.pushViewController(olsvc, animated: true)
     }
-}
-
-class OneLiftStatisticsVC: UITableViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.allowsSelection = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        dateFormatter.dateFormat = "MMM d, H:mm a"
-    }
-    let dateFormatter = DateFormatter()
-    var lifts: [WorkoutLift]!
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lifts.count
-    }
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
-        cell.backgroundColor = Theme.Colors.background
-        let sets = lifts[indexPath.row].sets?.array as! [WorkoutSet]
-        cell.textLabel?.text = sets.map { "\($0.completedWeight) x \($0.completedReps)" }.joined(separator: ", ")
-        cell.detailTextLabel?.text = dateFormatter.string(from: lifts[indexPath.row].date)
-        return cell
-    }
-    
 }

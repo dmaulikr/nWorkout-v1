@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 
 @objc(WorkoutLift)
-public class WorkoutLift: ManagedObject {
+public class WorkoutLift: Lift {
     var date: Date {
         return workout!.date! 
     }

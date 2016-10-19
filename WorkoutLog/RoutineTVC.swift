@@ -32,7 +32,7 @@ class RoutineTVC: WorkoutAndRoutineTVC<Routine, RoutineLift, RoutineLiftCell> {
         return ["routineSetCell", "cell"]
     }
     override func cellClassForInnerTableView(for cell: TableViewCellWithTableView) -> [AnyClass] {
-        return [RoutineSetCell.self, InnerTableViewCell.self]
+        return [RoutineSetCell.self, UITableViewCell.self]
     }
 
 }

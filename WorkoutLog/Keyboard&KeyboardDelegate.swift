@@ -1,11 +1,3 @@
-//
-//  Keyboard.swift
-//  WorkoutLog
-//
-//  Created by Nathan Lanza on 8/14/16.
-//  Copyright © 2016 Nathan Lanza. All rights reserved.
-//
-
 import UIKit
 
 protocol KeyboardDelegate: class {
@@ -37,6 +29,7 @@ class Keyboard: UIView {
         createStacks()
         bindActions()
     }
+
     let buttonOne = UIButton()
     let buttonTwo = UIButton()
     let buttonThree = UIButton()
@@ -56,6 +49,7 @@ class Keyboard: UIView {
     let hideButton = UIButton()
     
     func bindActions() {
+        
         let numberButtons = [zeroButton,buttonOne,buttonTwo,buttonThree,buttonFour,buttonFive,buttonSix,buttonSeven,buttonEight,buttonNine,decimalButton]
         var characters = (0...9).map { "\($0)" }
         characters.append(".")

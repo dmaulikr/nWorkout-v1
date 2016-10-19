@@ -21,7 +21,7 @@ extension RoutineLiftCell {
         let repsLabel = UILabel(tableHeaderStyleWith: "Reps")
         let labels = [weightLabel,repsLabel]
         
-        labelStackView = StackView(arrangedSubviews: labels, axis: .horizontal, spacing: 0, distribution: .fillEqually)
+        labelStackView = UIStackView(arrangedSubviews: labels, axis: .horizontal, spacing: 0, distribution: .fillEqually)
 
         topContentView.addSubview(labelStackView)
         labelStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +39,7 @@ extension RoutineLiftCell: SetCellDelegate {
         delegate?.cell?(self, didTap: button, for: object, or: nil)
     }
 
-    func cellShouldJumpToNextTextField(_ cell: InnerTableViewCell) {
+    func cellShouldJumpToNextTextField(_ cell: UITableViewCell) {
         let theInnerIndexPath = innerIndexPath(forInner: cell)!
         let newInnerIndexPath = IndexPath(row: theInnerIndexPath.row + 1, section: theInnerIndexPath.section)
         let newInnerCell = innerCellForRow(atInner: newInnerIndexPath) as? RoutineSetCell ?? liftCellDelegate.cellShouldJumpToNewSet(for: self, atInner: newInnerIndexPath) as! RoutineSetCell

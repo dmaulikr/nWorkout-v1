@@ -1,14 +1,5 @@
 import UIKit
 
-protocol SetCellDelegate: class {
-    func cellShouldJumpToNextTextField(_ cell: InnerTableViewCell)
-    func setCell(_ setCell: SetCell, didTap button: UIButton, for object: ManagedObject)
-}
-
-protocol SetCell {
-    var textFields: [UITextField] { get }
-}
-
 extension WorkoutSetCell: ConfigurableCell, SetCell {
     typealias DataSource = WorkoutSet
     func configureForObject(object: WorkoutSet, at indexPath: IndexPath) {
@@ -30,7 +21,7 @@ extension WorkoutSetCell: ConfigurableCell, SetCell {
     }
 }
 
-class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
+class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
     var delegate: SetCellDelegate?
     var set: WorkoutSet! {
         didSet {
@@ -50,9 +41,9 @@ class WorkoutSetCell: InnerTableViewCell, KeyboardDelegate {
         
         let completedWeightLabel = UILabel(text: "weight", textAlignment: .center, numberOfLines: 1, font: Theme.Fonts.tableHeader, borderColor: UIColor.darkGray.cgColor, borderWidth: 1)
         let completedRepsLabel = UILabel(text: "reps", textAlignment: .center, numberOfLines: 1, font: Theme.Fonts.tableHeader, borderColor: UIColor.darkGray.cgColor, borderWidth: 1)
-        let weightStackView = StackView(arrangedSubviews: [completedWeightLabel,completedWeightTextField], axis: .vertical, spacing: 0, distribution: .fill)
-        let repsStackView = StackView(arrangedSubviews: [completedRepsLabel,completedRepsTextField], axis: .vertical, spacing: 0, distribution: .fill)
-        failureStackView = StackView(arrangedSubviews: [weightStackView,repsStackView], axis: .horizontal, spacing: 0, distribution: .fillEqually)
+        let weightStackView = UIStackView(arrangedSubviews: [completedWeightLabel,completedWeightTextField], axis: .vertical, spacing: 0, distribution: .fill)
+        let repsStackView = UIStackView(arrangedSubviews: [completedRepsLabel,completedRepsTextField], axis: .vertical, spacing: 0, distribution: .fill)
+        failureStackView = UIStackView(arrangedSubviews: [weightStackView,repsStackView], axis: .horizontal, spacing: 0, distribution: .fillEqually)
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -300,35 +291,6 @@ extension WorkoutSetCell {
         currentlyEditing?.becomeFirstResponder()
     }
 }
-
-enum SetStatus: String {
-    case incomplete = " "
-    case done = "Done"
-    case fail = "Fail"
-    
-}
-
-class Button: UIButton {
-    func setAttributedTitle(_ title: String) {
-        let attributes = [NSFontAttributeName : Theme.Fonts.title, NSForegroundColorAttributeName : UIColor.black]
-        let attributedString = NSAttributedString(string: title, attributes: attributes)
-        setAttributedTitle(attributedString, for: UIControlState())
-    }
-    static func buttonForSetCell(title: String) -> Button {
-        let button = Button()
-        button.layer.borderColor = UIColor.darkGray.cgColor
-        button.layer.borderWidth = 1.0
-        button.setAttributedTitle(title)
-        button.addTarget(button, action: #selector(Button.callAction(_:)), for: .touchUpInside)
-        return button
-    }
-    
-    var actionClosure: ((_ button: Button) -> ())!
-    func callAction(_ button: Button) {
-        actionClosure(button)
-    }
-}
-
 
 extension WorkoutSetCell: UITextFieldDelegate {
     

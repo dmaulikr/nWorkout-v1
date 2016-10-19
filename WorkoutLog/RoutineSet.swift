@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 
 @objc(RoutineSet)
-public class RoutineSet: ManagedObject {
+public class RoutineSet: nSet {
 
 }
 

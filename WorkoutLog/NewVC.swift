@@ -63,7 +63,7 @@ class NewVC<Type: ManagedObject>: UIViewController, UIPopoverPresentationControl
         okayButton.layer.borderColor = Theme.Colors.foreground.cgColor
         okayButton.layer.cornerRadius = 5
         
-        let stackView = StackView(arrangedSubviews: [nameTextField,okayButton], axis: .vertical, spacing: 8, distribution: .fillEqually)
+        let stackView = UIStackView(arrangedSubviews: [nameTextField,okayButton], axis: .vertical, spacing: 8, distribution: .fillEqually)
         
         view.addSubview(stackView)
         stackView.frame = CGRect(x: 0, y: 0, width: 250, height: 250)

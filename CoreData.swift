@@ -1,9 +1,6 @@
 import CoreData
 
-protocol HasContext {}
-extension HasContext {
-    public var context: NSManagedObjectContext { return CoreData.shared.context } 
-}
+
 
 class CoreData {
     static var shared: CoreData = {
@@ -26,7 +23,7 @@ class CoreData {
         return container
     }()
     
-    func save () {
+    func save (handleError: ((Error) -> ())? = nil) {
         let context = persistentContainer.viewContext
         if context.hasChanges {
             do {

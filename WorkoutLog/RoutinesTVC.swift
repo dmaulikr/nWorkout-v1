@@ -49,7 +49,7 @@ class RoutinesTVC: WorkoutsAndRoutinesTVC<Routine, RoutineCell>, UIPopoverPresen
     
     // TVCWTVDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let innerCell = cell.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! InnerTableViewCell
+        let innerCell = cell.dequeueReusableCell(withIdentifier: "cell", for: indexPath) 
         let lift = dataProvider.object(at: cell.outerIndexPath).object(at: indexPath)
         innerCell.textLabel?.text = lift.name! + " x \(lift.sets!.count)"
         innerCell.isUserInteractionEnabled = false

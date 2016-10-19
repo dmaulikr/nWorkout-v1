@@ -22,7 +22,7 @@ extension RoutineSetCell: ConfigurableCell {
     }
 }
 
-class RoutineSetCell: InnerTableViewCell, KeyboardDelegate, SetCell {
+class RoutineSetCell: UITableViewCell, KeyboardDelegate, SetCell {
     var delegate: SetCellDelegate!
     var set: RoutineSet! {
         didSet {

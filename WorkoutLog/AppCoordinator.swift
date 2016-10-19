@@ -30,8 +30,8 @@ class AppCoordinator: Coordinator {
             let wtvc = WorkoutTVC(dataProvider: first)
             let dummyNavBarItem = dummy.tabBarItem!
             dummyNavBarItem.image = #imageLiteral(resourceName: "show")
-            dummyNavBarItem.title = "show"
-            wtvc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "hide", style: .plain, target: wtvc, action: #selector(wtvc.hideButtonPushed))
+            dummyNavBarItem.title = "Show"
+            wtvc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Side", style: .plain, target: wtvc, action: #selector(wtvc.hideButtonPushed))
             newWorkoutNav.pushViewController(wtvc, animated: false)
             tabBarController.present(newWorkoutNav, animated: true, completion: nil)            
         }
@@ -67,12 +67,12 @@ class AppCoordinator: Coordinator {
         statisticsNav.tabBarItem.title = "Statistics"
         statisticsTVC.navigationItem.title = "Statistics"
         
-//        let settingsTVC = UIViewController()
-//        let settingsNav = UINavigationController(rootViewController: settingsTVC)
-//        settingsNav.delegate = self
-//        settingsNav.tabBarItem.image = #imageLiteral(resourceName: "settings")
-//        settingsNav.tabBarItem.title = "Settings"
-//        settingsTVC.navigationItem.title = "Settings"
+        let settingsTVC = UIViewController()
+        let settingsNav = UINavigationController(rootViewController: settingsTVC)
+        settingsNav.delegate = self
+        settingsNav.tabBarItem.image = #imageLiteral(resourceName: "settings")
+        settingsNav.tabBarItem.title = "Settings"
+        settingsTVC.navigationItem.title = "Settings"
         
         let vcs = [workoutsNav, routineNav, dummy!, statisticsNav]
         tabBarController.viewControllers = vcs

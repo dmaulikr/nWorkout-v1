@@ -20,7 +20,7 @@ open class TableViewCellWithTableView: UITableViewCell {
         }
     }
     public var topContentViewHeight: CGFloat { return 0 }
-    let innerTableView = InnerTableView()
+    let innerTableView = UITableView.innerTableView()
     
     public var outerIndexPath: IndexPath!
     let subTableViewDelegateAndDataSource = SubTableViewDelegateAndDataSource()

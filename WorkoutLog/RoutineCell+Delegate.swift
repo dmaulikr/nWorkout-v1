@@ -6,7 +6,7 @@ class RoutineCell: NamedTVCWTV<Routine>, UITextFieldDelegate {
     
     override func setNameStackView() {
         nameTextField = UITextField()
-        nameStackView = StackView(arrangedSubviews: [nameTextField], axis: .horizontal, spacing: 0, distribution: .fill)
+        nameStackView = UIStackView(arrangedSubviews: [nameTextField], axis: .horizontal, spacing: 0, distribution: .fill)
     }
     
     override func setName(_ name: String) {
