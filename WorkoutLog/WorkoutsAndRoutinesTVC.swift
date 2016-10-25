@@ -7,7 +7,7 @@ class WorkoutsAndRoutinesTVC<Type: ManagedObject, Cell: TableViewCellWithTableVi
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath) as! TableViewCellWithTableView
         cell.innerTableFooterView?.isUserInteractionEnabled = false
-        
+        cell.innerTableViewIsUserInteractionEnabled = false
         return cell
     }
     

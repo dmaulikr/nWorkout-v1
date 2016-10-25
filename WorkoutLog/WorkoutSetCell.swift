@@ -1,57 +1,42 @@
 import UIKit
 
-extension WorkoutSetCell: ConfigurableCell, SetCell {
-    typealias DataSource = WorkoutSet
-    func configureForObject(object: WorkoutSet, at indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            textLabel?.text = Lets.addSetText
-            textFields.forEach { $0.isHidden = true }
-            doneButton.isHidden = true
-        } else {
-            textLabel?.text = ""
-            textFields.forEach {
-                $0.isHidden = false
-                $0.placeholder = "0"
-            }
-            doneButton.isHidden = false
-            doneButton.setStandardBorder()
-            set = object
-        }
-        selectionStyle = .none
-    }
-}
-
-class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
-    var delegate: SetCellDelegate?
-    var set: WorkoutSet! {
+class WorkoutSetCell: SetCell {
+    
+    var workoutSet: WorkoutSet { return set as! WorkoutSet }
+    
+    override var set: nSet! {
         didSet {
-            print(set.targetWeight, set.targetReps, set.completedWeight, set.completedReps)
-            changeTargetWeight(Int(set.targetWeight))
-            changeTargetReps(Int(set.targetReps))
-            changeCompletedWeight(Int(set.completedWeight))
-            changeCompletedReps(Int(set.completedReps))
-            changeIsDone(set.setStatus == .done)
-            changeHasFailed(set.setStatus == .fail)
+            changeTargetWeight(Int(workoutSet.targetWeight))
+            changeTargetReps(Int(workoutSet.targetReps))
+            changeCompletedWeight(Int(workoutSet.completedWeight))
+            changeCompletedReps(Int(workoutSet.completedReps))
+            changeIsDone(workoutSet.setStatus == .done)
+            changeHasFailed(workoutSet.setStatus == .fail)
         }
     }
-    let failureStackView: UIStackView
+    var failureStackView: UIStackView
+    
+    var activeTextFields: [UITextField] { return [targetWeightTextField, targetRepsTextField] + (hasFailed ? [completedWeightTextField, completedRepsTextField] : []) }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        textFields += [targetWeightTextField, targetRepsTextField, completedWeightTextField, completedRepsTextField]
         
         let completedWeightLabel = UILabel(text: "weight", textAlignment: .center, numberOfLines: 1, font: Theme.Fonts.tableHeader, borderColor: UIColor.darkGray.cgColor, borderWidth: 1)
         let completedRepsLabel = UILabel(text: "reps", textAlignment: .center, numberOfLines: 1, font: Theme.Fonts.tableHeader, borderColor: UIColor.darkGray.cgColor, borderWidth: 1)
-        let weightStackView = UIStackView(arrangedSubviews: [completedWeightLabel,completedWeightTextField], axis: .vertical, spacing: 0, distribution: .fill)
-        let repsStackView = UIStackView(arrangedSubviews: [completedRepsLabel,completedRepsTextField], axis: .vertical, spacing: 0, distribution: .fill)
-        failureStackView = UIStackView(arrangedSubviews: [weightStackView,repsStackView], axis: .horizontal, spacing: 0, distribution: .fillEqually)
+        let weightStackView = UIStackView(arrangedSubviews: [completedWeightLabel,completedWeightTextField], axis: .vertical, spacing: 1, distribution: .fill)
+        let repsStackView = UIStackView(arrangedSubviews: [completedRepsLabel,completedRepsTextField], axis: .vertical, spacing: 1, distribution: .fill)
+        failureStackView = UIStackView(arrangedSubviews: [weightStackView,repsStackView], axis: .horizontal, spacing: 1, distribution: .fillEqually)
+        
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        backgroundColor = .black
+        selectionStyle = .none
         
         layer.borderWidth = 0
         
+        textFields = [targetWeightTextField, targetRepsTextField, completedWeightTextField, completedRepsTextField]
         //Configure TextFields
         textFields.forEach { textField in
-            textField.borderStyle = .line
+            textField.borderStyle = .none
             textField.textAlignment = .center
             textField.delegate = self
             textField.inputView = keyboardView
@@ -60,12 +45,15 @@ class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
         
         keyboardView.delegate = self
         
+        let visibles: [UIView] = [targetWeightTextField, targetRepsTextField, doneButton, completedWeightTextField, completedWeightLabel, completedRepsTextField, completedRepsLabel, failButton, doneButton, noteButton]
+        visibles.forEach { visible in
+            visible.backgroundColor = .white
+        }
+        
         let views: [UIView] = [targetWeightTextField,targetRepsTextField,doneButton,failureStackView]
         
-        let stackView = UIStackView(arrangedSubviews: views)
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 0
+        
+        let stackView = UIStackView(arrangedSubviews: views, axis: .horizontal, spacing: 2, distribution: .fillEqually)
         
         contentView.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -73,10 +61,6 @@ class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
         contentView.addSubview(noteButton)
         noteButton.translatesAutoresizingMaskIntoConstraints = false
         noteButton.setContentHuggingPriority(1000, for: .horizontal)
-        noteButton.actionClosure = { [unowned self] button in
-            print("note button tapped")
-            self.delegate?.setCell(self, didTap: self.noteButton, for: self.set)
-        }
         contentView.addSubview(failButton)
         failButton.translatesAutoresizingMaskIntoConstraints = false
         failButton.setContentHuggingPriority(1000, for: .horizontal)
@@ -84,34 +68,37 @@ class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
             self.hasFailed = !self.hasFailed
         }
         
+        doneButton.backgroundColor = .white
         doneButton.actionClosure = { [unowned self] button in
             self.isDone = !self.isDone
         }
         
         NSLayoutConstraint.activate([
-            stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            stackView.rightAnchor.constraint(equalTo: failButton.leftAnchor),
-            failButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            failButton.rightAnchor.constraint(equalTo: noteButton.leftAnchor),
+            stackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 1),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 1),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1),
+            stackView.rightAnchor.constraint(equalTo: failButton.leftAnchor, constant: -2),
+            failButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 1),
+            failButton.rightAnchor.constraint(equalTo: noteButton.leftAnchor, constant: -2),
+            failButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1),
             noteButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            noteButton.rightAnchor.constraint(equalTo: contentView.rightAnchor)
-            ])
+            noteButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -1),
+            noteButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 1),
+            noteButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -1)
+        ])
     }
     
     
     let noteButton = Button.buttonForSetCell(title: "n")
     let failButton = Button.buttonForSetCell(title: "f")
     
-    var textFields = [UITextField]()
     
     let targetWeightTextField = UITextField()
     var targetWeight: Int {
-        get { return Int(set.targetWeight) }
+        get { return Int(workoutSet.targetWeight) }
         set {
             set.managedObjectContext?.perform {
-                self.set.targetWeight = Int16(newValue)
+                self.workoutSet.targetWeight = Int16(newValue)
                 try! self.set.managedObjectContext?.save()
             }
             changeTargetWeight(newValue)
@@ -122,10 +109,10 @@ class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
     }
     let targetRepsTextField = UITextField()
     var targetReps: Int {
-        get { return Int(set.targetReps) }
+        get { return Int(workoutSet.targetReps) }
         set {
             set.managedObjectContext?.perform {
-                self.set.targetReps = Int16(newValue)
+                self.workoutSet.targetReps = Int16(newValue)
                 try! self.set.managedObjectContext?.save()
             }
             changeTargetReps(newValue)
@@ -136,10 +123,10 @@ class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
     }
     let completedWeightTextField = UITextField()
     var completedWeight: Int {
-        get { return Int(set.completedWeight) }
+        get { return Int(workoutSet.completedWeight) }
         set {
             set.managedObjectContext?.performAndWait {
-                self.set.completedWeight = Int16(newValue)
+                self.workoutSet.completedWeight = Int16(newValue)
                 try! self.set.managedObjectContext?.save()
             }
             changeCompletedWeight(newValue)
@@ -150,10 +137,10 @@ class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
     }
     let completedRepsTextField = UITextField()
     var completedReps: Int {
-        get { return Int(set.completedReps) }
+        get { return Int(workoutSet.completedReps) }
         set {
             set.managedObjectContext?.perform {
-                self.set.completedReps = Int16(newValue)
+                self.workoutSet.completedReps = Int16(newValue)
                 try! self.set.managedObjectContext?.save()
             }
             changeCompletedReps(newValue)
@@ -164,10 +151,10 @@ class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
     }
     let doneButton = Button.buttonForSetCell(title: "Done")
     var isDone: Bool {
-        get { return set.setStatus == .done }
+        get { return workoutSet.setStatus == .done }
         set {
             set.managedObjectContext?.perform {
-                self.set.setStatus = newValue ? .done : .incomplete
+                self.workoutSet.setStatus = newValue ? .done : .incomplete
                 try! self.set.managedObjectContext?.save()
             }
             changeIsDone(newValue)
@@ -181,10 +168,10 @@ class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
         doneButton.setAttributedTitle(isDone ? "Done" : " ")
     }
     var hasFailed: Bool {
-        get { return set.setStatus == .fail }
+        get { return workoutSet.setStatus == .fail }
         set {
             set.managedObjectContext?.perform {
-                self.set.setStatus = newValue ? .fail : .incomplete
+                self.workoutSet.setStatus = newValue ? .fail : .incomplete
                 try! self.set.managedObjectContext?.save()
             }
             changeHasFailed(newValue)
@@ -192,27 +179,20 @@ class WorkoutSetCell: UITableViewCell, KeyboardDelegate {
     }
     func changeHasFailed(_ hasFailed: Bool) {
         failureStackView.isHidden = !hasFailed
-        failureStackView.setStandardBorder()
-        completedRepsTextField.setStandardBorder()
-        completedWeightTextField.setStandardBorder()
         doneButton.isHidden = hasFailed
         if hasFailed {
             doneButton.setAttributedTitle(" ")
         }
     }
-    
-    
-    let keyboardView = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: Double((UIApplication.shared.windows.first?.rootViewController?.view.frame.size.height)!) * Lets.keyboardToViewRatio))
-    var currentlyEditing: UITextField?
-    
     required init?(coder aDecoder: NSCoder) { fatalError() }
 }
 
-extension WorkoutSetCell {
+extension WorkoutSetCell: KeyboardDelegate {
     
     func keyWasTapped(character: String) {
-        currentlyEditing?.text = currentlyEditing!.text! + character
-        textFieldDidChange(textField: currentlyEditing!)
+        guard let currentlyEditing = currentlyEditing, let text = currentlyEditing.text else { fatalError() }
+        currentlyEditing.text = text + character
+        textFieldDidChange(textField: currentlyEditing)
     }
     func backspaceWasTapped() {
         currentlyEditing?.deleteBackward()
@@ -269,30 +249,44 @@ extension WorkoutSetCell {
     }
     func nextWasTapped() {
         replaceValueWithPlaceholder()
-        
-        switch currentlyEditing! {
-        case targetWeightTextField:
-            currentlyEditing = targetRepsTextField
-        case targetRepsTextField:
-            if hasFailed {
-                currentlyEditing = completedWeightTextField
-            } else {
-                currentlyEditing = nil
-                delegate?.cellShouldJumpToNextTextField(self)
-            }
-        case completedWeightTextField:
-            currentlyEditing = completedRepsTextField
-        case completedRepsTextField:
-            currentlyEditing = nil
-            delegate?.cellShouldJumpToNextTextField(self)
-        default:
-            break
+        guard let currentlyEditing = currentlyEditing, let idx = activeTextFields.index(of: currentlyEditing) else { fatalError() }
+        if idx < (activeTextFields.count - 1) {
+            let nextIdx = activeTextFields.index(after: idx)
+            let nextTF = activeTextFields[nextIdx]
+            self.currentlyEditing = nextTF
+            nextTF.becomeFirstResponder()
+        } else {
+            self.currentlyEditing = nil
+            jumpToNextSet(self)
         }
-        currentlyEditing?.becomeFirstResponder()
     }
+    
+}
+
+final class RepsOrWeightTextField: UITextField {
+    
+    var repsOrWeight: Int! {
+        didSet { didChange(repsOrWeight) }
+    }
+    
+    var didChange: ((_ newValue: Int) -> ())!
+    
+    init() {
+        super.init(frame: CGRect())
+        clearButtonMode = .whileEditing
+     
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) { fatalError() }
 }
 
 extension WorkoutSetCell: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        textField.placeholder = textField.text
+        textField.text = nil
+        return true
+    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currentlyEditing = textField

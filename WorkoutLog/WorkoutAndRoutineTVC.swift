@@ -2,13 +2,11 @@ import UIKit
 import CoreData
 import CoreGraphics
 
-class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: TableViewCellWithTableView>: TableViewController<Source, Type, Cell> where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider, Source: DataProvider, Source.Object.Object: SetType {
+class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: TableViewCellWithTableView>: TableViewController<Source, Type, Cell> where Type: ManagedObjectType, Cell: ConfigurableCell, Cell.DataSource == Type, Source.Object == Type, Type: DataProvider, Source: DataProvider, Source.Object.Object: nSet {
     override func viewWillAppear(_ animated: Bool) {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = editButtonItem
-        
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(_: )), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -30,7 +28,6 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
     func keyboardDidShow(_ notification: Notification) {
         scrollToTextField()
     }
-    
     func scrollToTextField() {
         print(#function)
 
@@ -47,7 +44,6 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
             }
         }
     }
-    
     func keyboardWillHide(_ notification: Notification) {
         UIView.animate(withDuration: 0.2) {
             guard let defaultInsets = self.defaultInsets else { return }
@@ -66,11 +62,7 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         var newIndexPath: IndexPath?
         context.performAndWait {
             newIndexPath = self.dataProvider.insert(object: object)
-            do {
-                try self.context.save()
-            } catch {
-                print(error: error)
-            }
+            CoreData.shared.save()
         }
         guard let indexPath = newIndexPath else { return }
         tableView.insertRows(at: [indexPath], with: .automatic)
@@ -90,18 +82,13 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         }
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        guard indexPath.section != 0 else {
             return super.tableView(tableView, cellForRowAt: indexPath)
-        } else {
-            let cell = UITableViewCell()
-            switch indexPath.row {
-            case 0: cell.textLabel?.text = "Add Lift"
-            case 1: cell.textLabel?.text = "Finish Workout"
-            case 2: cell.textLabel?.text = "Cancel Workout"
-            default: fatalError()
-            }
-            return cell
         }
+        let cell = UITableViewCell()
+        cell.textLabel?.text = ["Add Lift", "Finish Workout", "Cancel Workout"][indexPath.row]
+        return cell
+        
     }
     // UITableViewDelegate
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
@@ -113,23 +100,15 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         tableView.reloadData()
     }
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if indexPath.section == 1 {
-            return indexPath
-        } else {
-            return nil
-        }
+        return indexPath.section == 1 ? indexPath : nil
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 1 {
-            switch indexPath.row {
-            case 0:
-                addButtonTapped()
-                tableView.deselectRow(at: indexPath, animated: true)
-            default: fatalError()
-            }
-        } else {
+        guard indexPath.section == 1 && indexPath.row == 0 else {
             super.tableView(tableView, didSelectRowAt: indexPath)
+            return
         }
+        addButtonTapped()
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //TVCWTVDaDS
@@ -137,18 +116,10 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         return 2
     }
     override func cell(_ cell: TableViewCellWithTableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return dataProvider.object(at: cell.outerIndexPath).numberOfItems(inSection: section)
-        } else {
-            return 1
-        }
+        return section == 0 ? dataProvider.object(at: cell.outerIndexPath).numberOfItems(inSection: section) : 1
     }
     override func cell(_ cell: TableViewCellWithTableView, willSelectRowAtInner innerIndexPath: IndexPath) -> IndexPath? {
-        if innerIndexPath.section == 1 {
-            return innerIndexPath
-        } else {
-            return nil
-        }
+        return innerIndexPath.section == 1 ? innerIndexPath : nil
     }
     func addNewSet(for cell: TableViewCellWithTableView, atInner innerIndexPath: IndexPath) -> UITableViewCell {
         cell.deselectRow(at: innerIndexPath, animated: true)
@@ -159,14 +130,10 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         let lastSet = setCount > 0 ? Optional.some(lift.object(at: IndexPath(row: setCount - 1, section: 0))) : nil
         
         context.performAndWait {
-            var set = Type.Object(context: self.context)
+            let set = Type.Object(context: self.context)
             set.configure(weight: lastSet?.settableWeight ?? 0, reps: lastSet?.settableReps ?? 0)
             newInnerIndexPath = lift.insert(object: set)
-            do {
-                try self.context.save()
-            } catch {
-                print(error: error)
-            }
+            CoreData.shared.save()
         }
         guard let indexPath = newInnerIndexPath else { fatalError() }
         cell.insertRows(at: [indexPath], with: .automatic)
@@ -181,7 +148,7 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         _ = addNewSet(for: cell, atInner: innerIndexPath)
     }
     override func cell(_ cell: TableViewCellWithTableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 1 { return false } else { return true }
+        return indexPath.section != 1
     }
     override func cell(_ cell: TableViewCellWithTableView, commit editingSyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let outerObject = dataProvider.object(at: cell.outerIndexPath)
@@ -193,24 +160,28 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         tableView.endUpdates()
     }
     //Dummy since Swift can't find Subclass implementation without something to override.
-    override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { fatalError() }
+    override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 1 {
+            let tvc = cell.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            tvc.textLabel?.text = Lets.addSetText
+            return tvc
+        } else {
+            let innerCell = cell.dequeueReusableCell(withIdentifier: "setCell", for: indexPath) as! SetCell
+            let set = dataProvider.object(at: cell.outerIndexPath).object(at: indexPath)
+            innerCell.configureForObject(object: set, at: indexPath)
+            innerCell.jumpToNextSet = { innerCell in
+                let innerIndexPath = cell.innerIndexPath(forInner: innerCell)!
+                let newInnerIndexPath = IndexPath(row: innerIndexPath.row + 1, section: innerIndexPath.section)
+                let newInnerCell = cell.innerCellForRow(atInner: newInnerIndexPath) as? WorkoutSetCell ?? self.addNewSet(for: cell, atInner: newInnerIndexPath) as! WorkoutSetCell
+                newInnerCell.targetWeightTextField.becomeFirstResponder()
+            }
+            return innerCell
+        }
+    }
     override func cellClassForInnerTableView(for cell: TableViewCellWithTableView) -> [AnyClass] {
-        return super.cellClassForInnerTableView(for: cell)
+        return [UITableViewCell.self, SetCell.self]
     }
     override func reuseIdentifierForInnerTableView(for cell: TableViewCellWithTableView) -> [String] {
-        return super.reuseIdentifierForInnerTableView(for: cell)
-    }
-    
-    
-}
-
-extension WorkoutAndRoutineTVC: LiftCellDelegate {
-    func cellShouldJumpToNewSet(for cell: TableViewCellWithTableView, atInner innerIndexPath: IndexPath) -> UITableViewCell {
-        let newSetCell = addNewSet(for: cell, atInner: innerIndexPath) as! SetCell
-        newSetCell.textFields.forEach {
-            $0.placeholder = $0.text
-            $0.text = nil
-        }
-        return newSetCell as! UITableViewCell
+        return ["cell","setCell"]
     }
 }

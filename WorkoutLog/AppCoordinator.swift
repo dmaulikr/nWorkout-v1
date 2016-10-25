@@ -24,7 +24,6 @@ class AppCoordinator: Coordinator {
         request.returnsObjectsAsFaults = false
         request.predicate = NSPredicate(format: "complete == false")
         let incompletes = try! CoreData.shared.context.fetch(request)
-        print(incompletes)
         
         if let first = incompletes.first {
             let wtvc = WorkoutTVC(dataProvider: first)

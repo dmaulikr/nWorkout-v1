@@ -16,14 +16,6 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
     
     //UITableViewDataSource
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        if indexPath.section == 0 {
-            (cell as! WorkoutLiftCell).liftCellDelegate = self
-        }
-        return cell
-    }
-    
     func closeActiveWorkout() {
         let dummyTabBarItem = (UIApplication.shared.delegate as! AppDelegate).appCoordinator.dummy.tabBarItem
         dummyTabBarItem?.title = "new"
@@ -36,18 +28,13 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
             if indexPath.row == 1 {
-                
                 let alert = UIAlertController(title: "Finish Workout?", message: "Are you sure you want to finish this workout?", preferredStyle: .alert)
                 let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                 let finish = UIAlertAction(title: "Finish", style: .default) { _ in
                     self.context.perform {
                         self.dataProvider.complete = true
                         self.dataProvider.finishDate = Date()
-                        do {
-                            try self.context.save()
-                        } catch {
-                            print(error: error)
-                        }
+                        CoreData.shared.save()
                     }
                     self.closeActiveWorkout()
                 }
@@ -61,7 +48,7 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
                     let context = self.dataProvider.managedObjectContext!
                     context.perform {
                         context.delete(self.dataProvider)
-                        try! context.save()
+                        CoreData.shared.save()
                     }
                     self.closeActiveWorkout()
                 }
@@ -77,26 +64,22 @@ class WorkoutTVC: WorkoutAndRoutineTVC<Workout,WorkoutLift,WorkoutLiftCell> {
     
     // TVWTVCDADS
     override func cell(_ cell: TableViewCellWithTableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 1 {
-            let tableViewCell = cell.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-            tableViewCell.textLabel?.text = Lets.addSetText
-            return tableViewCell
-        } else {
-            let innerCell = cell.dequeueReusableCell(withIdentifier: "workoutSetCell", for: indexPath) as! WorkoutSetCell
-            innerCell.selectionStyle = .none
-            innerCell.delegate = cell as! WorkoutLiftCell
-            let set = dataProvider.object(at: cell.outerIndexPath).object(at: indexPath)
-            innerCell.configureForObject(object: set, at: indexPath)
-            return innerCell
+        let c = super.cell(cell, cellForRowAt: indexPath)
+        if let innerCell = c as? WorkoutSetCell {
+            innerCell.noteButton.actionClosure = { [unowned self] button in
+                let object = self.dataProvider.object(at: cell.outerIndexPath)
+                let noteVC = NoteVC(object: object, placeholder: "", button: button, callback: nil)
+                self.present(noteVC, animated: true, completion: nil)
+            }
         }
+        return c
     }
     
     override func reuseIdentifierForInnerTableView(for cell: TableViewCellWithTableView) -> [String] {
-        return ["workoutSetCell", "cell"]
+        return ["setCell", "cell"]
     }
     override func cellClassForInnerTableView(for cell: TableViewCellWithTableView) -> [AnyClass] {
         return [WorkoutSetCell.self, UITableViewCell.self]
     }
-    
 }
 

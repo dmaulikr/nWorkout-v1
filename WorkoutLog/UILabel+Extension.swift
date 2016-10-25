@@ -8,8 +8,8 @@ extension UILabel {
         self.textAlignment = textAlignment
         self.numberOfLines = numberOfLines
         self.font = font
-        self.layer.borderColor = borderColor
-        self.layer.borderWidth = borderWidth
+//        self.layer.bordercolor = bordercolor
+//        self.layer.borderWidth = borderWidth
     }
 
     convenience init(tableHeaderStyleWith string: String, borderColor: CGColor? = UIColor.lightGray.cgColor, borderWidth: CGFloat = 1) {

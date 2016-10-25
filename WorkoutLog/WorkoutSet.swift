@@ -1,24 +1,20 @@
 import Foundation
 import CoreData
 
-
-extension WorkoutSet: SetType {
-    var settableWeight: Int {
-        set { targetWeight = Int16(newValue) }
-        get { return Int(targetWeight) }
-    }
-    var settableReps: Int {
-        set { targetReps = Int16(newValue) }
-        get { return Int(targetReps) }
-    }
-}
-
 @objc(WorkoutSet)
 public class WorkoutSet: nSet {
     enum Status: String {
         case incomplete = " "
         case done = "Done"
         case fail = "Fail"
+    }
+    override var settableWeight: Int {
+        set { targetWeight = Int16(newValue) }
+        get { return Int(targetWeight) }
+    }
+    override var settableReps: Int {
+        set { targetReps = Int16(newValue) }
+        get { return Int(targetReps) }
     }
 }
 

@@ -10,12 +10,17 @@ class Button: UIButton {
     }
     static func buttonForSetCell(title: String) -> Button {
         let button = Button()
-        button.layer.borderColor = UIColor.darkGray.cgColor
-        button.layer.borderWidth = 1.0
+
         button.setAttributedTitle(title)
-        button.addTarget(button, action: #selector(Button.callAction(_:)), for: .touchUpInside)
         return button
     }
+    
+    init() {
+        super.init(frame: CGRect())
+        addTarget(self, action: #selector(Button.callAction(_:)), for: .touchUpInside)
+    }
+    
+    required init?(coder aDecoder: NSCoder) { fatalError() }
     
     var actionClosure: ((_ button: Button) -> ())!
     func callAction(_ button: Button) {

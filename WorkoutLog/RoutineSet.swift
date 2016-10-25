@@ -4,18 +4,14 @@ import CoreData
 @objc(RoutineSet)
 public class RoutineSet: nSet {
 
-}
-
-extension RoutineSet: SetType {
-    var settableWeight: Int {
+    override var settableWeight: Int {
         set { weight = Int16(newValue) }
         get { return Int(weight) }
     }
-    var settableReps: Int {
+    override var settableReps: Int {
         set { reps = Int16(newValue) }
         get { return Int(reps) }
     }
-
 }
 
 extension RoutineSet: ManagedObjectType {

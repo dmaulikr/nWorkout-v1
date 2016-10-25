@@ -1,8 +1,8 @@
 import UIKit
 
-extension RoutineSetCell: ConfigurableCell {
+extension RoutineSetCell {
     typealias DataSource = RoutineSet
-    func configureForObject(object: RoutineSet, at indexPath: IndexPath) {
+    override func configureForObject(object: nSet, at indexPath: IndexPath) {
         if indexPath.section == 1 {
             textLabel?.text = Lets.addSetText
             textFields.forEach { $0.isHidden = true }
@@ -22,12 +22,14 @@ extension RoutineSetCell: ConfigurableCell {
     }
 }
 
-class RoutineSetCell: UITableViewCell, KeyboardDelegate, SetCell {
-    var delegate: SetCellDelegate!
-    var set: RoutineSet! {
+class RoutineSetCell: SetCell, KeyboardDelegate  {
+    var routineSet: RoutineSet {
+        get { return set as! RoutineSet }
+    }
+    override var set: nSet! {
         didSet {
-            reps = Int(set.reps)
-            weight = Int(set.weight)
+            reps = Int(routineSet.reps)
+            weight = Int(routineSet.weight)
         }
     }
     
@@ -35,7 +37,6 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate, SetCell {
         
         weightTextField = UITextField()
         repsTextField = UITextField()
-        textFields += [weightTextField, repsTextField]
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         //Configure TextFields
@@ -46,6 +47,8 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate, SetCell {
             textField.inputView = keyboardView
             textField.placeholder = "0"
         }
+        
+        textFields! += [weightTextField, repsTextField]
         
         keyboardView.delegate = self
         
@@ -66,15 +69,14 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate, SetCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var textFields = [UITextField]()
     var weightTextField: UITextField
     var weight: Int {
         get {
-            return Int(set.weight)
+            return Int(routineSet.weight)
         }
         set {
             set.managedObjectContext?.perform {
-                self.set.weight = Int16(newValue)
+                self.routineSet.weight = Int16(newValue)
                 do {
                     try self.set.managedObjectContext?.save()
                 } catch {
@@ -89,11 +91,11 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate, SetCell {
     var repsTextField: UITextField
     var reps: Int {
         get {
-            return Int(set.reps)
+            return Int(routineSet.reps)
         }
         set {
             set.managedObjectContext?.perform {
-                self.set.reps = Int16(newValue)
+                self.routineSet.reps = Int16(newValue)
                 do {
                     try self.set.managedObjectContext?.save()
                 } catch {
@@ -105,9 +107,6 @@ class RoutineSetCell: UITableViewCell, KeyboardDelegate, SetCell {
             }
         }
     }
-    // MARK: KeyboardView
-    let keyboardView = Keyboard(frame: CGRect(x: 0, y: 0, width: 1, height: (UIApplication.shared.windows.first?.rootViewController?.view.frame.size.height)! / 3))
-    var currentlyEditing: UITextField?
 }
 
 extension RoutineSetCell {
@@ -167,7 +166,7 @@ extension RoutineSetCell {
         case weightTextField:
             currentlyEditing = repsTextField
         case repsTextField:
-            delegate?.cellShouldJumpToNextTextField(self)
+            print("DO THIS")
         default: fatalError()
         }
         currentlyEditing?.becomeFirstResponder()

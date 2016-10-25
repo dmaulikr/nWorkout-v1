@@ -46,6 +46,7 @@
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="targetReps" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="targetWeight" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="warmup" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="lift" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutLift" inverseName="sets" inverseEntity="WorkoutLift" syncable="YES"/>
     </entity>
     <elements>
@@ -55,6 +56,6 @@
         <element name="RoutineSet" positionX="-45" positionY="72" width="128" height="105"/>
         <element name="Workout" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="WorkoutLift" positionX="-45" positionY="27" width="128" height="135"/>
-        <element name="WorkoutSet" positionX="-36" positionY="36" width="128" height="150"/>
+        <element name="WorkoutSet" positionX="-36" positionY="36" width="128" height="165"/>
     </elements>
 </model>

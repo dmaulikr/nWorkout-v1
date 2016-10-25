@@ -6,6 +6,9 @@ extension UITableView {
         let tv = UITableView(frame: CGRect(), style: style)
         tv.tableFooterView = UIView()
         tv.backgroundView = UIView()
+        
+        tv.separatorStyle = .none
+        
         return tv
     }
     static func innerTableView() -> UITableView {
@@ -18,8 +21,11 @@ extension UITableView {
         tv.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         tv.isScrollEnabled = false
-        tv.layer.borderColor = UIColor.darkGray.cgColor
+        tv.layer.borderColor = UIColor.black.cgColor
         tv.layer.borderWidth = 2.0
+        
+        tv.separatorStyle = .none
+        
         return tv
         
     }

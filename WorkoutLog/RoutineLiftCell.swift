@@ -10,7 +10,6 @@ class RoutineLiftCell: NamedTVCWTV<RoutineLift> {
         setupTableLabels()
         selectionStyle = .none
     }
-    weak var liftCellDelegate: LiftCellDelegate!
 }
 
 extension RoutineLiftCell {
@@ -31,18 +30,5 @@ extension RoutineLiftCell {
         constraints.append(labelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2))
         constraints.append(labelStackView.bottomAnchor.constraint(equalTo: topContentView.bottomAnchor))
         NSLayoutConstraint.activate(constraints)
-    }
-}
-
-extension RoutineLiftCell: SetCellDelegate {
-    func setCell(_ setCell: SetCell, didTap button: UIButton, for object: ManagedObject) {
-        delegate?.cell?(self, didTap: button, for: object, or: nil)
-    }
-
-    func cellShouldJumpToNextTextField(_ cell: UITableViewCell) {
-        let theInnerIndexPath = innerIndexPath(forInner: cell)!
-        let newInnerIndexPath = IndexPath(row: theInnerIndexPath.row + 1, section: theInnerIndexPath.section)
-        let newInnerCell = innerCellForRow(atInner: newInnerIndexPath) as? RoutineSetCell ?? liftCellDelegate.cellShouldJumpToNewSet(for: self, atInner: newInnerIndexPath) as! RoutineSetCell
-        newInnerCell.weightTextField.becomeFirstResponder()
     }
 }

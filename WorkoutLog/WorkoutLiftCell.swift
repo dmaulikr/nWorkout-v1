@@ -1,9 +1,6 @@
 import UIKit
 import CoreData
 
-
-
-
 class WorkoutLiftCell: NamedTVCWTV<WorkoutLift> {
     var topLabelStackView: UIStackView!
     var bottomLabelStackView: UIStackView!
@@ -12,9 +9,7 @@ class WorkoutLiftCell: NamedTVCWTV<WorkoutLift> {
         super.configureForObject(object: object, at: indexPath)
         nameLabel.text = object.name
         setupTableLabels()
-        selectionStyle = .none
     }
-    weak var liftCellDelegate: LiftCellDelegate!
 }
 
 extension WorkoutLiftCell {
@@ -50,21 +45,6 @@ extension WorkoutLiftCell {
         constraints.append(topLabelStackView.heightAnchor.constraint(equalToConstant: Lets.liftCellTableHeaderHeight / 2))
         
         NSLayoutConstraint.activate(constraints)
-    }
-}
-
-extension WorkoutLiftCell: SetCellDelegate {
-    func cellShouldJumpToNextTextField(_ cell: UITableViewCell) {
-        let theInnerIndexPath = innerIndexPath(forInner: cell)!
-        let newInnerIndexPath = IndexPath(row: theInnerIndexPath.row + 1, section: theInnerIndexPath.section)
-        let newInnerCell = innerCellForRow(atInner: newInnerIndexPath) as? WorkoutSetCell ?? liftCellDelegate.cellShouldJumpToNewSet(for: self, atInner: newInnerIndexPath) as! WorkoutSetCell
-        newInnerCell.completedWeightTextField.placeholder = "0"
-        newInnerCell.completedRepsTextField.placeholder = "0"
-        newInnerCell.targetWeightTextField.becomeFirstResponder()
-     }
-    
-    func setCell(_ setCell: SetCell, didTap button: UIButton, for object: ManagedObject) {
-        delegate?.cell?(self, didTap: button, for: object, or: nil)
     }
 }
 

@@ -13,8 +13,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 10000
-        
+        tableView.estimatedRowHeight = 300
         navigationItem.rightBarButtonItem = editButtonItem
     }
     init(dataProvider: Source) {
@@ -26,9 +25,7 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
         let frc = NSFetchedResultsController(fetchRequest: request, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         dataProvider = FetchedResultsDataProvider(fetchedResultsController: frc, delegate: self) as! Source
     }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder aDecoder: NSCoder) { fatalError() }
     
     var dataProvider: Source!
     
@@ -55,7 +52,6 @@ class TableViewController<Source: DataProvider, Type: ManagedObject, Cell: Table
             if self.dataProvider is ManagedObject {
                 self.tableView.deleteRows(at: [indexPath], with: .none)
             }
-//            tableView.reloadData()
         })
         alert.addAction(UIAlertAction(title: "No", style: .cancel) { _ in
             self.tableView.endEditing(true)
