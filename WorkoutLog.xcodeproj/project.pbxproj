@@ -322,9 +322,9 @@
 			children = (
 				B3A594D71DB558F3000D2F65 /* RoutineLift+CoreDataProperties.swift */,
 				B3A594D91DB558F3000D2F65 /* WorkoutLift+CoreDataProperties.swift */,
+				B3A594DF1DB558F3000D2F65 /* Workout+CoreDataProperties.swift */,
 				B3A594DB1DB558F3000D2F65 /* Routine+CoreDataProperties.swift */,
 				B3A594DD1DB558F3000D2F65 /* LiftType+CoreDataProperties.swift */,
-				B3A594DF1DB558F3000D2F65 /* Workout+CoreDataProperties.swift */,
 				B3A594E11DB558F3000D2F65 /* WorkoutSet+CoreDataProperties.swift */,
 				B3A594E31DB558F3000D2F65 /* RoutineSet+CoreDataProperties.swift */,
 			);
