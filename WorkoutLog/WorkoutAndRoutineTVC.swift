@@ -13,16 +13,21 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(_: )), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
-    var defaultInsets: UIEdgeInsets!
+    var defaultTableViewInsets: UIEdgeInsets!
+    var defaultScrollIndicatorInsets: UIEdgeInsets!
+    
     var keyboardHeight: CGFloat!
+    
     func keyboardWillShow(_ notification: Notification) {
         if let userInfo = notification.userInfo {
-            defaultInsets = tableView.contentInset
+            print(tableView.contentInset, tableView.scrollIndicatorInsets)
+            defaultTableViewInsets = tableView.contentInset
+            defaultScrollIndicatorInsets = tableView.scrollIndicatorInsets
+            
             let value = (userInfo[UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue
             keyboardHeight = value?.height ?? view.frame.height * CGFloat(Lets.keyboardToViewRatio)
-
             
-            let insets = UIEdgeInsets(top: defaultInsets.top, left: defaultInsets.left, bottom: keyboardHeight, right: defaultInsets.right)
+            let insets = UIEdgeInsets(top: defaultTableViewInsets.top, left: defaultTableViewInsets.left, bottom: keyboardHeight, right: defaultTableViewInsets.right)
             tableView.contentInset = insets
             tableView.scrollIndicatorInsets = insets
         }
@@ -32,15 +37,14 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
     }
     
     func scrollToTextField() {
-        print(#function)
 
         if let firstResponder = UIResponder.currentFirstResponder() as? UIView {
+            
             let frFrame = firstResponder.frame
             let corrected = UIApplication.shared.keyWindow!.convert(frFrame, from: firstResponder.superview)
             let yRelativeToKeyboard = (view.frame.height - keyboardHeight) - (corrected.origin.y + corrected.height)
-            print(yRelativeToKeyboard)
+            
             if yRelativeToKeyboard < 0 {
-                print("what")
                 let frInViewsFrame = view.convert(frFrame, from: firstResponder.superview)
                 let scrollPoint = CGPoint(x: 0, y: frInViewsFrame.origin.y - keyboardHeight - tableView.contentInset.top - frInViewsFrame.height - UIApplication.shared.statusBarFrame.height)
                 tableView.setContentOffset(scrollPoint, animated: true)
@@ -50,8 +54,9 @@ class WorkoutAndRoutineTVC<Source: ManagedObject, Type: ManagedObject, Cell: Tab
     
     func keyboardWillHide(_ notification: Notification) {
         UIView.animate(withDuration: 0.2) {
-            guard let defaultInsets = self.defaultInsets else { return }
+            guard let defaultInsets = self.defaultTableViewInsets else { return }
             self.tableView.contentInset = defaultInsets
+            self.tableView.scrollIndicatorInsets = defaultInsets
         }
     }
     deinit {
